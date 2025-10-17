@@ -1,0 +1,647 @@
+\section{Constructing a Binomial Random Variable}
+
+Consider the case where \( n = 1 \) in a binomial distribution, resulting in a \textit{binomial(1, p)} random variable. In this setup:
+\begin{itemize}
+    \item \( X \) can take only two possible values, represented by events \( B_1 \) and \( B_2 \).
+    \item Define the probability space: 
+    \[
+    \Omega = \{B_1, B_2\}
+    \]
+    with a sigma-algebra of four elements: \(\emptyset\), \(\Omega\), \(B_1\), and \(B_2\).
+    \item Assign probabilities \(P(B_1) = p\) and \(P(B_2) = 1 - p\).
+\end{itemize}
+Define \( X: \Omega \rightarrow \mathbb{R} \) such that:
+\[
+X(B_1) = 1, \quad X(B_2) = 0.
+\]
+This gives us a binomial random variable, \( X \sim \text{binomial(1, p)} \), with support on \(\{0, 1\}\). The probability density for this binomial variable, denoted by \( \mu_X \), is fully characterized by:
+\[
+P(X = 1) = p, \quad P(X = 0) = 1 - p.
+\]
+This setup represents a basic discrete random variable on two values, \(0\) and \(1\), where \(1\) typically corresponds to a "success" in a given experiment, and \(0\) to a "failure." \newline
+It is often useful to transform binomial variables. For instance, define \( Y \) such that:
+\[
+Y(B_1) = 1, \quad Y(B_2) = -1.
+\]
+In this case, \( Y \) is not a binomial(1, p) random variable, as it takes values \( \{1, -1\} \) rather than \( \{0, 1\} \). However, we can express \( Y \) as a linear transformation of \( X \):
+\[
+Y = 2X - 1.
+\]
+Verifying this transformation:
+\begin{itemize}
+    \item If \( X = 1 \), then \( Y = 2 \cdot 1 - 1 = 1 \).
+    \item If \( X = 0 \), then \( Y = 2 \cdot 0 - 1 = -1 \).
+\end{itemize}
+Thus, any discrete random variable with two distinct values can be obtained from a binomial random variable through a suitable linear transformation. Consider the general case y = ax + b and create a system considering that we get $y=y_1$ when $x=1$ and $y=y_2$ when $x=0$. \newline
+Starting from a \textit{binomial(1, p)} random variable, we can define a general \textit{binomial(n, p)} random variable as the number of successes in \( n \) trials, where each trial has a success probability \( p \). \newline
+Define the probability space \( \Omega \) as the set of possible outcomes in \( n \) trials. Each outcome in \( \Omega \) is an \( n \)-dimensional vector where each component is either \( B_1 \) (success) or \( B_2 \) (failure). Therefore, 
+\[
+\Omega = \{ B_1, B_2 \}^n,
+\]
+which denotes the set of all sequences of \( B_1 \) and \( B_2 \) of length \( n \). We can take the sigma-algebra \( \mathcal{F} \) as the power set of \( \Omega \), containing all possible subsets. To define a probability measure on this space, we assume that each trial is independent and has probability \( p \) of success (i.e., taking value \( B_1 \)) and probability \( 1 - p \) of failure (i.e., taking value \( B_2 \)). Define the event \( A_i \) as the set of outcomes in which the \( i \)-th trial results in \( B_1 \). Then:
+\[
+P(A_i) = p \quad \text{and} \quad P(A_i^c) = 1 - p.
+\]
+Any \(\omega \in \Omega\) can be represented as:
+\[
+\omega = A_1^{*} \cap A_2^{*} \cap \dots \cap A_n^{*},
+\]
+where each \( A_i^{*} \) is either \( A_i \) or \( A_i^c \) (depending on whether the \( i \)-th trial is a success or failure). \newline
+By the independence of trials, the probability of any particular outcome \(\omega\) with \( k \) successes (i.e., \( A_i = B_1 \)) and \( n - k \) failures (i.e., \( A_i = B_2 \)) is:
+\[
+P(\omega) = p^k (1 - p)^{n - k}.
+\]
+
+\subsection{Definition of the Binomial(n, p) Random Variable}
+Define the random variable \( X: \Omega \to \mathbb{R} \) by:
+\[
+X(\omega) = \text{number of successes (i.e., occurrences of \( B_1 \)) in } \omega.
+\]
+Thus, \( X \) counts the number of times \( B_1 \) occurs in a sequence of \( n \) trials. \newline
+The support of \( X \), which consists of all possible values \( X \) can take, is \( \{0, 1, \dots, n\} \).
+
+\paragraph{Probability Mass Function of the Binomial(n, p) Variable}
+
+For any \( k = 0, 1, \dots, n \), the probability that \( X = k \) is given by the probability of obtaining exactly \( k \) successes and \( n - k \) failures:
+\[
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k},
+\]
+where \( \binom{n}{k} \) is the binomial coefficient, representing the number of ways to arrange \( k \) successes in \( n \) trials:
+\[
+\binom{n}{k} = \frac{n!}{k!(n - k)!}.
+\]
+Thus, a random variable \( X \) with this probability distribution is called a \textit{binomial(n, p)} random variable.
+
+\paragraph{Expectation and Variance of a Binomial Random Variable}
+
+We have computed the expectation of a binomial random variable \( X \sim \text{Binomial}(n, p) \), which is given by:
+\[
+\mathbb{E}[X] = n \cdot p.
+\]
+Now, let us compute the variance of \( X \). Recall that:
+\[
+\operatorname{Var}(X) = \mathbb{E}[X^2] - \left(\mathbb{E}[X]\right)^2.
+\]
+To compute \( \mathbb{E}[X^2] \), one way is to evaluate:
+\[
+\mathbb{E}[X^2] = \sum_{k=0}^n k^2 \cdot \binom{n}{k} p^k (1 - p)^{n-k}.
+\]
+However, this calculation can be challenging. Instead, we can approach it by expressing \( X \) as a sum of \( n \) independent \textit{Bernoulli}(p) random variables. Let \( X = \sum_{i=1}^n X_i \), where \( X_1, X_2, \ldots, X_n \) are independent \textit{Bernoulli}(p) random variables. Intuitively, this approach makes sense since \( X \) represents the count of successes in \( n \) independent trials, each with success probability \( p \). \newline
+Since \( \mathbb{E}[X] = \mathbb{E}\left(\sum_{i=1}^n X_i\right) = \sum_{i=1}^n \mathbb{E}[X_i] = n \cdot p \), we obtain the same expectation as computed directly. \newline
+For the variance, using the fact that the variance of a sum of independent variables is the sum of their variances, we get:
+\[
+\operatorname{Var}(X) = \sum_{i=1}^n \operatorname{Var}(X_i).
+\]
+Each \( X_i \) is a \textit{Bernoulli}(p) random variable, so:
+\[
+\operatorname{Var}(X_i) = p \cdot (1 - p).
+\]
+Therefore,
+\[
+\operatorname{Var}(X) = n \cdot p \cdot (1 - p).
+\]
+
+\section{Geometric Random Variable}
+
+Now, we define the \textit{geometric} random variable with parameter \( p \), where \( p \in (0, 1) \). \newline
+The geometric random variable models the number of independent trials required to obtain the first success. Consider an infinite sequence \( \omega = (\omega_1, \omega_2, \ldots) \) where each \( \omega_i \) can be \( B_1 \) (success) or \( B_2 \) (failure), and each trial has success probability \( p \) and failure probability \( 1 - p \). \newline
+Define the random variable \( X: \Omega \to \mathbb{N} \cup \{+\infty\} \) by:
+\[
+X(\omega) = \inf \{ n \geq 1 : \omega_n = B_1 \}.
+\]
+This represents the first time that \( B_1 \) (success) appears in the sequence. If \( \omega \) consists solely of \( B_2 \) outcomes (i.e., all failures), then we use the convention \( X = +\infty \). \newline
+Thus, for a finite value \( n \), \( X = n \) implies that:
+\[
+\omega = (B_2, B_2, \ldots, B_2, B_1, \ldots),
+\]
+where the first \( n - 1 \) outcomes are \( B_2 \), and the \( n \)-th outcome is \( B_1 \). The probability mass function of \( X \) is:
+\[
+P(X = n) = (1 - p)^{n - 1} p, \quad n = 1, 2, \dots
+\]
+
+\paragraph{Expectation and Variance of a Geometric Random Variable}
+For a geometric random variable \( X \) with parameter \( p \), the expectation and variance are given by:
+\[
+\mathbb{E}[X] = \frac{1}{p}, \quad \operatorname{Var}(X) = \frac{1 - p}{p^2}.
+\]
+These results follow from summing an infinite geometric series and applying variance calculations for an infinite sequence.
+
+\paragraph{Alternative Definition of Geometric Random Variables}
+Some textbooks define the geometric random variable \( Y \) as the number of failures before the first success. In this case, \( Y \in \mathbb{N} \) and is related to \( X \) by:
+\[
+Y = X - 1.
+\]
+Thus, the expectation of \( Y \) would be:
+\[
+\mathbb{E}[Y] = \mathbb{E}[X] - 1 = \frac{1}{p} - 1.
+\]
+
+\section{Hypergeometric Random Variable}
+Consider a box containing \( M \) balls, of which \( D \) are white and \( M - D \) are black. If we draw \( n \) balls without replacement, we define a hypergeometric random variable \( Y \) as the number of white balls obtained in the sample of \( n \) balls.
+
+\paragraph{Support and Constraints for \( Y \)}
+Given that:
+\begin{itemize}
+    \item \( M, D, \) and \( n \) are integers, with \( D \leq M \) and \( n \leq M \),
+    \item \( Y \) represents the count of white balls drawn, it follows that \( Y \) lies in the range \( 0 \leq Y \leq n \).
+\end{itemize}
+However, additional constraints apply since we cannot draw more white balls than are available in the box, nor can we draw more balls than we have available in total. This results in the following support for \( Y \):
+\[
+Y \in \left[ \max(0, n - (M - D)), \min(n, D) \right].
+\]
+
+\paragraph{Probability Mass Function of Hypergeometric Distribution}
+The probability that \( Y = k \), for \( k \) satisfying the above constraints, is given by:
+\[
+P(Y = k) = \frac{\binom{D}{k} \binom{M - D}{n - k}}{\binom{M}{n}},
+\]
+where:
+\begin{itemize}
+    \item \( \binom{D}{k} \) counts the ways to choose \( k \) white balls from \( D \),
+    \item \( \binom{M - D}{n - k} \) counts the ways to choose \( n - k \) black balls from \( M - D \),
+    \item \( \binom{M}{n} \) represents the total ways to choose \( n \) balls from \( M \).
+\end{itemize}
+
+\paragraph{Expectation and Variance of a Hypergeometric Random Variable}
+The expectation of \( Y \) for a hypergeometric random variable is:
+\[
+\mathbb{E}[Y] = n \cdot \frac{D}{M}.
+\]
+The variance is given by:
+\[
+\operatorname{Var}(Y) = n \cdot \frac{D}{M} \cdot \left(1 - \frac{D}{M}\right) \cdot \frac{M - n}{M - 1}.
+\]
+
+\section{Definition of \( Z = X \cdot Y \) as a Product of Binomial and Exponential Variables}
+Let \( X \sim \text{Binomial}(1, p) \) with parameter \( p \in (0, 1) \), and let \( Y \sim \text{Exponential}(\lambda) \) with rate \( \lambda > 0 \). Assume \( X \) and \( Y \) are independent. Define \( Z = X \cdot Y \). Then, we have the following properties:
+
+\paragraph{Expectation of \( Z \)}
+The expectation of \( Z \) is given by:
+\[
+\mathbb{E}[Z] = \mathbb{E}[X] \cdot \mathbb{E}[Y] = p \cdot \frac{1}{\lambda} = \frac{p}{\lambda}.
+\]
+
+\paragraph{Probability \( P(Z > 0) \)}
+Since \( Z > 0 \) if \( X = 1 \), the probability \( P(Z > 0) \) is:
+\[
+P(Z > 0) = P(X = 1) = p.
+\]
+
+\paragraph{Variance of \( Z \)}
+The variance of \( Z \), \( \operatorname{Var}(Z) \), is computed as:
+\[
+\operatorname{Var}(Z) = \mathbb{E}[X^2Y^2] - (\mathbb{E}[XY])^2 = \mathbb{E}[X^2]\cdot \mathbb{E}[Y^2] - (\mathbb{E}[XY])^2.
+\]
+Using independence, \( \operatorname{Var}(Z) = p \cdot \frac{1}{\lambda^2} \).
+
+\paragraph{\( P(Z \leq z) \)}
+Given independent random variables \( X \sim \text{Binomial}(1, p) \) and \( Y \sim \text{Exponential}(\lambda) \), with \( Z = X \cdot Y \), we compute \( P(Z \leq z) \) for \( z \in \mathbb{R} \).
+\[
+P(Z \leq z) = P(X \cdot Y \leq z)
+\]
+Using the law of total probability, we condition on the possible values of \( X \):
+\[
+P(Z \leq z) = P(X = 0) \cdot P(X \cdot Y \leq z \mid X = 0) + P(X = 1) \cdot P(X \cdot Y \leq z \mid X = 1)
+\]
+Since \( X = 0 \) implies \( Z = 0 \), we have:
+\[
+P(X = 0) \cdot P(X \cdot Y \leq z \mid X = 0) = (1 - p) \cdot 1 = 1 - p.
+\]
+When \( X = 1 \), we find \( P(Y \leq z) \):
+\[
+P(X = 1) \cdot P(X \cdot Y \leq z \mid X = 1) = p \cdot P(Y \leq z) = p \cdot (1 - e^{-\lambda z}) \quad \text{for } z > 0.
+\]
+Combining these, we get:
+\[
+P(Z \leq z) = \begin{cases} 
+0 & \text{if } z < 0, \\
+1 - p & \text{if } z = 0, \\ 
+(1 - p) + p(1 - e^{-\lambda z}) & \text{if } z > 0.
+\end{cases}
+\]
+
+\section{Poisson Distribution}
+Let \( \lambda > 0 \), and suppose \( X \sim \text{Poisson}(\lambda) \). The Poisson distribution is an approximation of the Bin(n,p) when \( n \) is large and \( np \) is bounded. Therefore $\lambda=np$
+
+\paragraph{Probability Mass Function of Poisson Distribution}
+The probability mass function of \( X \sim \text{Poisson}(\lambda) \) is given by:
+\[
+P(X = k) = e^{-\lambda} \frac{\lambda^k}{k!}, \quad k = 0, 1, 2, \dots
+\]
+
+\paragraph{Expectation and Variance of Poisson Distribution}
+For a Poisson random variable \( X \sim \text{Poisson}(\lambda) \):
+\[
+\mathbb{E}[X] = \lambda \quad \text{and} \quad \operatorname{Var}(X) = \lambda.
+\]
+
+\paragraph{Poisson Approximation for Sum of Binomial Variables}
+Let \( X_1, X_2, \dots, X_n \) be independent random variables such that \( X_i \sim \text{Binomial}(1, p_i) \), where we have that \( p_i \in [0, 1] \). Define \( S_n = X_1 + X_2 + \dots + X_n \). To approximate \( S_n \) with a Poisson distribution, let \( \Omega_n \sim \text{Poisson}\left( \sum_{i=1}^n p_i \right) \). \newline
+\textbf{Theorem:} For any subset \( A \subset \mathbb{N} \), we have:
+\[
+\abs{P(S_n \in A) -  P(\Omega_n \in A)} \leq \sum_{i=1}^n p_i^2.
+\]
+Choose \( p_i = \frac{\lambda}{n} \), then:
+\[
+S_n \sim \text{Binomial}\left(n, \frac{\lambda}{n}\right).
+\]
+Since:
+\[
+\sum_{i=1}^n p_i^2 = \sum_{i=1}^n \frac{\lambda^2}{n^2} = \frac{\lambda^2}{n},
+\]
+we have:
+\[
+\lim_{n \to \infty} \sum_{i=1}^n p_i^2 = 0.
+\]
+Thus, \( S_n \) is approximately distributed as \( \text{Poisson}(\lambda) \).
+
+\section{Uniform Distribution}
+Let \( X \) be a random variable uniformly distributed over the interval \( (a, b) \) with \( -\infty < a < b < \infty \). Then, the probability density function \( f_X(x) \) is defined by:
+\[
+f_X(x) = 
+\begin{cases} 
+\frac{1}{b - a} & \text{if } x \in [a, b], \\
+0 & \text{otherwise}.
+\end{cases}
+\]
+To determine the constant \( k = \frac{1}{b - a} \), consider the condition that the total probability must equal 1:
+\[
+\int_{-\infty}^{\infty} f_X(x) \, dx = \int_a^b \frac{1}{b - a} \, dx = \frac{1}{b - a} \cdot (b - a) = 1.
+\]
+Thus, \( k = \frac{1}{b - a} \) is correct. \newline
+Now, let \( [c, d] \subseteq (a, b) \) with \( c \leq d \) where \( c \) and \( d \) are any values within the interval. The probability that \( X \in [c, d] \) is:
+\[
+P(X \in [c, d]) = \int_c^d \frac{1}{b - a} \, dt = \frac{d - c}{b - a}.
+\]
+Consider now a small interval \( [c + \epsilon, d + \epsilon] \subseteq (a,b) \) for some \( \epsilon > 0 \). Then:
+\[
+P(X \in [c + \epsilon], d + \epsilon]) = \frac{\epsilon}{b - a}.
+\]
+This approach is valid for intervals where \( -\infty < a < b < \infty \). \newline
+The Cumulative Distribution Function (CDF) is
+\[
+F(x) = 
+\begin{cases} 
+0 & \text{if } x < a \\ 
+\frac{x - a}{b - a} & \text{if } a \le x \le b \\ 
+1 & \text{if } x > b 
+\end{cases}
+\]
+The expectation and variance are:
+\begin{itemize}
+    \item \textbf{Expectation:} \( \mathbb{E}[X] = \frac{a + b}{2} \)\\
+    \item \textbf{Variance:} \( \operatorname{Var}(X) = \frac{(b - a)^2}{12} \)
+\end{itemize}
+
+\section{Exponential Distribution}
+Let \( X \) be an exponentially distributed random variable with parameter \( \lambda > 0 \). The cumulative distribution function \( F_X(x) \) of \( X \) is given by:
+\[
+F_X(x) = 
+\begin{cases} 
+1 - e^{-\lambda x} & \text{if } x \geq 0, \\
+0 & \text{if } x < 0.
+\end{cases}
+\]
+The probability density function \( f_X(x) \) is then:
+\[
+f_X(x) = 
+\begin{cases} 
+\lambda e^{-\lambda x} & \text{if } x \geq 0, \\
+0 & \text{if } x < 0.
+\end{cases}
+\]
+The mean of \( X \) is \( \mathbb{E}[X] = \frac{1}{\lambda} \) and the variance is \( \text{Var}(X) = \frac{1}{\lambda^2} \).
+
+\subsection{Theorem: Characterization of the Exponential Distribution}
+Let \( T \) be a non-negative random variable (\( T : \Omega \to [0, +\infty) \)). Then \( T \) follows an exponential distribution with parameter \( \lambda > 0 \) if and only if it satisfies the memoryless property:
+\[
+P(T > s + t \mid T > s) = P(T > t), \quad \forall s, t \geq 0.
+\]
+
+\paragraph{Proof of \( \Rightarrow \): If \( T \sim \text{Exp}(\lambda) \), then \( P(T > s + t \mid T > s) = P(T > t) \)}
+Assuming \( T \sim \text{Exp}(\lambda) \), we have:
+\[
+P(T \leq t) = 1 - e^{-\lambda t},
+\]
+thus:
+\[
+P(T > t) = e^{-\lambda t}.
+\]
+Now, the conditional probability becomes:
+\[
+P(T > s + t \mid T > s) = \frac{P(T > s + t)}{P(T > s)} = \frac{e^{-\lambda (s + t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(T > t).
+\]
+
+\paragraph{Proof of \( \Leftarrow \): If \( P(T > s + t \mid T > s) = P(T > t) \), then \( T \sim \text{Exp}(\lambda) \)}
+Assume:
+\[
+P(T > s + t \mid T > s) = P(T > t), \quad \forall s, t \geq 0.
+\]
+By definition, we have:
+\[
+\frac{P(T > s + t)}{P(T > s)} = P(T > t).
+\]
+Let \( G(t) = P(T > t) \). Then:
+\[
+G(s + t) = G(s) \cdot G(t), \quad \forall s, t \geq 0.
+\]
+This is Cauchy’s functional equation. If \( G \) is continuous, the only solution is an exponential function:
+\[
+G(t) = e^{-\lambda t}.
+\]
+Thus, \( T \sim \text{Exp}(\lambda) \) for some \( \lambda > 0 \).
+
+\section{Normal (Gaussian) Distributions}
+In this section, we delve into one of the most significant distributions in probability and statistics: the normal (or Gaussian) distribution. These distributions are foundational in numerous applications due to their unique properties and prevalence in natural processes.
+
+\paragraph{Standard Normal Distribution}
+A real-valued random variable \( Z \) is said to follow a \emph{standard normal distribution} if it is absolutely continuous and has the following density function:
+\[
+f_Z(z) = \frac{1}{\sqrt{2 \pi}} e^{-\frac{z^2}{2}}.
+\]
+The graph of this function is symmetric about \( z = 0 \), reaching a peak at \( z = 0 \) where \( f_Z(0) = \frac{1}{\sqrt{2 \pi}} \), and approaches zero as \( z \) approaches \( \pm \infty \). Importantly, this function is integrable, a necessary property for it to serve as a probability density.
+
+\paragraph{Integrability and Properties of the Standard Normal Density}
+The function \( f_Z(z) \) is integrable over \( \mathbb{R} \), and satisfies:
+\[
+\int_{-\infty}^{\infty} f_Z(z) \, dz = 1.
+\]
+This property confirms that \( f_Z(z) \) is a valid density function. The computation of this integral is non-trivial and requires polar coordinates or specific advanced techniques since there is no elementary antiderivative for \( e^{-z^2/2} \). \newline
+In probability textbooks, tables are often provided for the cumulative distribution function (CDF) values of the standard normal distribution, as this integral does not yield to standard analytical methods. These tables give us a practical means of working with probabilities associated with normal random variables.
+
+\paragraph{Expectation and Variance of the Standard Normal Distribution}
+We begin by calculating the expectation \( E[Z] \) of a standard normal random variable \( Z \). Given that the distribution is symmetric around \( z = 0 \), the expectation (or mean) is zero:
+\[
+E[Z] = \int_{-\infty}^{\infty} z f_Z(z) \, dz = 0.
+\]
+This follows from the fact that \( f_Z(z) \) is an odd function about the origin. \newline
+Next, we compute the variance of \( Z \), which is given by the second moment \( E[Z^2] \) since \( E[Z] = 0 \). Thus:
+\[
+\text{Var}(Z) = E[Z^2] = \int_{-\infty}^{\infty} z^2 f_Z(z) \, dz.
+\]
+To evaluate this integral, we can use integration by parts. This yields:
+\[
+\text{Var}(Z) = \int_{-\infty}^{\infty} z^2 \frac{1}{\sqrt{2 \pi}} e^{-\frac{z^2}{2}} \, dz = 1.
+\]
+Thus, for a standard normal random variable \( Z \), we have \( E[Z] = 0 \) and \( \text{Var}(Z) = 1 \).
+
+\paragraph{Standardization and Symmetry}
+Due to its symmetry, the standard normal distribution is often denoted as \( N(0,1) \), where the parameters \( 0 \) and \( 1 \) refer to the mean and variance, respectively. When dealing with normally distributed random variables in general, it is often helpful to transform them into a standard normal distribution via a process known as standardization. The unique properties of the standard normal distribution make it invaluable in statistical analysis and theoretical derivations.
+
+\section{Normal Distribution: Expectation and Variance}
+Given a standard normal random variable \( Z \), we have shown that:
+\[
+E[Z] = 0 \quad \text{and} \quad \text{Var}(Z) = 1.
+\]
+A random variable \( X \) with a normal distribution that has mean \( \mu \) and variance \( \sigma^2 \) is denoted \( X \sim N(\mu, \sigma^2) \). To construct such a variable, we define \( X \) in terms of the standard normal \( Z \) as follows:
+\[
+X = \mu + \sigma Z.
+\]
+Here, \( \mu \in \mathbb{R} \) represents the mean, and \( \sigma^2 > 0 \) represents the variance of \( X \).
+
+\paragraph{Distribution of \( X \)}
+To determine the distribution of \( X \), we start by examining the probability:
+\[
+P(X \leq x) = P(\mu + \sigma Z \leq x).
+\]
+This is equivalent to:
+\[
+P\left( Z \leq \frac{x - \mu}{\sigma} \right).
+\]
+Letting \( \Phi(t) \) denote the cumulative distribution function (CDF) of the standard normal \( Z \), we have:
+\[
+P(X \leq x) = \Phi\left( \frac{x - \mu}{\sigma} \right).
+\]
+
+\paragraph{Density Function of \( X \)}
+To obtain the density function \( f_X(x) \) of \( X \), we differentiate \( P(X \leq x) \) with respect to \( x \). The density function \( f_X(x) \) becomes:
+\[
+f_X(x) = \frac{d}{dx} \Phi\left( \frac{x - \mu}{\sigma} \right) = \phi\left( \frac{x - \mu}{\sigma} \right) \cdot \frac{1}{\sigma},
+\]
+where \( \phi(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}} \) is the standard normal density. Thus:
+\[
+f_X(x) = \frac{1}{\sqrt{2 \pi} \sigma} e^{-\frac{(x - \mu)^2}{2\sigma^2}}.
+\]
+This is the density function for a normal random variable with mean \( \mu \) and variance \( \sigma^2 \).
+
+\paragraph{Expectation and Variance of \( X \)}
+Now, let's verify that \( \mu \) and \( \sigma^2 \) are indeed the mean and variance of \( X \). Since \( X = \mu + \sigma Z \), we find the expectation as follows:
+\[
+E[X] = E[\mu + \sigma Z] = \mu + \sigma E[Z] = \mu.
+\]
+For the variance, we have:
+\[
+\text{Var}(X) = \text{Var}(\mu + \sigma Z) = \sigma^2 \text{Var}(Z) = \sigma^2.
+\]
+Thus, for a random variable \( X \sim N(\mu, \sigma^2) \), the parameters \( \mu \) and \( \sigma^2 \) represent the mean and variance, respectively.
+
+\subsection{Properties of Normal and Exponential Random Variables}
+A few remarks about transformations and properties of random variables, which we will use later on.
+
+\paragraph{Standardization of a Normal Random Variable}
+If \( X \) is a normally distributed random variable with mean \( \mu \) and variance \( \sigma^2 \), i.e., \( X \sim N(\mu, \sigma^2) \), we can obtain a standard normal random variable \( Z \) by:
+\[
+Z = \frac{X - \mu}{\sigma}.
+\]
+This standardization process converts \( X \) into a standard normal random variable, \( Z \sim N(0, 1) \). Thus, starting from a generic normal variable, we can apply a linear transformation to obtain a standard normal distribution. \newline
+Conversely, starting from a standard normal distribution \( Z \), the transformation \( X = \mu + \sigma Z \) gives us a normal random variable with mean \( \mu \) and variance \( \sigma^2 \).
+
+\paragraph{Linear Transformations of a Standard Normal Variable}
+If \( X \sim N(\mu, \sigma^2) \) and \( A \) and \( B \) are constants with \( B \neq 0 \), then \( Y = A + B \cdot X \) will also be normally distributed with:
+\[
+Y \sim N(A + B \cdot \mu, \sigma^2 B^2).
+\]
+This property shows that a linear transformation of a normal random variable remains within the family of normal distributions, adjusting only the mean and variance.
+
+\section{Continuous and Discrete Random Variables}
+Consider the concept of an absolutely continuous random variable, specifically when we define \( X \) as a uniform random variable over the interval \( [0, 1] \) and \( Y \) as a binomial random variable with parameters \( n = 1 \) and \( p = \frac{1}{2} \), also known as a Bernoulli random variable. We assume that \( X \) and \( Y \) are independent. \newline
+Let \( W = \max(X, Y) \). Our goal is to find the distribution function \( F_W(w) \), where:
+\[
+F_W(w) = P(W \leq w).
+\]
+Since \( W = \max(X, Y) \), we have:
+\[
+P(W \leq w) = P(\max(X, Y) \leq w).
+\]
+The event \( \max(X, Y) \leq w \) implies that both \( X \leq w \) and \( Y \leq w \). Thus, we can rewrite this probability as:
+\[
+P(W \leq w) = P(X \leq w) \cdot P(Y \leq w),
+\]
+where we used the independence of \( X \) and \( Y \). Now, since we know the individual distributions of \( X \) and \( Y \), we can calculate \( F_W(w) \) explicitly. \newline
+Let \( V = \min(X, Y) \). The distribution function \( F_V(v) \) is given by:
+\[
+F_V(v) = P(V \leq v).
+\]
+The event \( \min(X, Y) \leq v \) occurs if at least one of \( X \) or \( Y \) is less than or equal to \( v \). Thus, we have:
+\[
+P(V \leq v) = 1 - P(V > v),
+\]
+where \( P(V > v) \) represents the probability that both \( X > v \) and \( Y > v \). Therefore:
+\[
+P(V > v) = P(X > v) \cdot P(Y > v),
+\]
+where again we use the independence of \( X \) and \( Y \). Consequently:
+\[
+F_V(v) = 1 - P(X > v) \cdot P(Y > v).
+\]
+Consider two independent random variables:
+\begin{itemize}
+    \item \( X \sim \text{Uniform}(0, 1) \), an absolutely continuous random variable with the density function:
+  \[
+  f_X(x) = 
+  \begin{cases} 
+  1, & 0 \leq x \leq 1, \\ 
+  0, & \text{otherwise}.
+  \end{cases}
+  \]
+  \item \( Y \sim \text{Bernoulli}\left(\frac{1}{2}\right) \), a discrete random variable taking values 0 and 1 with probabilities:
+  \[
+  P(Y = 0) = \frac{1}{2}, \quad P(Y = 1) = \frac{1}{2}.
+  \]
+\end{itemize} 
+Let \( W = \max(X, Y) \). Our goal is to find the distribution function \( F_W(w) = P(W \leq w) \). Since \( W = \max(X, Y) \), we have:
+\[
+P(W \leq w) = P(\max(X, Y) \leq w).
+\]
+This implies that both \( X \leq w \) and \( Y \leq w \). Using the independence of \( X \) and \( Y \), we can write:
+\[
+P(W \leq w) = P(X \leq w) \cdot P(Y \leq w).
+\]
+\begin{enumerate}
+    \item Compute \( P(X \leq w) \). Since \( X \) is uniformly distributed over \([0, 1]\),
+\[
+P(X \leq w) = 
+\begin{cases} 
+0, & w < 0, \\
+w, & 0 \leq w \leq 1, \\
+1, & w > 1.
+\end{cases}
+\]
+    \item Compute \( P(Y \leq w) \). For \( Y \), which is Bernoulli with parameter \( p = \frac{1}{2} \),
+\[
+P(Y \leq w) = 
+\begin{cases} 
+0, & w < 0, \\
+\frac{1}{2}, & 0 \leq w < 1, \\
+1, & w \geq 1.
+\end{cases}
+\]
+    \item Determine \( F_W(w) = P(W \leq w) \). Now, combining the results from Steps 1 and 2, we find \( F_W(w) \) for the different cases of \( w \):
+\begin{enumerate}
+    \item {If \( w < 0 \):}
+   \[
+   F_W(w) = P(W \leq w) = P(X \leq w) \cdot P(Y \leq w) = 0 \cdot 0 = 0.
+   \]
+   \item {If \( 0 \leq w < 1 \):}
+   \[
+   F_W(w) = P(X \leq w) \cdot P(Y \leq w) = w \cdot \frac{1}{2} = \frac{w}{2}.
+   \]
+   \item {If \( w \geq 1 \):}
+   \[
+   F_W(w) = P(X \leq w) \cdot P(Y \leq w) = 1 \cdot 1 = 1.
+   \]
+\end{enumerate}
+Thus, the cumulative distribution function \( F_W(w) \) is:
+\[
+F_W(w) = 
+\begin{cases} 
+0, & w < 0, \\
+\frac{w}{2}, & 0 \leq w < 1, \\
+1, & w \geq 1.
+\end{cases}
+\]
+\item Finding \( F_V(v) \), where \( V = \min(X, Y) \). To find the distribution function \( F_V(v) = P(V \leq v) \), we observe that \( V = \min(X, Y) \) implies that at least one of \( X \leq v \) or \( Y \leq v \). Thus,
+\[
+P(V \leq v) = 1 - P(V > v),
+\]
+where \( P(V > v) = P(X > v) \cdot P(Y > v) \) due to independence. Now,
+\[
+P(X > v) = 
+\begin{cases} 
+1, & v < 0, \\
+1 - v, & 0 \leq v \leq 1, \\
+0, & v > 1.
+\end{cases}
+\]
+and
+\[
+P(Y > v) = 
+\begin{cases} 
+1, & v < 0, \\
+\frac{1}{2}, & 0 \leq v < 1, \\
+0, & v \geq 1.
+\end{cases}
+\]
+Thus:
+\begin{enumerate}
+{If \( v < 0 \):}
+   \[
+   F_V(v) = P(V \leq v) = 1 - P(X > v) \cdot P(Y > v) = 1 - 1 \cdot 1 = 0.
+   \]
+{If \( 0 \leq v < 1 \):}
+   \[
+   F_V(v) = 1 - (1 - v) \cdot \frac{1}{2} = 1 - \frac{1 - v}{2} = \frac{1 + v}{2}.
+   \]
+{If \( v \geq 1 \):}
+   \[
+   F_V(v) = 1 - 0 \cdot 0 = 1.
+   \]
+\end{enumerate}
+Thus, the cumulative distribution function \( F_V(v) \) is:
+\[
+F_V(v) = 
+\begin{cases} 
+0, & v < 0, \\
+\frac{1 + v}{2}, & 0 \leq v < 1, \\
+1, & v \geq 1.
+\end{cases}
+\]
+\end{enumerate}
+
+
+\section{Expectation of the Minimum and Maximum of Exponential Variables}
+Let \( X \) and \( Y \) be two independent exponential random variables with rate parameter \( \lambda \). Define:
+\[
+Z = \min(X, Y) \quad \text{and} \quad W = \max(X, Y).
+\]
+We aim to find \( E[Z] \) and \( E[W] \).
+
+\paragraph{Expectation of the Minimum}
+\begin{enumerate}
+    \item Calculate \( P(Z \leq z) \):
+   \[
+   P(Z \leq z) = P(\min(X, Y) \leq z) = 1 - P(X > z \text, Y > z).
+   \]
+    \item By independence:
+   \[
+   P(Z \leq z) = 1 - P(X > z) \cdot P(Y > z) = 1 - e^{-\lambda z} \cdot e^{-\lambda z} = 1 - e^{-2\lambda z}.
+   \]
+    \item This implies that \( Z \) follows an exponential distribution with rate \( 2\lambda \), so:
+   \[
+   E[Z] = \frac{1}{2\lambda}.
+   \]
+This can be generalized: if \( X \sim \text{Exp}(\lambda_1) \) and \( Y \sim \text{Exp}(\lambda_2) \), then \( \min(X, Y) \sim \text{Exp}(\lambda_1 + \lambda_2) \).
+\end{enumerate}
+
+\paragraph{Expectation of the Maximum}
+\begin{enumerate}
+    \item Calculate \( P(W \leq w) \):
+   \[
+   P(W \leq w) = P(\max(X, Y) \leq w) = P(X \leq w \, Y \leq w).
+   \]
+   \item By independence:
+   \[
+   P(W \leq w) = P(X \leq w) \cdot P(Y \leq w) = \left(1 - e^{-\lambda w}\right)^2.
+   \]
+   This is only if $w \geq 0$, otherwise it is equal to zero.
+   \item To compute \( E[W] \), use the formula:
+   \[
+   E[W] = \int_0^{\infty} P(W > w) \, dw = \int_0^{\infty} \left(1 - \left(1 - e^{-\lambda w}\right)^2\right) \, dw.
+   \]
+   \item Simplifying the integral, we find:
+   \[
+   E[W] = \frac{3}{2\lambda}.
+   \]
+\end{enumerate}
+Thus, for two independent exponential random variables, the expectation of the maximum is \( \frac{3}{2\lambda} \), which is higher than that of the minimum.
+

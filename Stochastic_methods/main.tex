@@ -1,0 +1,85 @@
+\documentclass[a4paper,aps,secnumarabic,balancelastpage,amsmath,amssymb,nofootinbib,floatfix]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage{gensymb}
+\usepackage{SIunits}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.17}
+\usepackage{physics}
+\usepackage{gensymb}
+\usepackage[italian]{babel}
+\usepackage{graphicx} 
+\usepackage{geometry}
+\usepackage{amsfonts}
+\usepackage{amsopn}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{hyperref}
+\usepackage{makeidx}
+\usepackage{bm}
+\usepackage{fullpage}
+\usepackage{subfigure}
+\usepackage{graphicx}
+\usepackage{subcaption}
+\usepackage[export]{adjustbox}
+\usepackage{wrapfig}
+\usepackage{amsmath}
+\usepackage{listings}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,      
+    urlcolor=cyan,
+}
+\urlstyle{same}
+
+
+
+\makeindex
+\selectlanguage{italian}
+
+\begin{document}
+\title{\Huge\textbf{Stochastic methods}}
+\author{\textbf{Daniele Gelmini}}
+\date{}
+\maketitle
+\newpage
+
+\cleardoublepage
+\thispagestyle{empty}
+\vspace*{\stretch{1}}
+\begin{flushright}
+\itshape If I takes\\
+
+\end{flushright}
+\vspace{\stretch{2}}
+\cleardoublepage
+
+\tableofcontents
+
+\chapter{Introduction to Probabilistic Models}
+    \input{capitoli/capitolo1}
+\chapter{Definition of a Probability Space}
+    \input{capitoli/capitolo2}    
+\chapter{Conditional Probability and Independence}
+    \input{capitoli/capitolo3}
+\chapter{Random Variables}
+    \input{capitoli/capitolo4}    
+\chapter{Random Variables: Absolutely Continuous and Singular Distributions}
+    \input{capitoli/capitolo5}
+\chapter{Random Variables Distribution}
+    \input{capitoli/capitolo6}   
+\chapter{Notorious Random Variables}
+    \input{capitoli/capitolo7}
+\chapter{Moment Generating Function and Characteristic Function}
+    \input{capitoli/capitolo8}
+\chapter{Convergence in Probability Theory}
+    \input{capitoli/capitolo9}
+\chapter{Markov Chains}
+    \input{capitoli/capitolo10}
+\chapter{Martingale}
+    \input{capitoli/capitolo11}
+
+%\chapter{Formulary}
+%    \input{capitoli/formulario distribuzioni}
+\end{document}

@@ -1,0 +1,104 @@
+\section*{1. Bernoulli Distribution}
+\textbf{Distribution:} \( X \sim \text{Bernoulli}(p) \), where \( p \) is the probability of success in a single trial.\\
+\textbf{Probability Mass Function (PMF):}
+\[
+P(X = x) = 
+\begin{cases} 
+p & \text{if } x = 1 \\ 
+1 - p & \text{if } x = 0 
+\end{cases}
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(x) = 
+\begin{cases} 
+0 & \text{if } x < 0 \\ 
+1 - p & \text{if } 0 \le x < 1 \\ 
+1 & \text{if } x \ge 1 
+\end{cases}
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = p \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = p(1 - p) \)
+
+\section*{2. Binomial Distribution}
+\textbf{Distribution:} \( X \sim \text{Binomial}(n, p) \), with \( n \) trials and probability of success \( p \) per trial.\\
+\textbf{Probability Mass Function (PMF):}
+\[
+P(X = k) = \binom{n}{k} p^k (1 - p)^{n - k}, \quad k = 0, 1, \ldots, n
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(k) = \sum_{j=0}^{k} \binom{n}{j} p^j (1 - p)^{n - j}
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = np \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = np(1 - p) \)
+
+\section*{3. Geometric Distribution}
+\textbf{Distribution:} \( X \sim \text{Geom}(p) \), where \( p \) is the probability of success.\\
+\textbf{Probability Mass Function (PMF):}
+\[
+P(X = k) = (1 - p)^{k - 1} p, \quad k = 1, 2, \ldots
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(k) = 1 - (1 - p)^k
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = \frac{1}{p} \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = \frac{1 - p}{p^2} \)
+
+\section*{4. Poisson Distribution}
+\textbf{Distribution:} \( X \sim \text{Poisson}(\lambda) \), where \( \lambda \) is the average rate of occurrence.\\
+\textbf{Probability Mass Function (PMF):}
+\[
+P(X = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \ldots
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(k) = e^{-\lambda} \sum_{j=0}^{k} \frac{\lambda^j}{j!}
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = \lambda \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = \lambda \)
+
+\section*{5. Normal Distribution}
+\textbf{Distribution:} \( X \sim \text{Normal}(\mu, \sigma^2) \), with mean \( \mu \) and variance \( \sigma^2 \).\\
+\textbf{Probability Density Function (PDF):}
+\[
+f(x) = \frac{1}{\sqrt{2 \pi \sigma^2}} e^{-\frac{(x - \mu)^2}{2 \sigma^2}}
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(x) = \frac{1}{2} \left[ 1 + \operatorname{erf}\left( \frac{x - \mu}{\sigma \sqrt{2}} \right) \right]
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = \mu \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = \sigma^2 \)
+
+\section*{6. Exponential Distribution}
+\textbf{Distribution:} \( X \sim \text{Exp}(\lambda) \), where \( \lambda \) is the rate parameter.\\
+\textbf{Probability Density Function (PDF):}
+\[
+f(x) = \lambda e^{-\lambda x}, \quad x \geq 0
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(x) = 1 - e^{-\lambda x}, \quad x \geq 0
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = \frac{1}{\lambda} \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = \frac{1}{\lambda^2} \)
+
+\section*{7. Continuous Uniform Distribution}
+\textbf{Distribution:} \( X \sim \text{Uniform}(a, b) \), where \( a \) and \( b \) are the interval endpoints.\\
+\textbf{Probability Density Function (PDF):}
+\[
+f(x) = \frac{1}{b - a}, \quad x \in [a, b]
+\]
+\textbf{Cumulative Distribution Function (CDF):}
+\[
+F(x) = 
+\begin{cases} 
+0 & \text{if } x < a \\ 
+\frac{x - a}{b - a} & \text{if } a \le x \le b \\ 
+1 & \text{if } x > b 
+\end{cases}
+\]
+\textbf{Expectation:} \( \mathbb{E}[X] = \frac{a + b}{2} \)\\
+\textbf{Variance:} \( \operatorname{Var}(X) = \frac{(b - a)^2}{12} \)

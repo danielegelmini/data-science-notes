@@ -1,0 +1,98 @@
+    A \textit{probabilistic model} is a mathematical framework used to describe the outcomes of random phenomena. In such models, the outcome of an experiment is uncertain, and we cannot predict it deterministically. To build a probabilistic model, we need three fundamental components: 
+    \begin{itemize}
+        \item The \textit{sample space} $\Omega$: the set of all possible outcomes.
+        \item A \textit{sigma field} $\mathcal{A}$: the collection of events (subsets of $\Omega$) on which we can define probabilities.
+        \item A \textit{probability function} $P$: a function that assigns a probability to each event in $\mathcal{A}$.
+    \end{itemize}
+    
+    \section{Sample Space}
+    The first step in building a probabilistic model is to define the set of all possible outcomes of an experiment. This set is called the \textit{sample space}, denoted by $\Omega$. Each element in $\Omega$ represents a possible outcome of the random experiment.
+    \newline
+    For example:
+    \begin{itemize}
+        \item In the case of a coin flip, $\Omega = \{H, T\}$, where $H$ represents heads and $T$ represents tails.
+        \item In the case of rolling a standard six-sided die, $\Omega = \{1, 2, 3, 4, 5, 6\}$.
+    \end{itemize}
+    
+    \section{Events}
+    An event is any subset of the sample space $\Omega$. For example, if we consider the experiment of rolling a die, an event could be getting an even number, which can be described as $A = \{2, 4, 6\}$.\newline
+    Events are central to probabilistic models because they allow us to describe the occurrence of specific outcomes. For example, the event $A$ occurs if the outcome of the experiment is in the set $\{2, 4, 6\}$. There is no order inside a set, i.e. {1,2} = {2,1}. \newline
+    If $\Omega$ is finite, the set of the events will be $2^{\Omega} = P(\Omega) = \text{\{set of all the subset of $\Omega$}\}$. \newline
+    If $\Omega$=\{H,T\}, then 
+    \begin{equation}
+        2^{\Omega} = \{\emptyset,\{H\},\{T\},\{H,T\}\}.
+    \end{equation}
+    Therefore $\Omega$ is in $\Omega$.\newline
+    Any subset can be constructed by eliminating any element of $\Omega$, therefore the number of possible subset is $|2^{\Omega}| = 2^{|\Omega|}$. The operator $|\cdot|$ represents its cardinality. 
+    
+    \paragraph{Operations on Events}
+    We can perform various operations on events:
+    \begin{itemize}
+        \item \textbf{Union}: The event $A \cup B$ occurs if either event $A$ or event $B$ occurs.
+        \item \textbf{Intersection}: The event $A \cap B$ occurs if both events $A$ and $B$ occur.
+        \item \textbf{Complement}: The event $A^c$ occurs if event $A$ does not occur.
+        \item \textbf{Subtraction}: The event $A \ B$ occurs if A occurs but $A \cap B$ doesn't.
+    \end{itemize}
+    For example, if $A = \{2, 4, 6\}$ and $B = \{1, 2\}$ in the case of rolling a die:
+    \begin{itemize}
+        \item $A \cup B = \{1, 2, 4, 6\}$ represents rolling an even number or rolling a number less than or equal to 2.
+        \item $A \cap B = \{2\}$ represents rolling a number that is both even and less than or equal to 2.
+        \item $A^c = \{1, 3, 5\}$ represents rolling an odd number.
+    \end{itemize}
+
+    \section{Sigma Field}
+    The \textit{sigma field} (or \textit{sigma algebra}) is a crucial concept in probability theory. It represents the collection of events (subsets of the sample space) for which we can assign probabilities. \newline
+    Given a sample space $\Omega$, with a set of events $2^\Omega$, any $\mathcal{A}$ that is a subset of $2^\Omega$ (i.e., $\mathcal{A} \subseteq 2^\Omega$) is called a $\sigma$-field. We cannot define a probability space by taking any possible family of subsets, but we must ensure that certain properties are satisfied. \newline
+    A sigma field $\mathcal{A}$ must satisfy the following properties:
+    \begin{enumerate}
+        \item \textbf{Non-emptiness}: The entire sample space $\Omega$ must belong to the sigma field, i.e., $\Omega \in \mathcal{A}$.
+        \item \textbf{Closed under complements}: If an event $A \in \mathcal{A}$, then its complement $A^c = \Omega \setminus A$ must also belong to $\mathcal{A}$.
+        \item \textbf{Closed under countable unions}: If $A_1, A_2, \dots, A_n$ are events in $\mathcal{A}$, then their union $\bigcup_{n=1}^{\infty} A_n$ must also belong to $\mathcal{A}$.
+    \end{enumerate}
+
+    
+    \paragraph{Example 1: Tossing a Coin}
+    Consider a simple experiment of tossing a coin. The sample space is $\Omega = \{H, T\}$, where $H$ represents heads and $T$ represents tails. The sigma field $\mathcal{A}$ for this experiment can be defined as the collection of all subsets of $\Omega$, i.e.,
+    \[
+    \mathcal{A} = \{ \emptyset, \{H\}, \{T\}, \Omega \}.
+    \]
+    This is the \textit{power set} of $\Omega$, which contains all possible events, including the empty set (no outcome), individual outcomes (heads or tails), and the entire sample space. \newline
+    Or if $\mathcal{A}$ = \{$\emptyset$, $\Omega$\} any of his subset are a $\sigma-field$ since all of the properties are respected. There are no other possibilities.
+    
+    \paragraph{Example 2: Rolling a Die}
+    For a die roll, the sample space is $\Omega = \{1, 2, 3, 4, 5, 6\}$. The sigma field $\mathcal{A}$ would include all possible subsets of $\Omega$, such as:
+    \[
+    \mathcal{A} = \{ \emptyset, \{1\}, \{2\}, \dots, \{6\}, \{1, 2\}, \{1, 3\}, \dots, \Omega \}.
+    \]
+    In this case, the sigma field contains $2^6 = 64$ elements, since the total number of subsets of a set with $n$ elements is $2^n$.
+    
+    \paragraph{Example 3: Sigma Fields for Infinite Sample Spaces}
+    In more complex cases, particularly when dealing with infinite sample spaces, we do not include every subset of $\Omega$ in the sigma field. Instead, we define a sigma field $\mathcal{A}$ that includes a limited number of subsets that satisfy the properties listed above. This ensures that we can still define probabilities on these subsets.
+    
+    \section{Constructing a Probability Measure}
+    Once we have the sample space $\Omega$ and the sigma field $\mathcal{A}$, we define a \textit{probability measure} $P$ on the events in $\mathcal{A}$:
+    \begin{equation}
+        P: \mathcal{A} \rightarrow [0,1]
+    \end{equation}
+    The probability measure must satisfy the following conditions:
+    \begin{enumerate}
+        \item \textbf{Non-negativity}: For any event $A \in \mathcal{A}$, $P(A) \geq 0$.
+        \item \textbf{Normalization}: The probability of the entire sample space is 1, i.e., $P(\Omega) = 1$.
+        \item \textbf{Countable additivity}: For any sequence of disjoint events $A_1, A_2, \dots \in \mathcal{A}$, i.e. $A_n \in \mathcal{A}$ $\forall n$, $A_n \cap A_m = \emptyset$,$\forall n \neq m$, the probability of their union is the sum of their probabilities:
+        \[
+        P\left( \bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty} P(A_n).
+        \]
+    \end{enumerate}
+    The triple ($\Omega$,$\mathcal{A}$, P) will be called \textit{probability space}.
+    
+    \paragraph{Example: Coin Flip}
+    Consider the experiment of flipping a coin. The sample space is $\Omega = \{H, T\}$, $\mathcal{A} = \{ \emptyset, \{H\}, \{T\}, \Omega \}$.
+    We define the probability function $P$ as follows:
+    \[
+    P(H) = p \quad \text{and} \quad P(T) = 1 - p
+    \]
+    where $0 \leq p \leq 1$. Here, $p$ represents the probability of obtaining heads, and $1 - p$ represents the probability of obtaining tails. P($\Omega$) = 1 and P($\emptyset$) = 0. The latter comes from the property
+    \[
+    P(A^c) = 1 - P(A)
+    \]
+    and the fact that $\emptyset = \Omega^c$.

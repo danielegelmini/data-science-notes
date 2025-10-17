@@ -1,0 +1,327 @@
+Martingales are a class of stochastic processes with properties that facilitate the analysis of randomness and dependencies over time. When a process is proven to be a martingale, it inherits several useful mathematical properties, which can simplify proofs and provide deep insights into the system being studied.
+
+\paragraph{Key Applications:}
+\begin{itemize}
+    \item In computational finance, martingales are critical for modeling financial markets and deriving results like the no-arbitrage condition.
+    \item They are used in various domains, including gambling theory, stock price modeling, and decision-making under uncertainty.
+\end{itemize}
+
+\section{Comparison with Markov Chains}
+To appreciate martingales, it is helpful to compare them with Markov chains:
+\begin{itemize}
+    \item Markov chains rely on the \textbf{Markov property}: the future state depends only on the present state, not on the past.
+    \item The \textbf{Markov property} is expressed as:
+    \[
+    \mathbb{P}(X_{n+1} = x \mid X_n = y, X_{n-1} = z, \dots, X_0 = w) = \mathbb{P}(X_{n+1} = x \mid X_n = y).
+    \]
+    \item Markov chains can be studied using basic tools of conditional probability.
+\end{itemize}
+
+\paragraph{Limitations of the Markov Property:}
+The Markov property requires precise knowledge of the current state. General conditions like \( X_n > 0 \) are insufficient to "forget" the past and rely only on the present.
+
+\paragraph{Martingales and Conditional Expectation:}
+Martingales extend the Markov property by employing conditional expectation to handle dependencies in a more sophisticated way. The conditional expectation introduces a more nuanced way to approximate randomness:
+\begin{itemize}
+    \item A random variable \( X \) is a function mapping outcomes \( \omega \) to real numbers.
+    \item The expectation \( \mathbb{E}[X] \) collapses \( X \) into a single number, losing much of the rich structure of the random variable.
+    \item In contrast, the conditional expectation \( \mathbb{E}[X \mid Y] \) retains more information about \( X \) by approximating \( X \) based on the information in \( Y \).
+\end{itemize}
+
+\subsection{Conditional Expectation as an Approximation}
+The conditional expectation \( \mathbb{E}[X \mid Y] \) can be interpreted as an optimal approximation of \( X \) using the information carried by \( Y \):
+\begin{itemize}
+    \item If \( Y \) takes two possible values, \( \mathbb{E}[X \mid Y] \) is an approximation of \( X \) using random variables that take at most two values.
+    \item If \( Y \) takes \( k \) values, \( \mathbb{E}[X \mid Y] \) approximates \( X \) using random variables with \( k \) possible values.
+\end{itemize}
+
+\paragraph{Illustrative Example:}
+Think about an image represented by pixels, where each pixel corresponds to a random variable:
+\begin{itemize}
+    \item A high-resolution image has rich information, akin to a complex random variable.
+    \item Collapsing the image into a single color (e.g., the average color) corresponds to taking its expectation, resulting in a severe loss of detail.
+    \item Dividing the image into larger colored blocks (e.g., a \( 4 \times 4 \) grid) approximates the original image with less detail. Smaller blocks result in better approximations.
+\end{itemize}
+
+\paragraph{Relationship Between \( X \) and \( Y \):}
+\begin{itemize}
+    \item If \( Y \) carries more information than \( X \), the conditional expectation \( \mathbb{E}[X \mid Y] = X \); no approximation is necessary.
+    \item If \( X \) and \( Y \) are independent, the conditional expectation \( \mathbb{E}[X \mid Y] = \mathbb{E}[X] \); no new information is gained.
+\end{itemize}
+
+\subsection{Key Properties of Martingales}
+A process \( \{X_n\} \) is a martingale with respect to a filtration \( \mathcal{F}_n \) if:
+\begin{itemize}
+    \item \( \mathbb{E}[|X_n|] < \infty \) for all \( n \).
+    \item \( X_n \) is \( \mathcal{F}_n \)-measurable for all \( n \).
+    \item \( \mathbb{E}[X_{n+1} \mid \mathcal{F}_n] = X_n \), meaning that the current state is the best predictor of the next state.
+\end{itemize}
+
+\paragraph{Intuition:}
+Martingales represent "fair" stochastic processes, where the expected value of future outcomes, given the present, equals the current value.
+
+
+\section{Conditional Expectation: Discrete Case and Applications}
+
+\subsection{Definition and Basic Concepts}
+To introduce the concept of conditional expectation, let us start with a simple case where \(X\) is a discrete random variable. 
+
+\paragraph{Expectation of a Discrete Random Variable:}
+The expectation of \(X\) is defined as:
+\[
+\mathbb{E}[X] = \sum_x x \cdot P(X = x).
+\]
+
+\paragraph{Conditional Density:}
+Let \(X\) and \(Y\) be discrete random variables with joint probability mass function \(P_{X,Y}(x, y)\). The marginal density of \(Y\) is:
+\[
+P_Y(y) = \sum_x P_{X,Y}(x, y).
+\]
+The \textbf{conditional density} of \(X\) given \(Y=y\) is defined as:
+\[
+P_{X|Y}(x \mid y) = \frac{P_{X,Y}(x, y)}{P_Y(y)},
+\]
+provided that \(P_Y(y) > 0\). 
+
+\paragraph{Conditional Expectation:}
+The conditional expectation of \(X\) given \(Y=y\) is:
+\[
+\mathbb{E}[X \mid Y=y] = \sum_x x \cdot P_{X|Y}(x \mid y).
+\]
+This defines a function of \(y\), denoted as \(h(y)\), which is the best approximation of \(X\) using the information contained in \(Y\).
+
+\subsection{Conditional Expectation as a Random Variable}
+The conditional expectation \(\mathbb{E}[X \mid Y]\) is itself a random variable:
+\[
+\mathbb{E}[X \mid Y](\omega) = h(Y(\omega)).
+\]
+If \(Y\) takes on finitely many values, the conditional expectation will depend only on these values, forming a stepwise function.
+
+\subsection{Example: Symmetric Random Walk and Conditional Expectation}
+Let \(X\) and \(Y\) be two independent binomial random variables, each with parameters \((n, p)\). Consider the random variable \(Z = X + Y\). We aim to compute the conditional expectation of \(X\) given \(Z = m\):
+\[
+\mathbb{E}[X \mid Z=m].
+\]
+
+\paragraph{Step 1: Conditional Probability}
+The conditional probability \(P(X = k \mid Z = m)\) is given by:
+\[
+P(X = k \mid Z = m) = \frac{P(X = k, Z = m)}{P(Z = m)}.
+\]
+Since \(Z = X + Y\), this can be expressed as:
+\[
+P(X = k, Z = m) = P(X = k) \cdot P(Y = m-k),
+\]
+where \(P(X = k)\) and \(P(Y = m-k)\) are the probabilities for binomial distributions. The denominator \(P(Z = m)\) represents the probability of \(Z = m\), where \(Z\) follows a binomial distribution with parameters \((2n, p)\) (as the sum of two independent binomial random variables).
+
+\paragraph{Step 2: Computation of \(P(X = k \mid Z = m)\)}
+Substituting the probabilities:
+\[
+P(X = k) = \binom{n}{k} p^k (1-p)^{n-k},
+\]
+\[
+P(Y = m-k) = \binom{n}{m-k} p^{m-k} (1-p)^{n-(m-k)},
+\]
+and
+\[
+P(Z = m) = \binom{2n}{m} p^m (1-p)^{2n-m},
+\]
+we obtain:
+\[
+P(X = k \mid Z = m) = \frac{\binom{n}{k} \binom{n}{m-k} p^m (1-p)^{2n-m}}{\binom{2n}{m} p^m (1-p)^{2n-m}}.
+\]
+Simplifying, we find:
+\[
+P(X = k \mid Z = m) = \frac{\binom{n}{k} \binom{n}{m-k}}{\binom{2n}{m}}.
+\]
+This represents a hypergeometric distribution.
+
+\paragraph{Step 3: Conditional Expectation}
+The expectation of \(X\) given \(Z = m\) is the mean of this hypergeometric distribution:
+\[
+\mathbb{E}[X \mid Z = m] = \frac{m \cdot n}{2n} = \frac{m}{2}.
+\]
+
+\paragraph{Interpretation:}
+The conditional expectation is a linear function of \(Z\):
+\[
+\mathbb{E}[X \mid Z] = \frac{Z}{2}.
+\]
+This demonstrates that the conditional expectation adjusts the prior expectation of \(X\) based on the observed value of \(Z\).
+
+\subsection{Generalization to Continuous Random Variables}
+For absolutely continuous random variables \(X\) and \(Y\), the conditional density is defined as:
+\[
+f_{X|Y}(x \mid y) = \frac{f_{X,Y}(x, y)}{f_Y(y)},
+\]
+and the conditional expectation is:
+\[
+\mathbb{E}[X \mid Y=y] = \int_{-\infty}^\infty x \cdot f_{X|Y}(x \mid y) \, dx.
+\]
+The concepts mirror the discrete case, but integration replaces summation.
+
+
+\section{Conditional Expectation for Absolutely Continuous Random Variables}
+
+In this lecture, we extend the concept of conditional expectation to the setting of absolutely continuous random variables. This provides a framework for defining and computing the conditional densities and expectations, which are fundamental in probability theory and applications.
+
+\subsection{Conditional Density}
+Assume that \( X \) and \( Y \) are absolutely continuous random variables with a joint density \( f_{X,Y}(x,y) \). The marginal density of \( Y \), denoted as \( f_Y(y) \), is computed as:
+\[
+f_Y(y) = \int_{\mathbb{R}} f_{X,Y}(x,y) \, dx.
+\]
+The \textbf{conditional density} of \( X \) given \( Y=y \) is defined as:
+\[
+f_{X|Y}(x|y) =
+\begin{cases} 
+\frac{f_{X,Y}(x,y)}{f_Y(y)}, & \text{if } f_Y(y) > 0, \\
+0, & \text{if } f_Y(y) = 0.
+\end{cases}
+\]
+This definition ensures that the conditional density is well-defined over the range where \( f_Y(y) > 0 \).
+
+\subsection{Conditional Expectation}
+The \textbf{conditional expectation} of \( X \) given \( Y=y \) is defined as:
+\[
+\mathbb{E}[X \mid Y=y] = \int_{\mathbb{R}} x f_{X|Y}(x|y) \, dx.
+\]
+This expression provides a functional dependence on \( y \), resulting in a random variable \( h(Y) \), where \( h(y) = \mathbb{E}[X \mid Y=y] \).
+
+\paragraph{Properties:}
+\begin{itemize}
+    \item \( h(Y) \) represents the best approximation of \( X \) within the family of random variables measurable with respect to \( Y \).
+    \item \( h(Y) \) depends on the specific value of \( Y \), encapsulating the information provided by \( Y \).
+\end{itemize}
+
+\subsection{Example: Computing Conditional Expectation}
+Let the joint density of \( X \) and \( Y \) be given by:
+\[
+f_{X,Y}(x,y) = \frac{e^{-x/y} e^{-y}}{y}, \quad x > 0, \, y > 0.
+\]
+We aim to compute \( \mathbb{E}[X \mid Y=y] \).
+
+\paragraph{Step 1: Marginal Density of \( Y \)}
+The marginal density of \( Y \) is:
+\[
+f_Y(y) = \int_{0}^{\infty} f_{X,Y}(x,y) \, dx = \int_{0}^{\infty} \frac{e^{-x/y} e^{-y}}{y} \, dx.
+\]
+Simplifying, we have:
+\[
+f_Y(y) = e^{-y} \int_{0}^{\infty} \frac{e^{-x/y}}{y} \, dx.
+\]
+Using the substitution \( u = x/y \), we find:
+\[
+\int_{0}^{\infty} e^{-u} \, du = 1,
+\]
+and therefore:
+\[
+f_Y(y) = e^{-y}.
+\]
+
+\paragraph{Step 2: Conditional Density of \( X \) Given \( Y=y \)}
+The conditional density \( f_{X|Y}(x|y) \) is:
+\[
+f_{X|Y}(x|y) = \frac{f_{X,Y}(x,y)}{f_Y(y)} = \frac{\frac{e^{-x/y} e^{-y}}{y}}{e^{-y}} = \frac{e^{-x/y}}{y}, \quad x > 0.
+\]
+This is the density of an exponential random variable with rate parameter \( \lambda = 1/y \).
+
+\paragraph{Step 3: Conditional Expectation}
+For an exponential random variable with rate \( \lambda \), the expectation is \( 1/\lambda \). Thus:
+\[
+\mathbb{E}[X \mid Y=y] = y.
+\]
+
+\subsection{General Framework}
+The process outlined above can be generalized for computing conditional expectations in the absolutely continuous case:
+\begin{enumerate}
+    \item Compute the marginal density \( f_Y(y) \).
+    \item Define the conditional density \( f_{X|Y}(x|y) = f_{X,Y}(x,y) / f_Y(y) \).
+    \item Use the conditional density to evaluate \( \mathbb{E}[X \mid Y=y] \) as \( \int_{\mathbb{R}} x f_{X|Y}(x|y) \, dx \).
+\end{enumerate}
+
+\subsection{Tower Property of Conditional Expectation}
+The \textbf{tower property} states:
+\[
+\mathbb{E}[\mathbb{E}[X \mid Y]] = \mathbb{E}[X].
+\]
+This property confirms that conditioning provides an intermediate approximation, collapsing back to the original expectation when the outer expectation is taken.
+
+\paragraph{Conclusion:}
+The conditional expectation bridges the rich structure of random variables with computational simplicity. By using marginal and joint densities, we extend its application to absolutely continuous random variables, enabling its use in sophisticated probabilistic modeling.
+
+\section{Definition of Conditional Expectation}
+
+\subsection{Formal Definition}
+Let \( X \) and \( Y \) be random variables. The \textbf{conditional expectation} of \( X \) given \( Y \), denoted as \( \mathbb{E}[X \mid Y] \), is defined as a function \( h(Y) \) of \( Y \) such that for any event \( A \) in the \(\sigma\)-algebra generated by \( Y \), the following property holds:
+\[
+\mathbb{E}[X \cdot \mathbf{1}_A] = \mathbb{E}[h(Y) \cdot \mathbf{1}_A],
+\]
+where \( \mathbf{1}_A \) is the indicator function of the event \( A \).
+
+\subsection{Properties}
+\begin{itemize}
+    \item The conditional expectation \( \mathbb{E}[X \mid Y] \) is a random variable measurable with respect to the \(\sigma\)-algebra generated by \( Y \).
+    \item It provides a transformation of \( Y \) that uniquely satisfies the property above.
+    \item This definition extends the notion of conditional expectation to cases beyond discrete and absolutely continuous random variables, making it applicable to more general probability spaces.
+\end{itemize}
+
+\subsection{Connection with Classical Definitions}
+For discrete and absolutely continuous random variables, this general definition coincides with the classical definitions of conditional expectation:
+\begin{itemize}
+    \item In the discrete case, \( \mathbb{E}[X \mid Y=y] \) is computed as the weighted average over the values of \( X \), conditional on \( Y=y \).
+    \item In the absolutely continuous case, \( \mathbb{E}[X \mid Y=y] \) involves integration using the conditional density \( f_{X|Y}(x|y) \).
+\end{itemize}
+
+\section{Example: Symmetric Random Walk and Martingales}
+
+\subsection{Symmetric Random Walk}
+Consider a symmetric random walk \( S_n \), defined as:
+\[
+S_0 = 0, \quad S_n = S_{n-1} + X_n,
+\]
+where \( \{X_n\}_{n=1}^\infty \) is an independent and identically distributed sequence of random variables with:
+\[
+X_n =
+\begin{cases}
++1, & \text{with probability } \frac{1}{2}, \\
+-1, & \text{with probability } \frac{1}{2}.
+\end{cases}
+\]
+
+\paragraph{Properties of the Symmetric Random Walk:}
+\begin{itemize}
+    \item The expectation of \( S_n \) remains constant over time:
+    \[
+    \mathbb{E}[S_n] = \mathbb{E}[S_{n-1}] = \cdots = \mathbb{E}[S_0].
+    \]
+    \item The process has no upward or downward trend on average, reflecting the symmetry of the step distribution.
+    \item \( S_n \) is recurrent in the symmetric case but not necessarily positive recurrent.
+\end{itemize}
+
+\subsection{Martingale Property}
+The symmetric random walk is a classic example of a martingale. To verify this:
+\begin{itemize}
+    \item Consider the conditional expectation of \( S_n \) given the history up to time \( m \), \( \mathcal{F}_m \):
+    \[
+    \mathbb{E}[S_n \mid \mathcal{F}_m] = S_m, \quad \text{for } n \geq m.
+    \]
+    \item This holds because \( S_n - S_m = X_{m+1} + \cdots + X_n \), and each \( X_k \) is independent with zero mean.
+    \item Hence, \( \{S_n\} \) satisfies the martingale property:
+    \[
+    \mathbb{E}[S_{n+1} \mid \mathcal{F}_n] = S_n.
+    \]
+\end{itemize}
+
+\subsection{Martingales in Finance}
+Martingales play a central role in computational finance:
+\begin{itemize}
+    \item A stock price process under a risk-neutral measure is typically modeled as a martingale.
+    \item This reflects the absence of arbitrage opportunities, ensuring that it is impossible to construct a strategy that guarantees risk-free profit.
+\end{itemize}
+
+\subsection{Information and Sigma-Algebras}
+The concept of information is mathematically captured by sigma-algebras:
+\begin{itemize}
+    \item The \(\sigma\)-algebra generated by a stochastic process represents the available information up to a certain time.
+    \item Richer \(\sigma\)-algebras correspond to greater information and can impact decision-making in finance, probability, and other fields.
+\end{itemize}

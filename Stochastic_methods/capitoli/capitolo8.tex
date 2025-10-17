@@ -1,0 +1,1020 @@
+
+In probability theory, two generating functions are frequently used: the \textbf{moment generating function} (MGF) and the \textbf{characteristic function} (CF) of a random variable. These functions serve as powerful tools to simplify computations, allowing us to work with distributions in a more manageable way. \newline
+Note that the MGF and CF also appear under different names in mathematics, where they are referred to as the \emph{Laplace transform} and \emph{Fourier transform}, respectively. These are fundamental in fields such as analysis, where they are used to solve differential and partial differential equations.
+
+\section{Moment Generating Function (MGF)}
+Let \( X \) be a real-valued random variable. The \textbf{moment generating function} of \( X \), denoted \( M_X(t) \), is a function of a real variable \( t \) defined as:
+\[
+M_X(t) = \mathbb{E}\left[ e^{tX} \right].
+\]
+This expectation, if finite, is said to generate the moments of \( X \). However, for the MGF to exist, it must hold that \( M_X(t) < \infty \) for values of \( t \) in a neighborhood around zero. \newline
+The MGF allows us to derive the moments of \( X \). Higher-order moments (e.g., mean, variance) can be obtained by differentiating \( M_X(t) \) with respect to \( t \), as shown below.
+
+\paragraph{Properties and Calculations Involving the MGF}
+
+If \( X \) is a continuous random variable with density function \( f(x) \), the MGF can be expressed as:
+\[
+M_X(t) = \int_{-\infty}^{\infty} e^{tx} f(x) \, dx.
+\]
+The finiteness of this integral depends on the behavior of \( f(x) \) as \( x \to \pm \infty \). \newline
+As \( x \) increases, \( e^{tx} \) grows rapidly. Thus, \( f(x) \) must decay quickly enough for the integral to converge. When this holds, the existence of \( M_X(t) \) indicates strong integrability conditions on \( f(x) \), making it a stronger assumption than requiring only a finite mean or variance.
+
+\paragraph{Obtaining Moments from the MGF}
+
+To compute the \( n \)-th moment of \( X \), we observe that if we repeatedly differentiate \( e^{tX} \) with respect to \( t \), we obtain expressions involving powers of \( X \):
+\[
+\frac{d^n}{dt^n} \left( e^{tX} \right) = X^n e^{tX}.
+\]
+Thus, the \( n \)-th derivative of the MGF evaluated at \( t = 0 \) gives:
+\[
+M_X^{(n)}(0) = \mathbb{E}\left[ X^n \right].
+\]
+By taking successive derivatives of \( M_X(t) \) and setting \( t = 0 \), we can calculate all the moments of \( X \).
+
+\subsection{Example Calculation of Moments Using the MGF}
+
+Suppose \( X \) is a random variable with a known MGF \( M_X(t) \). To find the first and second moments (mean and variance), we proceed as follows:
+\begin{enumerate}
+    \item \textbf{First Moment (Mean):}
+   \[
+   \mathbb{E}[X] = M_X'(0).
+   \]
+    \item \textbf{Second Moment:}
+   \[
+   \mathbb{E}[X^2] = M_X''(0).
+   \]
+    \item \textbf{Variance of \( X \):}
+   Using \( \mathrm{Var}(X) = \mathbb{E}[X^2] - (\mathbb{E}[X])^2 \), we can compute the variance once we have the first and second moments.
+\end{enumerate}
+This approach, using derivatives of the MGF, can be generalized to higher moments, providing an efficient tool for characterizing the behavior of random variables.
+
+\section{Characteristic Function (CF)}
+
+The characteristic function \( \phi_X(u) \) of a random variable \( X \) is defined as:
+\[
+\phi_X(u) = \mathbb{E}\left[e^{i u X}\right],
+\]
+where \( i = \sqrt{-1} \) is the imaginary unit, and \( u \in \mathbb{R} \). Unlike the MGF, the characteristic function is always well-defined for any random variable, as it involves the modulus \( |e^{i u X}| = 1 \). \newline
+\paragraph{Connection to Complex Numbers:}
+\begin{itemize}
+    \item Complex numbers are expressed as \( z = a + i b \), where \( a \) is the real part, \( b \) is the imaginary part, and \( i^2 = -1 \).
+    \item The exponential of a complex number \( z = x + i y \) is given by:
+\[
+e^{i u X} = \cos(uX) + i \sin(uX).
+\]
+\end{itemize}
+\paragraph{Properties:}
+\begin{itemize}
+    \item If \( X \) admits finite moments up to order \( n \), then:
+\[
+\phi_X^{(n)}(u) \big|_{u=0} = i^n \mathbb{E}[X^n].
+\]
+    \item The characteristic function is a powerful tool for analyzing distributions and deriving properties of random variables.
+\end{itemize}
+
+\subsection{Example: Binomial Random Variable}
+
+Let \( X \) be a Bernoulli random variable with parameter \( p \). The characteristic function \( \phi_X(u) \) is computed as:
+\[
+\phi_X(u) = \mathbb{E}\left[e^{i u X}\right] = e^{i u \cdot 0}(1 - p) + e^{i u \cdot 1}p = (1 - p) + p e^{i u}.
+\]
+Taking the derivative with respect to \( u \):
+\[
+\phi_X'(u) = p e^{i u} \cdot i.
+\]
+At \( u = 0 \):
+\[
+\phi_X'(0) = i p.
+\]
+From this, we recover the expectation of \( X \) as:
+\[
+\mathbb{E}[X] = \frac{\phi_X'(0)}{i} = p.
+\]
+Higher-order derivatives allow the computation of moments of \( X \). While this method is effective, for simple distributions like the Bernoulli, direct computation of moments is often easier.
+
+
+\section{Properties of the Characteristic Function}
+    
+    \paragraph{Proposition 1: Characterization of Distributions}
+    The characteristic function \( \phi_X(\mathbf{u}) \) uniquely determines the distribution of a random vector \( \mathbf{X} \). Specifically, if \( \mathbf{X} \) and \( \mathbf{Y} \) are two random vectors, then:
+    \[
+    \phi_X(\mathbf{u}) = \phi_Y(\mathbf{u}) \quad \text{for all } \mathbf{u} \in \mathbb{R}^n
+    \]
+    if and only if \( \mathbf{X} \) and \( \mathbf{Y} \) have the same distribution. \newline
+    This property allows us to classify distributions by their characteristic functions. For example, the characteristic function of a Gaussian random variable completely determines its distribution. Hence, proving that a random variable's characteristic function matches that of a Gaussian distribution is sufficient to establish that the random variable follows a Gaussian distribution.
+    
+    \paragraph{Proposition 2: Independence and Characteristic Functions}
+    Let \( \mathbf{X} = (X_1, X_2) \) be a two-dimensional random vector where \( X_1 \) and \( X_2 \) are independent random variables. Then:
+    \[
+    \phi_{\mathbf{X}}(u, v) = \phi_{X_1}(u) \cdot \phi_{X_2}(v),
+    \]
+    where \( u, v \in \mathbb{R} \). A similar result holds for the moment generating function, provided it exists:
+    \[
+    M_{\mathbf{X}}(s, t) = M_{X_1}(s) \cdot M_{X_2}(t).
+    \]
+    
+    \paragraph{Proof of Proposition 2 for the Moment Generating Function:}
+    The moment generating function of \( \mathbf{X} \) is defined as:
+    \[
+    M_{\mathbf{X}}(\mathbf{t}) = \mathbb{E}\left[e^{\mathbf{t} \cdot \mathbf{X}}\right],
+    \]
+    where \( \mathbf{t} = (s, t) \) and \( \mathbf{X} = (X_1, X_2) \). Substituting the definition of the scalar product, we get:
+    \[
+    M_{\mathbf{X}}(s, t) = \mathbb{E}\left[e^{s X_1 + t X_2}\right].
+    \]
+    Using the property of the exponential function:
+    \[
+    M_{\mathbf{X}}(s, t) = \mathbb{E}\left[e^{s X_1} \cdot e^{t X_2}\right].
+    \]
+    Since \( X_1 \) and \( X_2 \) are independent, the expectation of their product is the product of their expectations:
+    \[
+    M_{\mathbf{X}}(s, t) = \mathbb{E}\left[e^{s X_1}\right] \cdot \mathbb{E}\left[e^{t X_2}\right].
+    \]
+    Thus:
+    \[
+    M_{\mathbf{X}}(s, t) = M_{X_1}(s) \cdot M_{X_2}(t).
+    \]
+    
+    \paragraph{Remark: Independence under Transformations}
+    Let \( X \) and \( Y \) be independent random variables, and let \( g_1 \) and \( g_2 \) be measurable transformations. Then:
+    \[
+    g_1(X) \quad \text{and} \quad g_2(Y)
+    \]
+    are also independent random variables. However, the converse is not always true. Constructing counterexamples where \( g_1(X) \) and \( g_2(Y) \) are independent but \( X \) and \( Y \) are not requires careful consideration.
+    
+    \paragraph{Corollary: Sum of Independent Random Variables}
+    If \( X \) and \( Y \) are independent random variables, then the characteristic function of their sum is the product of their individual characteristic functions:
+    \[
+    \phi_{X+Y}(u) = \mathbb{E}\left[e^{i u (X + Y)}\right] = \phi_X(u) \cdot \phi_Y(u).
+    \] 
+    \paragraph{Proof:}
+    \begin{align*}
+    \phi_{X+Y}(u) &= \mathbb{E}\left[e^{i u (X + Y)}\right] \\
+    &= \mathbb{E}\left[e^{i u X} \cdot e^{i u Y}\right].
+    \end{align*}
+    Since \( X \) and \( Y \) are independent:
+    \[
+    \phi_{X+Y}(u) = \mathbb{E}\left[e^{i u X}\right] \cdot \mathbb{E}\left[e^{i u Y}\right] = \phi_X(u) \cdot \phi_Y(u).
+    \]
+    
+    \paragraph{Remark: Convolution of Densities}
+    For absolutely continuous random variables \( X \) and \( Y \), the density of their sum \( Z = X + Y \) is given by the convolution of their individual densities \( f_X \) and \( f_Y \):
+    \[
+    f_Z(z) = (f_X * f_Y)(z) = \int_{-\infty}^\infty f_X(x) f_Y(z - x) \, dx.
+    \]
+    While the convolution operation can be computationally challenging, the corresponding characteristic function simplifies the process by converting the sum into a product of functions in the frequency domain.
+\section{Moment Generating Functions (MGFs) and Characteristic Functions (CFs)}
+    \subsection{MGF for a Binomial Random Variable}
+    Now consider a binomial random variable \( X \sim \text{Binomial}(n, p) \). The MGF of \( X \) is given by:
+    \[
+    M_X(t) = E[e^{tX}].
+    \]
+    To compute this expectation, note that \( X \) can take values \( 0, 1, \ldots, n \) with probabilities given by the binomial distribution. For simplicity, let’s compute it for the special case \( X \sim \text{Binomial}(1, p) \), also known as a Bernoulli random variable:
+    \[
+    M_X(t) = E[e^{tX}] = (1 - p) \cdot e^{t \cdot 0} + p \cdot e^{t \cdot 1} = 1 - p + p e^t.
+    \]
+    This function is finite for any \( t \in \mathbb{R} \), and we can easily consider the moment generating function here without issue.
+    
+    \subsection{MGF for a Geometric Random Variable}
+    
+    Let \( X \) be a geometric random variable with success probability \( p \). The probability mass function (PMF) of \( X \) is given by:
+    \[
+    P(X = k) = (1 - p)^{k - 1} p, \quad k = 1, 2, 3, \dots
+    \]
+    The moment generating function (MGF) of \( X \), \( M_X(t) = \mathbb{E}[e^{tX}] \), can be computed as follows:
+    \[
+    M_X(t) = \sum_{k=1}^{\infty} e^{tk} (1 - p)^{k - 1} p.
+    \]
+    We can factor out \( p \) and rewrite the sum:
+    \[
+    M_X(t) = p\cdot e^t\sum_{k=1}^{\infty} \left( e^t (1 - p) \right)^{k - 1}.
+    \]
+    This is a geometric series with ratio \( e^t (1 - p) \). For convergence, we require \( |e^t (1 - p)| < 1 \), which leads to:
+    \[
+    M_X(t) = \frac{p \cdot e^t}{1 - e^t (1 - p)}, \quad \text{for } t < -\ln(1 - p).
+    \]
+    
+    \subsection{MGF for a Poisson Random Variable}
+    
+    Let \( Y \) be a Poisson random variable with parameter \( \lambda \). The probability mass function (PMF) of \( Y \) is given by:
+    \[
+    P(Y = k) = \frac{\lambda^k e^{-\lambda}}{k!}, \quad k = 0, 1, 2, \dots
+    \]
+    The moment generating function (MGF) of \( Y \), \( M_Y(t) = \mathbb{E}[e^{tY}] \), can be computed as follows:
+    \[
+    M_Y(t) = \sum_{k=0}^{\infty} e^{tk} \frac{\lambda^k e^{-\lambda}}{k!}.
+    \]
+    We can rewrite this as:
+    \[
+    M_Y(t) = e^{-\lambda} \sum_{k=0}^{\infty} \frac{(\lambda e^t)^k}{k!}.
+    \]
+    Recognizing the series as the Taylor expansion of \( e^{\lambda e^t} \), we get that the MGF of a Poisson random variable \( Y \) with parameter \( \lambda \) is:
+    \[
+    M_Y(t) = e^{\lambda (e^t - 1)}.
+    \]
+    \subsection{MGF for an Exponential Random Variables}
+    To compute the moment generating function \( M_X(t) \) for an exponential random variable \( X \) with parameter \( \lambda > 0 \), we have:
+    \[
+    M_X(t) = \mathbb{E}\left[e^{tX}\right].
+    \]
+    We can calculate \( M_X(t) \) by using the integral form of the expectation. Since \( X \) is exponentially distributed, the density function \( f(x) \) of \( X \) is given by:
+    \[
+    f(x) = 
+    \begin{cases} 
+    \lambda e^{-\lambda x} & \text{for } x \geq 0, \\
+    0 & \text{for } x < 0.
+    \end{cases}
+    \]
+    Thus, we can write the expectation as:
+    \[
+    M_X(t) = \int_{0}^{\infty} e^{tx} \lambda e^{-\lambda x} \, dx.
+    \]
+    Simplifying, we get:
+    \[
+    M_X(t) = \int_{0}^{\infty} \lambda e^{(t - \lambda)x} \, dx.
+    \]
+    This integral is finite if and only if \( t < \lambda \) (since if \( t \geq \lambda \), the exponent \( (t - \lambda)x \) does not decay as \( x \to \infty \)). Thus, for \( t < \lambda \), we can compute the integral:
+    \[
+    M_X(t) = \lambda \int_{0}^{\infty} e^{-(\lambda - t)x} \, dx.
+    \]
+    The antiderivative of \( e^{-(\lambda - t)x} \) is \( -\frac{1}{\lambda - t} e^{-(\lambda - t)x} \). Evaluating this from 0 to \( \infty \), we obtain:
+    \[
+    M_X(t) = \lambda \left[-\frac{1}{\lambda - t} e^{-(\lambda - t)x} \right]_{0}^{\infty} = \frac{\lambda}{\lambda - t}.
+    \]
+    Thus, the moment generating function \( M_X(t) \) for an exponential random variable \( X \) with rate \( \lambda \) is:
+    \[
+    M_X(t) = 
+    \begin{cases} 
+    \frac{\lambda}{\lambda - t} & \text{for } t < \lambda, \\
+    +\infty & \text{for } t \geq \lambda.
+    \end{cases}
+    \]
+    To verify that this result aligns with the known expectation \( \mathbb{E}[X] = \frac{1}{\lambda} \), we take the derivative of \( M_X(t) \) with respect to \( t \) and evaluate at \( t = 0 \):
+    \[
+    M_X'(t) = \frac{\lambda}{(\lambda - t)^2}.
+    \]
+    Then,
+    \[
+    M_X'(0) = \frac{\lambda}{\lambda^2} = \frac{1}{\lambda},
+    \]
+    which matches the expectation \( \mathbb{E}[X] = \frac{1}{\lambda} \). \newline
+    In general, the \( n \)-th moment of an exponential distribution is given by:
+    \[
+    E[X^n] = \frac{n!}{\lambda^n}.
+    \]
+    This can be computed as \( \frac{1}{\lambda}, \frac{2}{\lambda^2}, \ldots \), continuing by applying derivatives that introduce additional terms in the factorial sequence.
+    
+    \subsection{Sums of Independent Binomial Random Variables}
+    
+    Let \( X_1, \dots, X_n \) be independent \( \text{Bin}(1, p) \) random variables (i.e., Bernoulli random variables). The goal is to show that the sum \( Z = \sum_{i=1}^n X_i \) is distributed as \( \text{Bin}(n, p) \).
+    The moment generating function (MGF) of \( X_i \) is given by:
+    \[
+    M_{X_i}(t) = \mathbb{E}\left[e^{t X_i}\right] = (1-p) + p e^t, \quad i = 1, \dots, n.
+    \]
+    Using the independence of \( X_1, \dots, X_n \), the MGF of \( Z \) is the product of the MGFs of the individual components:
+    \[
+    M_Z(t) = \prod_{i=1}^n M_{X_i}(t) = \left((1-p) + p e^t\right)^n.
+    \]
+    The MGF of \( \text{Bin}(n, p) \) is known to be:
+    \[
+    M_{\text{Bin}(n, p)}(t) = \left((1-p) + p e^t\right)^n.
+    \] 
+    Since the MGFs match, by the uniqueness property of the moment generating function, \( Z \sim \text{Bin}(n, p) \).
+    
+    \subsection{Sums of Independent Poisson Random Variables}
+    
+    Let \( X_1 \sim \text{Poiss}(\lambda_1) \) and \( X_2 \sim \text{Poiss}(\lambda_2) \) be independent. The goal is to show that \( Z = X_1 + X_2 \sim \text{Poiss}(\lambda_1 + \lambda_2) \).
+    The MGF of \( X_i \) is given by:
+    \[
+    M_{X_i}(t) = \exp\left(\lambda_i \left(e^t - 1\right)\right), \quad i = 1, 2.
+    \]
+    Using the independence of \( X_1 \) and \( X_2 \), the MGF of \( Z \) is the product of the MGFs of \( X_1 \) and \( X_2 \):
+    \[
+    M_Z(t) = M_{X_1}(t) \cdot M_{X_2}(t) = \exp\left(\lambda_1 \left(e^t - 1\right)\right) \cdot \exp\left(\lambda_2 \left(e^t - 1\right)\right).
+    \]
+    Simplifying:
+    \[
+    M_Z(t) = \exp\left((\lambda_1 + \lambda_2) \left(e^t - 1\right)\right).
+    \]
+    The MGF of \( \text{Poiss}(\lambda_1 + \lambda_2) \) is:
+    \[
+    M_{\text{Poiss}(\lambda_1 + \lambda_2)}(t) = \exp\left((\lambda_1 + \lambda_2) \left(e^t - 1\right)\right).
+    \]
+    Since the MGFs match, \( Z \sim \text{Poiss}(\lambda_1 + \lambda_2) \).
+    
+    \subsection{Sum of Independent Poisson Random Variables}
+    Let \( X \sim \text{Poiss}(\lambda) \) and \( Y \sim \text{Poiss}(\mu) \) be independent random variables, where \( \lambda, \mu > 0 \). We aim to find the distribution of \( Z = X + Y \). \newline
+    Using the independence of \( X \) and \( Y \), the characteristic function of \( Z \) is given by:
+    \[
+    \phi_Z(u) = \phi_X(u) \cdot \phi_Y(u),
+    \]
+    where the characteristic function of a Poisson random variable is:
+    \[
+    \phi_X(u) = e^{\lambda (e^{iu} - 1)} \quad \text{and} \quad \phi_Y(u) = e^{\mu (e^{iu} - 1)}.
+    \]
+    Thus:
+    \[
+    \phi_Z(u) = e^{\lambda (e^{iu} - 1)} \cdot e^{\mu (e^{iu} - 1)} = e^{(\lambda + \mu)(e^{iu} - 1)}.
+    \]
+    The characteristic function \( \phi_Z(u) \) matches the characteristic function of a \( \text{Poisson}(\lambda + \mu) \) random variable. Therefore, \( Z = X + Y \sim \text{Poisson}(\lambda + \mu) \).
+    
+    \subsection{MGF for a Uniform Random Variable}
+    
+    Consider \( X \) as a uniform random variable over the interval \([a, b]\). The probability density function (PDF) of \( X \) is given by:
+    \[
+    f_X(x) = 
+    \begin{cases} 
+    \frac{1}{b-a}, & \text{if } x \in [a, b], \\
+    0, & \text{otherwise}.
+    \end{cases}
+    \]
+    The moment generating function (MGF) of \( X \) is defined as:
+    \[
+    M_X(t) = \mathbb{E}[e^{tX}] = \int_{-\infty}^{\infty} e^{tx} f_X(x) \, dx.
+    \]
+    Substituting the PDF:
+    \[
+    M_X(t) = \int_a^b e^{tx} \frac{1}{b-a} \, dx.
+    \]
+    After computation, the MGF is:
+    \[
+    M_X(t) = 
+    \begin{cases} 
+    1, & \text{if } t = 0, \\
+    \frac{e^{tb} - e^{ta}}{t(b-a)}, & \text{if } t \neq 0.
+    \end{cases}
+    \]
+    While the formula for \( t \neq 0 \) is not defined at \( t = 0 \), we can compute the limit:
+    \[
+    \lim_{t \to 0} \frac{e^{tb} - e^{ta}}{t(b-a)}.
+    \]
+    Using the Taylor expansion \( e^{tx} \approx 1 + tx \) for small \( t \), the numerator becomes:
+    \[
+    e^{tb} - e^{ta} \approx (1 + tb) - (1 + ta) = t(b-a).
+    \]
+    Thus:
+    \[
+    \lim_{t \to 0} \frac{e^{tb} - e^{ta}}{t(b-a)} = \frac{t(b-a)}{t(b-a)} = 1.
+    \]
+    Since this matches the value \( M_X(0) = 1 \), the function is continuous at \( t = 0 \). \newline When evaluating MGFs, special attention must be given to continuity and differentiability, particularly at points where the function may appear undefined (e.g., \( t = 0 \)). The limit-based definition often resolves ambiguities and ensures consistency with expected statistical properties. \newline
+    The expectation \( \mathbb{E}[X] \) is given by:
+    \[
+    \mathbb{E}[X] = \frac{d}{dt} M_X(t) \Big|_{t=0}.
+    \]
+    Differentiating \( M_X(t) \) for \( t \neq 0 \):
+    \[
+    M_X'(t) = \frac{d}{dt} \left( \frac{e^{tb} - e^{ta}}{t(b-a)} \right).
+    \]
+    Applying the quotient rule:
+    \[
+    M_X'(t) = \frac{(b-a)(be^{tb} - ae^{ta}) - (e^{tb} - e^{ta})}{t^2(b-a)}.
+    \]
+    At \( t = 0 \), substituting \( e^{tx} = 1 + tx \) simplifies:
+    \[
+    M_X'(0) = \frac{b+a}{2}.
+    \]
+    Thus, \( \mathbb{E}[X] = \frac{b+a}{2} \), as expected for a uniform random variable.
+    
+    \subsection{MGF and CF of a Standard Normal Distribution}
+    
+    Consider \( Z \sim \mathcal{N}(0, 1) \), the standard normal random variable. The probability density function (PDF) is given by:
+    \[
+    f_Z(z) = \frac{1}{\sqrt{2\pi}} e^{-\frac{z^2}{2}}, \quad z \in \mathbb{R}.
+    \]
+    The moment generating function (MGF) of \( Z \) is defined as:
+    \[
+    M_Z(t) = \mathbb{E}[e^{tZ}] = \int_{-\infty}^{\infty} e^{tz} f_Z(z) \, dz.
+    \]
+    Substituting the PDF:
+    \[
+    M_Z(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{tz} e^{-\frac{z^2}{2}} \, dz.
+    \]
+    Rewriting the exponent:
+    \[
+    tz - \frac{z^2}{2} = -\frac{(z - t)^2}{2} + \frac{t^2}{2}.
+    \]
+    This transforms the integral into:
+    \[
+    M_Z(t) = e^{\frac{t^2}{2}} \cdot \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-\frac{(z - t)^2}{2}} \, dz.
+    \]
+    Recognizing the integral as the total probability under the normal distribution with mean \( t \) and variance 1, which equals 1:
+    \[
+    M_Z(t) = e^{\frac{t^2}{2}}.
+    \]
+    Thus, the moment generating function for a standard normal random variable is:
+    \[
+    M_Z(t) = e^{\frac{t^2}{2}}, \quad t \in \mathbb{R}.
+    \]
+    The characteristic function \( \phi_Z(u) \) is defined as:
+    \[
+    \phi_Z(u) = \mathbb{E}[e^{iuZ}] = \int_{-\infty}^\infty e^{iuz} f_Z(z) \, dz.
+    \]
+    Using similar steps as above, substituting \( i \) for \( t \), the characteristic function becomes:
+    \[
+    \phi_Z(u) = e^{-\frac{u^2}{2}}, \quad u \in \mathbb{R}.
+    \]
+    Note the sign difference between the MGF and the characteristic function:
+    \[
+    M_Z(t) = e^{\frac{t^2}{2}}, \quad \phi_Z(u) = e^{-\frac{u^2}{2}}.
+    \]
+    A random variable \( X \) is said to be symmetric if:
+    \[
+    X \stackrel{d}{=} -X,
+    \]
+    i.e., the distributions of \( X \) and \( -X \) are identical. \newline
+    If \( X \) is symmetric, its characteristic function \( \phi_X(u) \) is a real-valued function.
+    \paragraph{Proof}: The characteristic function of \( -X \) is:
+    \[
+    \phi_{-X}(u) = \mathbb{E}[e^{iu(-X)}] = \mathbb{E}[e^{-iuX}] = \phi_X(-u).
+    \]
+    Using the property of the complex conjugate:
+    \[
+    \phi_X(-u) = \overline{\phi_X(u)}.
+    \]
+    If \( X \) is symmetric, \( X \stackrel{d}{=} -X \), implying \( \phi_X(u) = \phi_X(-u) \). Combining these, we have:
+    \[
+    \phi_X(u) = \overline{\phi_X(u)}.
+    \]
+    This equality holds if and only if \( \phi_X(u) \) is real-valued. Thus, for symmetric random variables:
+    \[
+    \phi_X(u) \in \mathbb{R}, \quad \forall u \in \mathbb{R}.
+    \]
+    For the standard normal distribution \( Z \sim \mathcal{N}(0, 1) \), which is symmetric, the characteristic function is:
+    \[
+    \phi_Z(u) = e^{-\frac{u^2}{2}},
+    \]
+    a real-valued function. The symmetry of a random variable greatly simplifies the properties of its characteristic function, ensuring it is real-valued. This result extends to any symmetric distribution, providing a powerful tool for analyzing such random variables in probability theory.
+    
+    \subsection{MGF and CF of a General Normal Distribution}
+    
+    \paragraph{Linear Transformation to Obtain a General Normal Distribution}
+    Given \( Z \sim \mathcal{N}(0, 1) \), a standard normal random variable, we can construct a general normal random variable \( X \sim \mathcal{N}(\mu, \sigma^2) \) through the following linear transformation:
+    \[
+    X = \mu + \sigma Z,
+    \]
+    where \( \mu \) represents the mean, and \( \sigma^2 \) represents the variance.
+    
+    \paragraph{Moment Generating Function of a General Normal Random Variable}
+    The moment generating function (MGF) of \( X \) is defined as:
+    \[
+    M_X(t) = \mathbb{E}[e^{tX}].
+    \]
+    Substituting \( X = \mu + \sigma Z \):
+    \[
+    M_X(t) = \mathbb{E}[e^{t(\mu + \sigma Z)}] = \mathbb{E}[e^{t\mu} \cdot e^{t\sigma Z}].
+    \]
+    Since \( e^{t\mu} \) is a constant, it factors out of the expectation:
+    \[
+    M_X(t) = e^{t\mu} \cdot \mathbb{E}[e^{t\sigma Z}].
+    \]
+    Here, \( \mathbb{E}[e^{t\sigma Z}] \) is the MGF of \( Z \sim \mathcal{N}(0, 1) \), evaluated at \( t\sigma \). From earlier results, the MGF of \( Z \) is \( e^{\frac{t^2}{2}} \). Thus:
+    \[
+    M_X(t) = e^{t\mu} \cdot e^{\frac{(t\sigma)^2}{2}} = e^{t\mu + \frac{t^2\sigma^2}{2}}, \quad t \in \mathbb{R}.
+    \]
+    
+    \paragraph{Characteristic Function of a General Normal Random Variable}
+    
+    The characteristic function \( \phi_X(u) \) is defined as:
+    \[
+    \phi_X(u) = \mathbb{E}[e^{iuX}].
+    \]
+    Using the same substitution \( X = \mu + \sigma Z \):
+    \[
+    \phi_X(u) = \mathbb{E}[e^{iu(\mu + \sigma Z)}] = \mathbb{E}[e^{iu\mu} \cdot e^{iu\sigma Z}].
+    \]
+    Factoring out the constant \( e^{iu\mu} \):
+    \[
+    \phi_X(u) = e^{iu\mu} \cdot \mathbb{E}[e^{iu\sigma Z}].
+    \]
+    The term \( \mathbb{E}[e^{iu\sigma Z}] \) is the characteristic function of \( Z \sim \mathcal{N}(0, 1) \), evaluated at \( u\sigma \). From earlier results, the characteristic function of \( Z \) is \( e^{-\frac{u^2}{2}} \). Thus:
+    \[
+    \phi_X(u) = e^{iu\mu} \cdot e^{-\frac{(u\sigma)^2}{2}} = e^{iu\mu - \frac{u^2\sigma^2}{2}}, \quad u \in \mathbb{R}.
+    \]
+    The moment generating function and the characteristic function have similar forms, differing only by the sign in the exponential term involving \( u^2 \) or \( t^2 \).
+    
+    \paragraph{Addition of Independent Normal Random Variables}
+    Let \( X \sim \mathcal{N}(\mu_1, \sigma_1^2) \) and \( Y \sim \mathcal{N}(\mu_2, \sigma_2^2) \) be independent random variables. Then, the sum \( X + Y \) is also a normal random variable:
+    \[
+    X + Y \sim \mathcal{N}(\mu_1 + \mu_2, \sigma_1^2 + \sigma_2^2).
+    \]
+    Using the properties of the characteristic function:
+    \[
+    \phi_{X+Y}(u) = \phi_X(u) \cdot \phi_Y(u),
+    \]
+    since \( X \) and \( Y \) are independent. \newline
+    Substituting the characteristic functions:
+    \[
+    \phi_X(u) = e^{iu\mu_1 - \frac{u^2\sigma_1^2}{2}}, \quad \phi_Y(u) = e^{iu\mu_2 - \frac{u^2\sigma_2^2}{2}}.
+    \]
+    Thus:
+    \[
+    \phi_{X+Y}(u) = e^{iu\mu_1 - \frac{u^2\sigma_1^2}{2}} \cdot e^{iu\mu_2 - \frac{u^2\sigma_2^2}{2}}.
+    \]
+    Simplifying:
+    \[
+    \phi_{X+Y}(u) = e^{iu(\mu_1 + \mu_2) - \frac{u^2(\sigma_1^2 + \sigma_2^2)}{2}}.
+    \]
+    This is the characteristic function of a normal random variable with mean \( \mu_1 + \mu_2 \) and variance \( \sigma_1^2 + \sigma_2^2 \). \newline
+    Therefore the sum of two independent normal random variables is itself normal, with parameters given by the sum of the means and variances. This property illustrates why normal distributions are fundamental in probability and statistics.
+    
+        
+\section{Exercise: Sums of Independent Uniform Random Variables}
+
+\paragraph{Part 1: Distribution of the Sum of Uniform Random Variables}
+
+Let \( X_1, X_2, \dots, X_N \) be independent \( \text{Uniform}(0, 1) \) random variables, and define:
+\[
+Z = X_1 + X_2 + \cdots + X_N.
+\]
+We aim to prove that the probability that \( Z \leq x \), for \( 0 \leq x \leq 1 \), is given by:
+\[
+P(Z \leq x) = \frac{x^N}{N!}.
+\]
+\paragraph{Concrete Example: Summing Two Uniform Random Variables}
+\begin{enumerate}
+    \item Consider the case where \( N = 2 \). The random variable \( Z = X_1 + X_2 \) can take values in the interval \([0, 2]\). However, \( Z \) is not uniformly distributed over this interval.
+    \item Since \( X_1 \) and \( X_2 \) are independent, their joint density is:
+\[
+f_{X_1, X_2}(x_1, x_2) = 
+\begin{cases} 
+1 & \text{if } 0 \leq x_1 \leq 1 \text{ and } 0 \leq x_2 \leq 1, \\
+0 & \text{otherwise}.
+\end{cases}
+\]
+This density corresponds to a uniform distribution over the unit square in \( \mathbb{R}^2 \).
+    \item To compute \( P(Z \leq x) \), we integrate the joint density over the region \( A_x \) defined by \( X_1 + X_2 \leq x \), where \( 0 \leq x \leq 1 \):
+\[
+P(Z \leq x) = \int_{A_x} f_{X_1, X_2}(x_1, x_2) \, dx_1 \, dx_2.
+\]
+The region \( A_x \) is a triangle with vertices at \((0, 0)\), \((x, 0)\), and \((0, x)\). The area of this triangle is \( \frac{x^2}{2} \). Since the density \( f_{X_1, X_2} \) is constant and equal to 1 over the unit square:
+\[
+P(Z \leq x) = \frac{x^2}{2}, \quad \text{for } 0 \leq x \leq 1.
+\]
+    \item Generalizing to \( N = 2 \)
+For \( 1 \leq x \leq 2 \), the region \( A_x \) extends beyond the triangle and includes additional area within the square. The computation becomes more involved but follows similar principles.
+\end{enumerate}
+
+\paragraph{Inductive Proof for General \( N \)}
+
+We now prove that for \( N \geq 1 \):
+\[
+P(Z \leq x) = \frac{x^N}{N!}, \quad \text{for } 0 \leq x \leq 1.
+\]
+\begin{itemize}
+    \item Base Case:
+For \( N = 1 \), \( Z = X_1 \sim \text{Uniform}(0, 1) \), and:
+\[
+P(Z \leq x) = x = \frac{x^1}{1!}.
+\]
+    \item Assume the result holds for \( N \). That is, for \( Z_N = X_1 + \cdots + X_N \), we have:
+\[
+P(Z_N \leq x) = \frac{x^N}{N!}, \quad \text{for } 0 \leq x \leq 1.
+\]
+Now consider \( Z_{N+1} = Z_N + X_{N+1} \), where \( Z_N \) and \( X_{N+1} \) are independent, and \( X_{N+1} \sim \text{Uniform}(0, 1) \). The cumulative distribution function (CDF) of \( Z_{N+1} \) is:
+\[
+P(Z_{N+1} \leq x) = \int_0^1 P(Z_N \leq x - u) \, f_{X_{N+1}}(u) \, du.
+\]
+Substitute \( f_{X_{N+1}}(u) = 1 \) for \( 0 \leq u \leq 1 \):
+\[
+P(Z_{N+1} \leq x) = \int_0^1 P(Z_N \leq x - u) \, du.
+\]
+For \( 0 \leq x \leq 1 \), \( x - u \leq 1 \) for all \( u \), so we can use the inductive hypothesis:
+\[
+P(Z_{N+1} \leq x) = \int_0^x \frac{(x - u)^N}{N!} \, du.
+\]
+Change variables: let \( v = x - u \), so \( u = x - v \) and \( du = -dv \):
+\[
+P(Z_{N+1} \leq x) = \int_0^x \frac{v^N}{N!} \, dv = \frac{x^{N+1}}{(N+1)!}.
+\]
+Thus, the result holds for \( N+1 \).
+\end{itemize}
+By induction, the result holds for all \( N \geq 1 \):
+\[
+P(Z \leq x) = \frac{x^N}{N!}, \quad \text{for } x \in [0, 1].
+\]
+
+
+\paragraph{Density and Double Integral Computation}
+
+We aim to compute the double integral of the joint density \( f_{Z, X} \) over a region \( B_W \), determined by the condition \( Z + X \leq W \). The density of the random vector \( (Z, X) \) is:
+\[
+f_{Z, X}(z, x) = f_Z(z) \cdot f_X(x),
+\]
+where:
+\begin{itemize}
+    \item \( f_Z(z) = \frac{z^{N-1}}{(N-1)!} \) for \( z \in [0, N] \),
+    \item \( f_X(x) = 1 \) for \( x \in [0, 1] \).
+\end{itemize}
+The set \( B_W \) is defined as:
+\[
+B_W = \{(z, x) : z + x \leq W, \, z \in [0, n], \, x \in [0, 1]\}.
+\]
+\paragraph{Behavior of \( B_W \)}
+\begin{itemize}
+    \item  For \( W \leq 0 \): The inequality \( Z + X \leq W \) cannot hold as \( Z, X \geq 0 \). Therefore:
+  \[
+  P(Z + X \leq W) = 0.
+  \]
+    \item For \( 0 < W \leq 1 \): The region \( B_W \) is a right triangle with vertices \( (0, 0) \), \( (0, W) \), and \( (W, 0) \), lying within the rectangle \( [0, N] \times [0, 1] \).
+    \item For \( W > 1 \): The boundary \( Z + X = W \) extends beyond the rectangle. The region \( B_W \) becomes the intersection of the half-plane \( Z + X \leq W \) with \( [0, N] \times [0, 1] \).
+\end{itemize}
+
+\paragraph{Integral Over \( B_W \)}
+For \( 0 < W \leq 1 \), we compute:
+\[
+P(Z + X \leq W) = \int_{B_W} f_{Z, X}(z, x) \, dz \, dx.
+\]
+Expanding \( f_{Z, X}(z, x) \), this becomes:
+\[
+P(Z + X \leq W) = \int_0^W \int_0^{W - z} \frac{z^{N-1}}{(N-1)!} \cdot 1 \, dx \, dz.
+\]
+\begin{itemize}
+    \item Evaluate the Inner Integral. The inner integral integrates over \( x \) from 0 to \( W - z \):
+\[
+\int_0^{W-z} 1 \, dx = W - z.
+\]
+Substitute this into the outer integral:
+\[
+P(Z + X \leq W) = \int_0^W \frac{z^{N-1}}{(N-1)!} (W - z) \, dz.
+\]
+    \item  Simplify the Outer Integral. Distribute \( W - z \) within the integral:
+\[
+P(Z + X \leq W) = \int_0^W \frac{z^{N-1} W}{(N-1)!} \, dz - \int_0^W \frac{z^N}{(N-1)!} \, dz.
+\]
+Separate the two terms:
+\[
+P(Z + X \leq W) = \frac{W}{(N-1)!} \int_0^W z^{N-1} \, dz - \frac{1}{(N-1)!} \int_0^W z^N \, dz.
+\]
+    \item  Compute Each Integral.
+    \begin{itemize}
+        \item For the first term:
+\[
+\int_0^W z^{N-1} \, dz = \frac{W^N}{N}.
+\]
+        \item For the second term:
+\[
+\int_0^W z^N \, dz = \frac{W^{N+1}}{N+1}.
+\]
+    \end{itemize}
+
+    \item  Substitute these results back:
+\[
+P(Z + X \leq W) = \frac{W}{(N-1)!} \cdot \frac{W^N}{N} - \frac{1}{(N-1)!} \cdot \frac{W^{N+1}}{N+1}.
+\]
+Factor out \( \frac{W^N}{(N-1)!} \):
+\[
+P(Z + X \leq W) = \frac{W^N}{(N-1)!} \left( \frac{1}{N} - \frac{W}{N+1} \right).
+\]
+Simplify further:
+\[
+P(Z + X \leq W) = \frac{W^N}{N!} \left( N + 1 - W \right).
+\]
+    \item Final Result for \( 0 < W \leq 1 \):
+\[
+P(Z + X \leq W) = \frac{W^{N+1}}{(N+1)!}.
+\]
+
+\end{itemize}
+The probability \( P(Z + X \leq W) \) satisfies the desired property for all \( W \in [0, 1] \), confirming the inductive step. This approach generalizes to higher dimensions with similar arguments.
+
+\paragraph{Expected Number of Independent Uniform Random Variables to Exceed 1}
+
+We aim to determine the expected number of independent \( U(0, 1) \) random variables required for their cumulative sum to exceed 1. Let \( \{X_1, X_2, \dots\} \) be a sequence of independent \( U(0, 1) \) random variables, and define \( N \) as the minimum number of such variables required such that:
+\[
+S_N = X_1 + X_2 + \cdots + X_N > 1.
+\]
+The goal is to compute \( \mathbb{E}[N] \), the expected value of \( N \). \newline
+The random variable \( N \) can take values in \( \mathbb{N} \), and the probability mass function of \( N \) is:
+\[
+P(N = n) = P(S_{n-1} \leq 1, \, S_n > 1),
+\]
+where \( S_k = X_1 + X_2 + \cdots + X_k \). \newline
+For specific cases:
+\begin{itemize}
+    \item \( P(N = 1) = P(X_1 > 1) = 0 \) (since \( X_1 \leq 1 \) with probability 1),
+    \item \( P(N = 2) = P(S_1 \leq 1, S_2 > 1) \),
+    \item \( P(N = 3) = P(X_1 + X_2 < 1, X_1 + X_2 + X_3 > 1) = P(S_2 \leq 1, S_3 > 1) \),
+    \item and in general:
+\[
+P(N = n) = P(S_{n-1} \leq 1, S_n > 1).
+\]
+\end{itemize}
+To compute \( \mathbb{E}[N] \), we use the standard definition:
+\[
+\mathbb{E}[N] = \sum_{n=1}^\infty n \cdot P(N = n).
+\]
+Alternatively, we use the relationship:
+\[
+\mathbb{E}[N] = \sum_{n=1}^\infty P(N > n),
+\]
+where:
+\[
+P(N > n) = P(S_n \leq 1).
+\]
+This approach simplifies the computation as \( P(S_n \leq 1) \) is easier to handle than \( P(N = n) \). From the first part of the exercise, we know:
+\[
+P(S_n \leq x) = \frac{x^n}{n!}, \quad \text{for } x \in [0, 1].
+\]
+Setting \( x = 1 \), we have:
+\[
+P(S_n \leq 1) = \frac{1^n}{n!} = \frac{1}{n!}.
+\]
+Thus:
+\[
+P(N > n) = P(S_n \leq 1) = \frac{1}{n!}.
+\]
+Substitute \( P(N > n) = \frac{1}{n!} \) into the formula for \( \mathbb{E}[N] \):
+\[
+\mathbb{E}[N] = \sum_{n=1}^\infty \frac{1}{n!}.
+\]
+Recognizing the series expansion for the exponential function:
+\[
+\sum_{n=0}^\infty \frac{1}{n!} = e,
+\]
+we subtract the \( n = 0 \) term (equal to 1):
+\[
+\mathbb{E}[N] = e - 1.
+\]
+To sum up the expected number of independent \( U(0, 1) \) random variables required to exceed a sum of 1 is:
+\[
+\mathbb{E}[N] = e - 1 \approx 1.718.
+\]
+The computation illustrates the importance of using \( P(N > n) \) to simplify expectations for discrete random variables. The problem connects to Poisson processes, where the waiting time until a specific event exhibits a similar distributional property.
+
+
+
+\section{Random Vectors and Extensions to Multivariate Distributions}
+When transitioning from single random variables to random vectors, the complexity increases significantly. A random vector introduces dependencies among its components, making the analysis richer and more intricate. The study of random vectors allows us to address problems in high dimensions or to analyze sequences of random variables, such as in the context of stochastic processes. \newline
+For instance:
+\begin{itemize}
+    \item In high-dimensional settings, random vectors are used to model "big data," where the dimensionality of the data plays a crucial role.
+    \item In stochastic processes, a sequence of random variables over time can be treated as a random vector when analyzed over a finite time horizon.
+\end{itemize}
+Let \( X \) be a random vector in \( \mathbb{R}^n \). In this context, we generalize concepts such as the moment generating function (MGF) and the characteristic function from single variables to vectors. To do so, we need a suitable operation that maps vectors in \( \mathbb{R}^n \) to scalars. 
+\paragraph{Scalar Product:}
+The scalar product of two vectors \( \mathbf{u}, \mathbf{v} \in \mathbb{R}^n \) is defined as:
+\[
+\mathbf{u} \cdot \mathbf{v} = \sum_{i=1}^n u_i v_i,
+\]
+where \( u_i \) and \( v_i \) are the components of \( \mathbf{u} \) and \( \mathbf{v} \), respectively. This operation produces a scalar from two vectors, a property that allows us to generalize functions like the MGF and characteristic function. 
+\paragraph{Norm:}
+The norm of a vector \( \mathbf{x} \in \mathbb{R}^n \) is derived from the scalar product:
+\[
+\|\mathbf{x}\| = \sqrt{\mathbf{x} \cdot \mathbf{x}} = \sqrt{\sum_{i=1}^n x_i^2}.
+\]
+This is the Euclidean norm, commonly used to measure distances in \( \mathbb{R}^n \).
+
+\paragraph{Moment Generating Function for Random Vectors}
+For a random vector \( \mathbf{X} \in \mathbb{R}^n \), the moment generating function (MGF) is defined as:
+\[
+M_{\mathbf{X}}(\mathbf{t}) = \mathbb{E}\left[e^{\mathbf{t} \cdot \mathbf{X}}\right],
+\]
+where \( \mathbf{t} \in \mathbb{R}^n \) is a vector of parameters, and \( \mathbf{t} \cdot \mathbf{X} \) is the scalar product:
+\[
+\mathbf{t} \cdot \mathbf{X} = \sum_{i=1}^n t_i X_i.
+\]
+This expectation is well-defined if the random vector \( \mathbf{X} \) admits an MGF.
+
+\paragraph{Characteristic Function for Random Vectors}
+The characteristic function for a random vector \( \mathbf{X} \in \mathbb{R}^n \) is given by:
+\[
+\phi_{\mathbf{X}}(\mathbf{u}) = \mathbb{E}\left[e^{i (\mathbf{u} \cdot \mathbf{X})}\right],
+\]
+where \( \mathbf{u} \in \mathbb{R}^n \) and \( i = \sqrt{-1} \) is the imaginary unit. Expanding \( \mathbf{u} \cdot \mathbf{X} \) in the scalar product, we have:
+\[
+\phi_{\mathbf{X}}(\mathbf{u}) = \mathbb{E}\left[e^{i(u_1 X_1 + u_2 X_2 + \cdots + u_n X_n)}\right].
+\]
+
+\paragraph{Key Properties of Scalar Products in Vector Analysis}
+\begin{itemize}
+    \item The scalar product allows the definition of norms and angles between vectors.
+    \item Unlike single-variable multiplication, scalar products in \( \mathbb{R}^n \) lack certain algebraic properties. For instance:
+        \begin{itemize}
+            \item There is no "multiplicative inverse" for vectors.
+            \item In the context of matrices, matrix multiplication is not commutative (\( AB \neq BA \) in general).
+        \end{itemize}
+    \item Despite these limitations, the scalar product is a fundamental tool for generalizing single-variable concepts to higher dimensions.
+\end{itemize}
+
+\paragraph{Unified View of Generating Functions}
+Both the MGF and the CF serve as tools for analyzing random vectors. While the MGF may not always exist, the CF is always well-defined. Most of the properties and techniques applicable to single random variables extend to random vectors through these generating functions. The characteristic function, in particular, is a versatile tool that simplifies computations and generalizations in higher dimensions.
+
+\section{MGF and CF of Linear Transformations of Multivariate Normal Vectors}
+    
+    Let \( X \in \mathbb{R}^d \) be a \( d \)-dimensional random vector, \( A \in \mathbb{R}^{n \times d} \) a real-valued matrix, and \( b \in \mathbb{R}^n \) a constant vector. Define:
+    \[
+    Y = AX + b.
+    \]
+    The transformation maps \( X \) (a \( d \)-dimensional vector) to \( Y \) (an \( n \)-dimensional vector).  
+    \paragraph{Moment Generating Function of \( Y \):}
+    \[
+    M_Y(t) = \mathbb{E}\left[e^{t^\top Y}\right] = \mathbb{E}\left[e^{t^\top (AX + b)}\right].
+    \]
+    Using linearity:
+    \[
+    M_Y(t) = \mathbb{E}\left[e^{t^\top b} \cdot e^{(t^\top A)^\top X}\right].
+    \]
+    Factoring out the constant term:
+    \[
+    M_Y(t) = e^{t^\top b} \cdot M_X(A^\top t),
+    \]
+    where \( M_X \) is the moment generating function of \( X \).
+    \paragraph{Characteristic Function of \( Y \):}
+    \[
+    \phi_Y(u) = \mathbb{E}\left[e^{iu^\top Y}\right] = \mathbb{E}\left[e^{iu^\top (AX + b)}\right].
+    \]
+    Using similar steps:
+    \[
+    \phi_Y(u) = e^{iu^\top b} \cdot \phi_X(A^\top u).
+    \]
+    These transformations provide the foundation for analyzing multivariate normal distributions and will be crucial for constructing and understanding them in further discussions.
+
+\section{Multivariate Normal Distribution: Standard Case}
+
+Let \( Z \) be a \( D \)-dimensional standard normal random vector, where:
+\[
+Z = \begin{bmatrix} Z_1 \\ Z_2 \\ \vdots \\ Z_D \end{bmatrix}, \quad Z_i \sim \mathcal{N}(0, 1), \text{ independent}.
+\]
+The characteristic function of \( Z \) is:
+\[
+\phi_Z(U) = \prod_{i=1}^D \phi_{Z_i}(U_i),
+\]
+where each \( \phi_{Z_i}(U_i) = e^{-U_i^2 / 2} \). Therefore:
+\[
+\phi_Z(U) = \prod_{i=1}^D e^{-U_i^2 / 2} = e^{-\frac{1}{2} \sum_{i=1}^D U_i^2}.
+\]
+Using the norm notation:
+\[
+\phi_Z(U) = e^{-\frac{1}{2} \|U\|^2},
+\]
+where \( \|U\|^2 = \sum_{i=1}^D U_i^2 \).
+
+\subsection{Multivariate Normal Distribution: General Case}
+
+To generalize to a multivariate normal distribution, let \( A \) be an \( N \times D \) matrix, \( \mu \in \mathbb{R}^N \), and \( Z \) be a \( D \)-dimensional standard normal random vector. Define:
+\[
+X = A Z + \mu.
+\]
+Here, \( X \) is an \( N \)-dimensional random vector. \newline
+The characteristic function of \( X \) is given by:
+\[
+\phi_X(U) = e^{i U^\top \mu} \phi_Z(A^\top U).
+\]
+Substituting \( \phi_Z \):
+\[
+\phi_X(U) = e^{i U^\top \mu} e^{-\frac{1}{2} \|A^\top U\|^2}.
+\]
+Expanding the norm:
+\[
+\|A^\top U\|^2 = (A^\top U)^\top (A^\top U) = U^\top (A A^\top) U.
+\]
+Define \( \Sigma = A A^\top \), the covariance matrix of \( X \). Then:
+\[
+\phi_X(U) = e^{i U^\top \mu} e^{-\frac{1}{2} U^\top \Sigma U}.
+\]
+Key Properties of \( \Sigma \):
+\begin{itemize}
+    \item \( \Sigma \) is a symmetric matrix: \( \Sigma^\top = \Sigma \).
+    \item \( \Sigma \) is positive semi-definite, as it arises from the product \( A A^\top \).
+\end{itemize}
+The expectation of \( X \) is:
+\[
+\mathbb{E}[X] = \mathbb{E}[A Z + \mu] = A \mathbb{E}[Z] + \mu.
+\]
+Since \( \mathbb{E}[Z] = 0 \), we have:
+\[
+\mathbb{E}[X] = \mu.
+\]
+
+\section{Expectation and Covariance for Multivariate Normal Random Vectors}
+
+\subsection{Expectation of the Components of \( X \)}
+Let \( X \) be an \( N \)-dimensional random vector defined as:
+\[
+X = A Z + \mu,
+\]
+where \( Z \) is a \( D \)-dimensional standard normal random vector (\( Z \sim \mathcal{N}(0, I) \)), \( A \) is an \( N \times D \) matrix, and \( \mu \) is a constant vector in \( \mathbb{R}^N \). The \( i \)-th component of \( X \) is:
+\[
+X_i = \sum_{j=1}^D a_{ij} Z_j + \mu_i.
+\]
+Taking the expectation of \( X_i \), we have:
+\[
+\mathbb{E}[X_i] = \mathbb{E}\left[\sum_{j=1}^D a_{ij} Z_j + \mu_i \right].
+\]
+By linearity of expectation:
+\[
+\mathbb{E}[X_i] = \sum_{j=1}^D a_{ij} \mathbb{E}[Z_j] + \mu_i.
+\]
+Since \( \mathbb{E}[Z_j] = 0 \) for all \( j \), we conclude:
+\[
+\mathbb{E}[X_i] = \mu_i.
+\]
+Thus, the expectation of \( X \) is:
+\[
+\mathbb{E}[X] = \mu.
+\]
+
+\subsection{Covariance Between Components of \( X \)}
+The covariance between \( X_i \) and \( X_j \) is defined as:
+\[
+\text{Cov}(X_i, X_j) = \mathbb{E}\left[(X_i - \mathbb{E}[X_i])(X_j - \mathbb{E}[X_j])\right].
+\]
+Substituting \( X_i \) and \( X_j \):
+\[
+X_i = \sum_{k=1}^D a_{ik} Z_k + \mu_i, \quad X_j = \sum_{h=1}^D a_{jh} Z_h + \mu_j,
+\]
+and noting that \( \mathbb{E}[X_i] = \mu_i \), we have:
+\[
+\text{Cov}(X_i, X_j) = \mathbb{E}\left[\left(\sum_{k=1}^D a_{ik} Z_k \right) \left(\sum_{h=1}^D a_{jh} Z_h \right)\right].
+\]
+Expanding the product:
+\[
+\text{Cov}(X_i, X_j) = \sum_{k=1}^D \sum_{h=1}^D a_{ik} a_{jh} \mathbb{E}[Z_k Z_h].
+\]
+Since \( Z \sim \mathcal{N}(0, I) \), the covariance of \( Z_k \) and \( Z_h \) is:
+\[
+\text{Cov}(Z_k, Z_h) = 
+\begin{cases} 
+1 & \text{if } k = h, \\ 
+0 & \text{if } k \neq h.
+\end{cases}
+\]
+Since \( Z \sim \mathcal{N}(0, I) \), it is a multivariate standard normal random vector with mean \( 0 \) and covariance matrix \( I \). This implies the following:
+\begin{enumerate}
+    \item \textbf{Independence between components}: The components \( Z_k \) and \( Z_h \) are independent for \( k \neq h \). 
+    For independent random variables, the covariance is \( 0 \):
+    \[
+    \text{Cov}(Z_k, Z_h) = \mathbb{E}[Z_k Z_h] - \mathbb{E}[Z_k] \mathbb{E}[Z_h].
+    \]
+    Since \( Z_k \) and \( Z_h \) are independent, 
+    \(\mathbb{E}[Z_k Z_h] = \mathbb{E}[Z_k] \mathbb{E}[Z_h]\), and given that \( \mathbb{E}[Z_k] = 0 \):
+    \[
+    \text{Cov}(Z_k, Z_h) = 0.
+    \]
+    \item \textbf{Unit variance}: Each component \( Z_k \) follows a univariate standard normal distribution \( \mathcal{N}(0, 1) \). 
+    This implies:
+    \[
+    \text{Var}(Z_k) = \text{Cov}(Z_k, Z_k) = \mathbb{E}[Z_k^2] - (\mathbb{E}[Z_k])^2 = 1.
+    \]
+\end{enumerate}
+The covariance matrix of \( Z \in \mathbb{R}^D \) is defined as:
+\[
+\Sigma = \mathbb{E}[(Z - \mathbb{E}[Z])(Z - \mathbb{E}[Z])^\top].
+\]
+For \( Z \sim \mathcal{N}(0, I) \), the mean is \( \mathbb{E}[Z] = 0 \), so:
+\[
+\Sigma = \mathbb{E}[Z Z^\top].
+\]
+Since \( \Sigma = I \), it follows that:
+\begin{itemize}
+    \item \( \Sigma_{kk} = \text{Var}(Z_k) = 1 \) (diagonal elements).
+    \item \( \Sigma_{kh} = \text{Cov}(Z_k, Z_h) = 0 \) for \( k \neq h \) (off-diagonal elements).
+\end{itemize}
+Thus, for a vector \( Z \sim \mathcal{N}(0, I) \), the covariance between \( Z_k \) and \( Z_h \) is:
+\[
+\text{Cov}(Z_k, Z_h) =
+\begin{cases} 
+1 & \text{if } k = h, \\
+0 & \text{if } k \neq h.
+\end{cases}
+\]
+Thus, the double sum reduces to:
+\[
+\text{Cov}(X_i, X_j) = \sum_{k=1}^D a_{ik} a_{jk}.
+\]
+
+\subsection{Covariance Matrix of \( X \)}
+The covariance matrix \( \Sigma \) of \( X \) is defined as:
+\[
+\Sigma_{ij} = \text{Cov}(X_i, X_j).
+\]
+Using the result above:
+\[
+\Sigma_{ij} = \sum_{k=1}^D a_{ik} a_{jk}.
+\]
+In matrix form:
+\[
+\Sigma = A A^\top,
+\]
+where \( \Sigma \) is symmetric and positive semi-definite.
+
+\subsection{Properties of \( \Sigma \)}
+\begin{enumerate}
+    \item \textbf{Symmetry:} \( \Sigma^\top = \Sigma \).
+    \item \textbf{Positive Semi-Definiteness:} For any \( x \in \mathbb{R}^N \),
+\[
+x^\top \Sigma x = x^\top (A A^\top) x = \|A^\top x\|^2 \geq 0.
+\]
+\end{enumerate}
+
+\subsection{Definition of Multivariate Normal Distribution}
+A random vector \( X \in \mathbb{R}^N \) is said to follow a multivariate normal distribution with mean \( \mu \in \mathbb{R}^N \) and covariance matrix \( \Sigma \), denoted \( X \sim \mathcal{N}(\mu, \Sigma) \), if its characteristic function is:
+\[
+\phi_X(U) = e^{i U^\top \mu} e^{-\frac{1}{2} U^\top \Sigma U}.
+\]
+
+\subsection{Key Propositions}
+\begin{enumerate}
+    \item \textbf{Linear Transformation:} If \( X \sim \mathcal{N}(\mu, \Sigma) \) and \( Y = B X + b \), then \( Y \sim \mathcal{N}(B \mu + b, B \Sigma B^\top) \).
+    \item \textbf{Independence and Covariance:} If \( X, Y \) are components of a multivariate normal vector, then \( X \) and \( Y \) are independent if and only if \( \text{Cov}(X, Y) = 0 \).
+\end{enumerate}

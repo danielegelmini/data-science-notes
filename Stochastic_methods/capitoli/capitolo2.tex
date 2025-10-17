@@ -1,0 +1,124 @@
+A probability space is a mathematical construct used to model random experiments. It is defined by the triplet $(\Omega, \mathcal{A}, P)$, where:
+    \begin{itemize}
+        \item $\Omega$ is the \textbf{sample space}, representing all possible outcomes of a random experiment.
+        \item $\mathcal{A}$ is a \textbf{$\sigma$-algebra}, a collection of subsets of $\Omega$ called \textbf{events}, which are the measurable outcomes we are interested in.
+        \item $P$ is the \textbf{probability measure}, a function that assigns a probability to each event $A \in \mathcal{A}$, such that $P(A) \in [0, 1]$.
+    \end{itemize}
+    The most basic conditions for a valid probability measure are:
+    \begin{enumerate}
+        \item $P(\Omega) = 1$.
+        \item For any countable sequence of pairwise disjoint events $\{A_n\}$ (i.e., $A_i \cap A_j = \emptyset$ for $i \neq j$), we have:
+        \[
+        P\left( \bigcup_{n=1}^{\infty} A_n \right) = \sum_{n=1}^{\infty} P(A_n).
+        \]
+    \end{enumerate}
+    
+    \section{Properties of Probability}
+    Several key properties arise naturally from this definition:
+    \begin{enumerate}
+        \item The probability of the \textbf{empty set} is 0, i.e., $P(\emptyset) = 0$.
+        \item \textbf{Monotonicity}: If $A \subseteq B$, then $P(A) \leq P(B)$.
+        \item \textbf{Complement Rule}: The probability of the complement of an event $A$ is:
+        \[
+        P(A^c) = 1 - P(A).
+        \]
+        \item \textbf{Additivity}: For any two events $A$ and $B$:
+        \[
+        P(A \cup B) = P(A) + P(B) - P(A \cap B).
+        \]
+        \item P(B) = P(A$\cap$B) + P($A^c\cap$ B)
+        \item P($A\cup B \cup C$) = P(A) + P(B) + P(C) - P(A$\cap$B) - P(A$\cap$C) - P(B$\cap$C) + P($A\cap B \cap C$)
+        \item Consider $n$ events $A_1, A_2, \dots, A_n$ in $\Omega$. Then 
+        \[
+        {P}(A_1 \cup A_2 \cup \cdots \cup A_n) = \sum_{k=1}^\mathbb{N} \sum_{\substack{J \subseteq \{1,2,\dots,n\} \\ |J| = k}} (-1)^{k+1} {P}\left(\bigcap_{i \in J} A_i\right).
+        \]
+    \end{enumerate}
+    
+    \section{Uniform Probability}
+    In the case where $\Omega$ is finite and consists of $n$ outcomes, we often define a \textbf{uniform probability} measure. This assigns equal probability to each outcome. Specifically, if $\Omega = \{\omega_1, \omega_2, \dots, \omega_n\}$, the probability of each elementary event is:
+    \[
+    P(\{\omega_i\}) = \frac{1}{\mathbb{N}}, \quad \forall i = 1, 2, \dots, n.
+    \]
+    The probability of any event $A \subseteq \Omega$ is then:
+    \[
+    P(A) = \frac{|A|}{|\Omega|} = \frac{|A|} {\mathbb{N}},
+    \]
+    where $|A|$ is the cardinality of $A$.\newline
+    Let \( \Omega \) be a generic set, and let \( p : \Omega \to [0, +\infty) \) be such that:
+    \[
+    \sum_{w \in \Omega} p(w) = 1.
+    \]
+    Then, for every \( A \subseteq \Omega \), we can define the probability of \( A \) as:
+    \begin{equation}
+        P(A) = \sum_{w \in A} p(w). \label{sommap}
+    \end{equation}
+    In particular, \( p(w) = P(\{w\}) \). It can be shown (details are omitted) that \( P \) is a probability measure on \( \mathcal{A}=P(\Omega) \) (the power set of \( \Omega \)). We recall that:
+    \[
+    N = \{ w \in \Omega : p(w) > 0 \}
+    \]
+    is at most countable, and clearly \( P(N) = 1 \). Thus, \( P \) is \textit{concentrated} on a discrete (i.e., finite or countable) set. \newline
+    The converse is also true: if a probability measure \( P \) on \( P(\Omega) \) is such that \( P(N) = 1 \) for a discrete \( N \), then \( P \) can be expressed as in equation (\ref{sommap}), with:
+    \[
+    p(w) = P(\{w\}).
+    \]
+    \paragraph{Example: Tossing a Fair Coin}
+    Consider the experiment of tossing a fair coin. The sample space is $\Omega = \{H, T\}$, where $H$ represents heads and $T$ represents tails. Since the coin is fair, the probability of each outcome is:
+    \[
+    P(H) = P(T) = \frac{1}{2}.
+    \]
+    If we define an event $A = \{H\}$, the probability of $A$ is simply:
+    \[
+    P(A) = \frac{1}{2}.
+    \]
+    The complement of $A$, denoted by $A^c$, is the event $\{T\}$, and its probability is:
+    \[
+    P(A^c) = 1 - P(A) = \frac{1}{2}.
+    \]
+
+    \paragraph{Example: Probability of At Least One Empty Box}
+    Consider the problem where $n$ balls are randomly placed into three initially empty boxes. We want to compute the probability that at least one box remains empty. Let $A_i$ represent the event that the $i$-th box is empty. The probability of the union of these events $P(A_1 \cup A_2 \cup A_3)$ can be computed using the inclusion-exclusion principle:
+    \[
+    P(A_1 \cup A_2 \cup A_3) = P(A_1) + P(A_2) + P(A_3) - P(A_1 \cap A_2) - P(A_1 \cap A_3) - P(A_2 \cap A_3) + P(A_1 \cap A_2 \cap A_3).
+    \]
+    Given that the events $A_1$, $A_2$, and $A_3$ are symmetric, the probabilities can be simplified to:
+    \[
+    P(A_1) = P(A_2) = P(A_3),
+    \]
+    and similarly for the intersections:
+    \[
+    P(A_1 \cap A_2) = P(A_2 \cap A_3) = P(A_1 \cap A_3).
+    \]
+    The intersection occurs if all of the boxes are empty which is impossibile
+    \[
+    P(A_1 \cap A_2 \cap A_3) = 0.
+    \]
+    Let's describe the problem using the sample space $\Omega$ = \{$\omega_1,\omega_2,\ldots,\omega_n$\}. Each $\omega_i$ represent in which box the i-th ball will go, therefore $\omega_i \in \{1,2,3\}$. I assume each throw has the same probability to occurs P(A) = $|A|/|\Omega|$. In this case $|\Omega|$ is equal to $3^n$ because each $\omega_i$ can be 1,2 or 3. \newline
+    The event $A_1 = \{ \omega \in \Omega : \omega_i \in \{2,3\}\}$ and $|A_1| = 2^n$. Using the definition of uniform probability 
+    \[
+    P(A_1) = \frac{|A_1|}{|\Omega|} = \frac{2^n}{3^n} =  \left(\frac{2}{3}\right)^n
+    \]
+    The event $A_1 \cap A_2$ = \{(3,3,3,\ldots,3)\}, because if the box 1 and box 2 are empty it means that only the box 3 is full. Its cardinality is $1^n=1 $ 
+    \[
+    P(A_1\cap A_2) = \frac{|A_1\cap A_2|}{|\Omega|} = \frac{1^n}{3^n} =  \left(\frac{1}{3}\right)^n
+    \]
+    Using the formula written above we get that:
+    \[
+    P(A_1 \cup A_2 \cup A_3) = 3 \left(\frac{2}{3}\right)^n - 3 \left(\frac{1}{3}\right)^n.
+    \]
+
+    \section{Continuity of the probability}
+    Since the probability is define on a sigma field there is no concept of continuity. We can not add events because we have to consider their intersection etc. How can I define the concept of converging?
+    \begin{itemize}
+    \item[(i)] (\textit{Lower continuity}). Let $(A_n)_{n \in \mathbb{N}}$ be an increasing sequence of events, i.e. $A_n \subseteq A_{n+1}$ for all $n$. Then
+    \[
+    {P}\left( \bigcup_{n \in \mathbb{N}} A_n \right) = \lim_{n \to +\infty} {P}(A_n). \tag{1.5}
+    \]
+    \item[(ii)] (\textit{Upper continuity}). Let $(A_n)_{n \in \mathbb{N}}$ be a decreasing sequence of events, i.e. $A_n \supseteq A_{n+1}$ for all $n$. Then
+    \[
+    {P}\left( \bigcap_{n \in \mathbb{N}} A_n \right) = \lim_{n \to +\infty} {P}(A_n). \tag{1.6}
+    \]
+    \item[(iii)] (\textit{Sub-additivity}). Let $(A_n)_{n \in \mathbb{N}}$ be an arbitrary sequence of events. Then
+    \[
+    {P}\left( \bigcup_{n \in \mathbb{N}} A_n \right) \leq \sum_{n \in \mathbb{N}} {P}(A_n).
+    \]
+    \end{itemize}

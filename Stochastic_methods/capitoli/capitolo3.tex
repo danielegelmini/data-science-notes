@@ -1,0 +1,576 @@
+\section{Conditional Probability}
+    Given a probability space $(\Omega, \mathcal{A}, {P})$ and two events $A$ and $B$ such that ${P}(B) > 0$ and A,B $\in \mathcal{A}$, the conditional probability of $A$ given $B$ is defined as:
+    \[
+    {P}(A | B) = \frac{{P}(A \cap B)}{{P}(B)}.
+    \]
+    This represents the probability of event $A$ occurring under the assumption that event $B$ has already occurred. \newline
+    The formula ${P}(A | B)$ quantifies the likelihood of $A$ occurring given that we know $B$ has occurred. If $B$ happens, the sample space effectively shrinks to $B$, and we are interested in the probability that $A$ occurs within this smaller space.
+    
+    \paragraph{Example 1: Rolling Two Dice}
+    Consider two fair dice. Let $A$ be the event that the first die shows a value less than or equal to 2, and let $B$ be the event that the sum of the two dice is 4. We compute ${P}(A | B)$.\newline
+    The sample space $\Omega$ consists of all possible pairs $(i,j)$ where $i,j \in \{1, 2, 3, 4, 5, 6\}$, giving us $|\Omega| = 36$. The event $B$, the sum of two dice being 4, consists of the outcomes: 
+    \[
+    B = \{(1,3), (2,2), (3,1)\},
+    \]
+    so ${P}(B) = \frac{3}{36} = \frac{1}{12}$.
+    The event $A$ consists of the outcomes:
+    \[
+    A = \{(1,j) | j = 1,2,3,4,5,6\} \cup \{(2,j) | j = 1,2,3,4,5,6\},
+    \]
+    so ${P}(A) = \frac{12}{36} = \frac{1}{3}$.\newline
+    Now, we compute the intersection $A \cap B = \{(1,3), (2,2)\}$, giving ${P}(A \cap B) = \frac{2}{36} = \frac{1}{18}$. Hence, the conditional probability is:
+    \[
+    {P}(A | B) = \frac{\frac{1}{18}}{\frac{1}{12}} = \frac{2}{3}.
+    \]
+    This shows that knowing the sum is 4 increases the likelihood of the first die showing a number less than or equal to 2.
+    
+    \paragraph{Example: Conditional Probability with Balls in a Box}
+    We have a box containing 2 white balls and 3 black balls. We withdraw two balls without replacement. Define the following events:
+    \begin{itemize}
+        \item $B_1$: The first ball is black.
+        \item $B_2$: The second ball is black.
+    \end{itemize}
+    We aim to compute the probability of both $B_1$ and $B_2$ occurring, i.e., $P(B_1 \cap B_2)$. Using the definition of conditional probability, we know:
+    \[
+    P(B_1 \cap B_2) = P(B_1) \cdot P(B_2 \mid B_1)
+    \]
+    Computing the Probabilities:
+    \begin{itemize}
+        \item The probability of drawing a black ball first is:
+        \[
+        P(B_1) = \frac{3}{5}
+        \]
+        \item Given that the first ball is black, there are now 2 black balls and 2 white balls left. Thus, the probability of drawing a second black ball is:
+        \[
+        P(B_2 \mid B_1) = \frac{2}{4} = \frac{1}{2}
+        \]
+        \item Therefore, the probability of both events occurring is:
+        \[
+        P(B_1 \cap B_2) = \frac{3}{5} \cdot \frac{1}{2} = \frac{3}{10}
+        \]
+    \end{itemize}
+    Generalizing to $n$ Events: suppose we want to generalize the concept to $n$ events, say $A_1, A_2, \dots, A_n$. The probability of the intersection of these events can be written as:
+    \[
+    P(A_1 \cap A_2 \cap \dots \cap A_n) = P(A_1) \cdot P(A_2 \mid A_1) \cdot P(A_3 \mid A_1 \cap A_2) \cdot \dots \cdot P(A_n \mid A_1 \cap A_2 \cap \dots \cap A_{n-1})
+    \]
+    This formula is particularly useful when dealing with sequential events, where each event may depend on the outcomes of the preceding ones. \newline
+    We use the law of total probability to express $P(B_2)$:
+    \[
+    P(B_2) = P(B_1\cap B_2) + P(B_1^c \cap B_2) = P(B_2 \mid B_1) \cdot P(B_1) + P(B_2 \mid B_1^c) \cdot P(B_1^c)
+    \]
+    Where:
+    \begin{itemize}
+        \item $P(B_1) = \frac{3}{5}$
+        \item $P(B_2 \mid B_1) = \frac{1}{2}$
+        \item $P(B_1^c) = \frac{2}{5}$
+        \item $P(B_2 \mid B_1^c) = \frac{3}{4}$
+    \end{itemize}
+    Thus:
+    \[
+    P(B_2) = \left(\frac{3}{5} \cdot \frac{1}{2}\right) + \left(\frac{2}{5} \cdot \frac{3}{4}\right) = \frac{3}{10} + \frac{6}{20} = \frac{6}{10} = \frac{3}{5}
+    \]
+    For the case of three elements, we can extend the formula using the law of total probability. The idea is to split the event space in such a way that event \( B_3 \) is expressed in terms of \( B_1 \) and \( B_2 \), as follows:
+    \[
+    P(B_3) = P((B_1 \cap B_2 \cap B_3)) + P((B_1 \cap B_2^c \cap B_3)) + P((B_1^c \cap B_2 \cap B_3)) + P((B_1^c \cap B_2^c \cap B_3))
+    \]
+    Now, we can express each term using conditional probabilities. \newline
+    The general formula becomes:
+    \[
+    P(B_3) = P(B_3 \mid B_1 \cap B_2) \cdot P(B_1 \cap B_2) + P(B_3 \mid B_1 \cap B_2^c) \cdot P(B_1 \cap B_2^c)
+    \]
+    \[
+    + P(B_3 \mid B_1^c \cap B_2) \cdot P(B_1^c \cap B_2) + P(B_3 \mid B_1^c \cap B_2^c) \cdot P(B_1^c \cap B_2^c)
+    \]
+    We can compute each partial probability using the law of total probability, as done in the case of two elements.\newline
+    In a more compact form, the formula can be written as:
+    \[
+    P(B_3) = P(B_3 \mid B_1 \cap B_2) \cdot P(B_2 \mid B_1) \cdot P(B_1) + P(B_3 \mid B_1 \cap B_2^c) \cdot P(B_2^c \mid B_1) \cdot P(B_1)
+    \]
+    \[
+    + P(B_3 \mid B_1^c \cap B_2) \cdot P(B_2 \mid B_1^c) \cdot P(B_1^c) + P(B_3 \mid B_1^c \cap B_2^c) \cdot P(B_2^c \mid B_1^c) \cdot P(B_1^c)
+    \]
+    It results that P($B_3$) = $\frac{3}{5}$.
+
+    \section{Independence of Two Events}
+    Let $A$ and $B$ be two events. Assume ${P}(B) > 0$. We say that $A$ and $B$ are independent if:
+    \[
+    {P}(A \mid B) = {P}(A)
+    \]
+    This definition is intuitive: even after learning that $B$ has occurred, the probability of $A$ does not change. Therefore, the occurrence of $B$ does not provide any additional information about $A$. Mathematicians prefer a more rigorous definition, which avoids the assumption that ${P}(B) > 0$. The mathematical definition is:
+    \[
+    {P}(A \cap B) = {P}(A) \cdot {P}(B)
+    \]
+    This definition is equivalent to the conditional probability definition when ${P}(B) > 0$, but it applies more generally.
+    
+    \paragraph{Remark: Probability Zero Events}
+    If ${P}(B) = 0$, then $B$ is independent of any other event. This is because:
+    \[
+    {P}(A \cap B) \leq {P}(B) = 0
+    \]
+    Hence, ${P}(A \cap B) = 0$, and thus the independence condition is trivially satisfied. Therefore, the concept of independence is only meaningful for non-trivial events.
+    
+    \paragraph{Disjoint vs. Independent Events}
+    The concepts of disjoint and independent events are related but distinct. Two events $A$ and $B$ are disjoint if $A \cap B = \emptyset$, meaning:
+    \[
+    {P}(A \cap B) = 0
+    \]
+    Two disjoint events can only be independent if one of them has probability zero. This is because, for independent events with positive probabilities, ${P}(A \cap B)$ must be the product of their probabilities, therefore two disjoint event are independent if and only if at least one of the two events has probability equals to zero.
+    
+    \paragraph{Example: Tossing Two Dice}
+    Consider two independent dice. Define events $A$ and $B$ as follows:
+    \begin{itemize}
+        \item $A$: The first die shows a 1.
+        \item $B$: The second die shows a 6.
+    \end{itemize}
+    Intuitively, these events are independent since the outcome of one die does not affect the other. \newline
+    To check this formally:
+    \[
+    {P}(A) = \frac{1}{6}, \quad {P}(B) = \frac{1}{6}, \quad {P}(A \cap B) = \frac{1}{36}
+    \]
+    Since:
+    \[
+    {P}(A \cap B) = {P}(A) \cdot {P}(B) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}
+    \]
+    $A$ and $B$ are independent.
+    \paragraph{A Third Event}
+    Now, define a third event $C$: the sum of the two dice equals 7. We can represent $C$ as:
+    \[
+    C = \{(1,6), (2,5), (3,4), (4,3), (5,2), (6,1)\}
+    \]
+    The probability of $C$ is:
+    \[
+    {P}(C) = \frac{6}{36} = \frac{1}{6}
+    \]
+    To check if $A$ and $C$ are independent, compute the intersection:
+    \[
+    A \cap C = \{(1,6)\}
+    \]
+    Thus:
+    \[
+    {P}(A \cap C) = \frac{1}{36}
+    \]
+    Since:
+    \[
+    {P}(A) \cdot {P}(C) = \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{36}
+    \]
+    $A$ and $C$ are independent.
+    
+    \paragraph{A Fourth Event: Sum Equals 6}
+    Now, consider a new event $D$: the sum of the two dice equals 6. We represent $D$ as:
+    \[
+    D = \{(1,5), (2,4), (3,3), (4,2), (5,1)\}
+    \]
+    The probability of $D$ is:
+    \[
+    {P}(D) = \frac{5}{36}
+    \]
+    Check if $A$ and $D$ are independent. The intersection is:
+    \[
+    A \cap D = \{(1,5)\}
+    \]
+    Thus:
+    \[
+    {P}(A \cap D) = \frac{1}{36}
+    \]
+    However:
+    \[
+    {P}(A) \cdot {P}(D) = \frac{1}{6} \cdot \frac{5}{36} = \frac{5}{216}
+    \]
+    Since ${P}(A \cap D) \neq {P}(A) \cdot {P}(D)$, $A$ and $D$ are \textbf{not} independent.
+    
+    \paragraph{Independence of Three Events}
+    Events $A$, $B$, and $C$ are independent if:
+    \[
+    {P}(A \cap B \cap C) = {P}(A) \cdot {P}(B) \cdot {P}(C)
+    \]
+    In our example:
+    \[
+    {P}(A \cap B \cap C) = \frac{1}{36}, \quad {P}(A) \cdot {P}(B) \cdot {P}(C) = \frac{1}{6} \cdot \frac{1}{6} \cdot \frac{1}{6} = \frac{1}{216}
+    \]
+    Since these are not equal, $A$, $B$, and $C$ are \textbf{not} independent as a trio, even though they are pairwise independent.
+
+    \section{General case: Independence Between Events}
+    We say that two events, \( A \) and \( B \), are independent if and only if:
+    \[
+    P(A \cap B) = P(A)P(B)
+    \]
+    This means that the occurrence of one event does not affect the probability of the other. When extending this to a finite number of events \( A_1, A_2, \dots, A_n \), we define independence as follows:
+    For any subset \( J \subseteq \{1, 2, \dots, n\} \), the events are independent if:
+    \[
+    P\left(\bigcap_{j \in J} A_j \right) = \prod_{j \in J} P(A_j)
+    \]
+    This definition ensures that for every possible subset of events, the probability of their intersection is the product of their individual probabilities. \newline
+    We can further extend the definition of independence to an infinite sequence of events \( \{A_t\}_{t \in T} \), where \( T \) can be a countable or uncountable index set. The events \( \{A_t\} \) are independent if for events of every \textbf{finite} subset of these events \( T_0 \subseteq T \), the events \( \{A_t\}_{t \in T_0} \) are independent. This means that the independence property holds for any finite subset of events from the infinite collection.
+    
+    \section{Independence of Complement Events}
+    A notable result is that if \( A \) and \( B \) are independent, then their complements \( A^c \) and \( B \) are also independent. To prove this, we start by assuming \( A \) and \( B \) are independent. We need to show that:
+    \[
+    P(A^c \cap B) = P(A^c)P(B)
+    \]
+    Using the definition of complement and basic properties of probability, we proceed by expressing the probability of the intersection of complements as:
+    \[
+    P(A^c \cap B) = P(B) - P(A \cap B)
+    \]
+    Since \( A \) and \( B \) are independent, we can substitute \( P(A \cap B) = P(A)P(B) \) into this equation, which leads us to the desired result:
+    \[
+    P(A^c \cap B) = (1 - P(A))(P(B)) = P(A^c)P(B)
+    \]
+    
+    \section{Sigma Fields and Independence}
+    Given a sigma field \( \sigma(A) \), the smallest sigma field containing \( A \) (i.e. the intersection of all the sigma field containing A)
+    \[
+    \sigma_A = \{\emptyset, \Omega, A, A^c\},
+    \]
+    we define the independence between sigma fields similarly to events. If \( \sigma(A) \) and \( \sigma(B) \) are two sigma fields on $\Omega$, they are independent if every event in \( \sigma(A) \) is independent of every event in \( \sigma(B) \). Formally, for any \( C \in \sigma(A) \) and \( D \in \sigma(B) \), we have:
+    \[
+    P(C \cap D) = P(C)P(D)
+    \]
+
+    \paragraph{Reverse Conditional Probability}
+    Let's return to the concept of conditional probability. To illustrate this, consider the following experiment: we have a box containing two white balls and three black balls. Define:
+    \begin{itemize}
+        \item \( B_1 \) as the event where the first ball drawn is black.
+        \item \( B_2 \) as the event where the second ball drawn is black.
+    \end{itemize}
+    We aim to compute the probability of \( B_2 \), the second ball being black, but we will do so by conditioning on what happened in the first extraction. Using conditional probability, we express this as:
+    \[
+    P(B_2) = P(B_2 | B_1) P(B_1) + P(B_2 | B_1^c) P(B_1^c)
+    \]
+    where \( B_1^c \) represents the complement of \( B_1 \), i.e., the event that the first ball is white. This formula tells us that the best way to compute an event happening at time 2 is to condition on the past, i.e., what happened at time 1.\newline
+    Now, let's explore a less intuitive concept: starting from the probability of \( B_1 \), what is the probability of \( B_1 \) given \( B_2 \)? Mathematically, this can be written as \( P(B_1 | B_2) \). \newline
+    At first glance, this might seem counterintuitive because we are conditioning on an event that occurs in the future. This method is sometimes used in statistical trials, where you ask, "What is the probability of an earlier event, knowing something that happened later?"  \newline
+    To compute this, we use the definition of conditional probability:
+    \[
+    P(B_1 \cap B_2) = P(B_1 | B_2) P(B_2) = P(B_2 | B_1) P(B_1)
+    \]
+    Rearranging, we get:
+    \[
+    P(B_1 | B_2) = \frac{P(B_2 | B_1) P(B_1)}{P(B_2)}
+    \]
+    Thus, we condition on \( B_1 \) or \( B_2 \), depending on the context. 
+    
+    \section{Bayes' Theorem}
+    The result above is known as Bayes' Theorem:
+    \[
+    P(B_1 | B_2) = \frac{P(B_2 | B_1) P(B_1)}{P(B_2)}
+    \]
+    This theorem is central to the field of Bayesian statistics, where it is used to update probabilities based on new information. 
+    
+    \paragraph{Example: Two Black Balls in a Box}
+    Consider again the box with two white balls and three black balls. Suppose we know that the probability of the first ball being black is \( \frac{3}{5} \). Now, what is the probability that the first ball was black, given that the second ball is black? Using Bayes' Theorem, we calculate:
+    \[
+    P(B_1 | B_2) = \frac{P(B_2 | B_1) P(B_1)}{P(B_2 | B_1) P(B_1) + P(B_2 | B_1^c) P(B_1^c)}
+    \]
+    Substituting the values:
+    \[
+    P(B_2 | B_1) = \frac{1}{2}, \quad P(B_1) = \frac{3}{5}, \quad P(B_2 | B_1^c) = \frac{3}{5}
+    \]
+    This yields:
+    \[
+    P(B_1 | B_2) = \frac{\frac{1}{2} \times \frac{3}{5}}{\frac{1}{2} \times \frac{3}{5} + \frac{3}{5} \times \frac{2}{5}} = \frac{1}{2}
+    \]
+    Thus, the probability of the first ball being black, given that the second ball is black, decreases from \( \frac{3}{5} \) to \( \frac{1}{2} \).
+    
+    \subsection{Generalizing Bayes' Theorem}
+    We can extend Bayes' Theorem to more general cases. Suppose we have a partition of the sample space \( \Omega \) into disjoint events \( B_1, B_2, \dots, B_n \) such that \( B_i \cap B_j = \emptyset \) for \( i \neq j \) and \( \cup_{i=1}^n B_i = \Omega \). For any event \( A \), the probability of \( B_i \) given \( A \) is:
+    \[
+    P(B_i | A) = \frac{P(A | B_i) P(B_i)}{\sum_{j=1}^n P(A | B_j) P(B_j)}
+    \]
+    This is the general form of Bayes' Theorem. The \( P(B_i) \) terms are known as \emph{prior probabilities}, while \( P(A | B_i) \) is referred to as the \emph{likelihood}, and the resulting \( P(B_i | A) \) is called the \emph{posterior probability}.
+    
+    
+    \section{Conditional Probability and Bayes' Theorem}
+    Conditional probability allows us to compute the probability of an event given the occurrence of another event. For two events \( A \) and \( B \), the conditional probability of \( A \) given \( B \) is defined as:
+    \[
+    P(A | B) = \frac{P(A \cap B)}{P(B)}, \quad \text{provided } P(B) > 0
+    \]
+    An important application of conditional probability is Bayes' Theorem, which provides a method to update probabilities based on new information. Bayes' Theorem is expressed as:
+    \[
+    P(A | B) = \frac{P(B | A) P(A)}{P(B)}
+    \]
+    where \( P(B) = P(B | A) P(A) + P(B | A^c) P(A^c) \).
+        
+    \subsection{Example: Medical Testing}
+    An interesting application of Bayes' Theorem can be found in medical testing, particularly in the context of HIV testing using the ELISA test. Though this example uses older data, the concepts remain relevant today. \newline
+    Let's define two key states for an individual:
+    \begin{itemize}
+        \item \( M \): the person is ill (HIV positive),
+        \item \( S \): the person is healthy (HIV negative).
+    \end{itemize}
+    In terms of test outcomes, we also define:
+    \begin{itemize}
+        \item HIV positive: the test result is positive,
+        \item HIV negative: the test result is negative.
+    \end{itemize}
+    One of the main issues with medical tests, especially when the disease is rare, is that even if a test has high sensitivity and specificity, the probability of actually being ill, given a positive test result, might still be low. This is particularly relevant when the prevalence of the disease is very low in the population. \newline
+    We want to compute two important probabilities:
+    \begin{enumerate}
+        \item \( P(M | \text{positive}) \): the probability of being ill given a positive test result.
+        \item \( P(S | \text{negative}) \): the probability of being healthy given a negative test result.
+    \end{enumerate}
+    
+    \paragraph{Application of Bayes' Theorem}
+    To calculate these probabilities, we use Bayes' Theorem. For example, to compute the probability of being ill given a positive test result, we have:
+    \[
+    P(M | \text{positive}) = \frac{P(\text{positive} | M) P(M)}{P(\text{positive} | M) P(M) + P(\text{positive} | S) P(S)}
+    \]
+    Assume the following data from epidemiological studies:
+    \[
+    P(M) = 0.000025, \quad P(S) = 0.999975
+    \]
+    Additionally, we have estimates of the test's performance:
+    \begin{itemize}
+        \item Sensitivity: \( P(\text{positive} | M) = 0.993 \)
+        \item Specificity: \( P(\text{negative} | S) = 0.9999 \)
+    \end{itemize}
+    Thus, the probability of a false positive is:
+    \[
+    P(\text{positive} | S) = 1 - 0.9999 = 0.0001
+    \]
+    Now we can substitute these values into Bayes' Theorem:
+    \[
+    P(M | \text{positive}) = \frac{0.993 \times 0.000025}{0.993 \times 0.000025 + 0.0001 \times 0.999975}
+    \]
+    \[
+    P(M | \text{positive}) \approx 0.1988
+    \]
+    This means that even with a positive result, the probability of actually having HIV is only about 20\%. Despite the high sensitivity and specificity of the test, the low prevalence of the disease in the population drastically reduces the probability of being ill after receiving a positive test result.
+    
+    \paragraph{Probability of Being Healthy Given a Negative Test Result}
+    Similarly, we can compute the probability of being healthy given a negative test result:
+    \[
+    P(S | \text{negative}) = \frac{P(\text{negative} | S) P(S)}{P(\text{negative} | S) P(S) + P(\text{negative} | M) P(M)}
+    \]
+    Substituting the known values:
+    \[
+    P(S | \text{negative}) = \frac{0.9999 \times 0.999975}{0.9999 \times 0.999975 + 0.007 \times 0.000025}
+    \]
+    \[
+    P(S | \text{negative}) \approx 0.999999
+    \]
+    This result shows that if the test is negative, it is almost certain (99.9999\%) that the person is healthy.
+    
+    \paragraph{Interpretation of Results}
+    Even though the test is highly sensitive and specific, the prior probability of being ill plays a crucial role. When the prevalence of the disease is very low, as in this case, the probability of actually being ill after receiving a positive result remains relatively low (20\%), though still significantly higher than the prior probability (0.0025\%). \newline
+    In contrast, a negative test result provides strong assurance that the individual is healthy. This example highlights how Bayesian reasoning allows us to update our beliefs based on new evidence and is widely applied in diagnostic testing and other fields involving uncertainty.
+    
+    \section{Limit Superior and Limit Inferior of a Sequence of Events}
+    Consider a sequence of events \( \{A_n\} \). We have already seen two cases:
+    \begin{itemize}
+        \item \textbf{Increasing sequence:} In this case, if \( A_n \subseteq A_{n+1} \) for all \( n \), we define the limit of the sequence as the union of all events:
+        \[
+        \lim_{n \to \infty} A_n = \bigcup_{n=1}^{\infty} A_n
+        \]
+        \item \textbf{Decreasing sequence:} If \( A_{n+1} \subseteq A_n \) for all \( n \), we define the limit as the intersection:
+        \[
+        \lim_{n \to \infty} A_n = \bigcap_{n=1}^{\infty} A_n
+        \]
+    \end{itemize}
+    However, this approach defines the limit differently for increasing and decreasing sequences, which is not ideal. To generalize this and provide a unified definition, we introduce the concepts of \emph{lim sup} and \emph{lim inf}.
+    
+    \paragraph{Limit Superior and Limit Inferior}
+    Given a sequence of events \( \{A_n\} \), we define the \emph{lim sup} and \emph{lim inf} as follows:
+    \begin{itemize}
+        \item \textbf{Lim Sup:}
+        \[
+        \limsup_{n \to \infty} A_n = \lim_{n \to \infty} \bigcup_{m=n}^{\infty} A_m=\bigcap_{n=1}^{\infty} \bigcup_{m=n}^{\infty} A_m
+        \]
+        \item \textbf{Lim Inf:}
+        \[
+        \liminf_{n \to \infty} A_n = \lim_{n \to \infty} \bigcap_{m=n}^{\infty} A_m= \bigcup_{n=1}^{\infty} \bigcap_{m=n}^{\infty} A_m
+        \]
+    \end{itemize}
+    The \emph{lim sup} represents the event that occurs infinitely often, while the \emph{lim inf} represents the event that eventually always occurs. These definitions are based on the sequence of intersections and unions of the events.
+    
+    \paragraph{Properties of Lim Sup and Lim Inf}
+    Both the \emph{lim sup} and \emph{lim inf} of a sequence of events are themselves events, i.e. they both belongs to $\mathcal{A}$. This is important because only events are measurable, and we need to ensure that we can compute their probabilities. \newline
+    One crucial property is that:
+    \[
+    \liminf_{n \to \infty} A_n \subseteq \limsup_{n \to \infty} A_n
+    \]
+    This holds because the \emph{lim inf} requires the events to occur after a certain point onwards, while the \emph{lim sup} only requires the events to occur infinitely often, even if not consecutively.\newline
+    Given a family of events $A_n$ we say that A = $\lim_{n \to \infty} A_n$, where $A \in \mathcal{A}$ (i.e. A is an event), if and only if $A = \liminf_n A_n = \limsup_n A_n$.
+    
+    \paragraph{Intuition Behind Lim Sup and Lim Inf}
+    To better understand the difference between \emph{lim sup} and \emph{lim inf}, consider a random game where \( A_n \) represents the event that you win the \( n \)-th game. The \emph{lim sup} of \( \{A_n\} \) represents the event that you win infinitely often (my wins are not finite but I win i.o., i.e. I can win and lose, but my wins occurs i.o.), while the \emph{lim inf} represents the event that, after a certain point, you win every game.
+
+    \subsection{Example: Alternating Events}
+    Let us consider two events $A$ and $B$. Define a sequence $\{A_n\}$ where:
+    \[
+    A_1 = A, A_2 = B, A_3 = A, A_4 = B, \dots
+    \]
+    Thus, the sequence alternates between $A$ and $B$ for all $n$. Specifically:
+    \[
+    A_n = \begin{cases}
+    A & \text{if } n \text{ is odd}, \\
+    B & \text{if } n \text{ is even}.
+    \end{cases}
+    \]
+    In this case:
+    \begin{itemize}
+        \item The \textit{lim sup} is the union of $A$ and $B$, since both events repeat infinitely:
+        \[
+        \limsup A_n = A \cup B
+        \]
+        \item The \textit{lim inf} is the empty set, as no outcome can belong to both $A$ and $B$ infinitely often:
+        \[
+        \liminf A_n = \emptyset
+        \]
+    \end{itemize}
+    This means that outcomes can alternate between $A$ and $B$, but no outcome belongs to both $A$ and $B$ from some point onward.
+    
+    \paragraph{Interpretation: Occurrence Infinitely Often}
+    The set $\limsup A_n$ can also be interpreted as the set of outcomes that belong to infinitely many events in the sequence. This is an alternative way to define the \textit{lim sup}. For example, consider an outcome $\omega \in A$. If $\omega$ belongs to $A_1$, $A_3$, $A_5$, and so on (all odd-indexed events), then it belongs to infinitely many events, and thus $\omega \in \limsup A_n$. \newline
+    Similarly, if an outcome $\omega \in B$ belongs to $A_2$, $A_4$, $A_6$, and so on (all even-indexed events), then $\omega$ also belongs to infinitely many events. The union of these two sets is the \textit{lim sup}, $A \cup B$. \newline
+    On the other hand, the \textit{lim inf} is empty because no outcome belongs to both $A$ and $B$ from some point onward. \newline
+    This process assumed that $A \cap B = \emptyset$. If the intersection isn't empty than the \emph{lim inf} = $A \cap B$.
+    
+    \subsection{Exercise: Indicator Functions and Sequences}
+    In this exercise, we are asked to prove the following result for a family of events $\{A_n\}$:
+    \[
+    \limsup_{n \to \infty} \mathbf{1}_{A_n} - \liminf_{n \to \infty} \mathbf{1}_{A_n} = \mathbf{1}_{\limsup A_n / \liminf A_n }
+    \]
+    Here, $\mathbf{1}_{A_n}$ denotes the indicator function of the event $A_n$, which takes the value 1 if $\omega \in A_n$ and 0 otherwise.
+    
+    \paragraph{Indicator Functions}
+    The indicator function $\mathbf{1}_A$ for an event $A$ is defined as:
+    \[
+    \mathbf{1}_A(\omega) = \begin{cases} 
+    1 & \text{if } \omega \in A, \\
+    0 & \text{if } \omega \notin A.
+    \end{cases}
+    \]
+    In this exercise, we will work with the indicator functions of $\{A_n\}$, the sequence of events, and aim to show that the difference between the \textit{lim sup} and \textit{lim inf} of the sequence of indicator functions coincides with the difference between the indicator functions of the \textit{lim sup} and \textit{lim inf} of the events. To prove this equality, we must first recognize that it is an equality between two functions. Specifically, if $F$ and $G$ are two functions, then $F = G$ means that for every $\omega$, $F(\omega) = G(\omega)$. \newline
+    Thus, we need to show that for every $\omega \in \Omega$, the value of $\limsup \mathbf{1}_{A_n}(\omega) - \liminf \mathbf{1}_{A_n}(\omega)$ is the same as $\mathbf{1}_{\limsup A_n / \liminf A_n}(\omega)$. That means that if $\omega$ belongs to the limsup but not the liminf than the indicator function on the right will be one, zero otherwise. This means that there are infinitely many n such that $\omega \in A_n$. Therefore $\mathbf{1}_{A_n}(\omega) = 1$. 
+    \newline
+    Let us analyze the values taken by these functions.
+    
+    \subsubsection{Case 1: $\mathbf{1}_{\limsup A_n} = 1$}
+    This happens if and only if $\omega \in \limsup A_n$, which means that $\omega$ belongs to infinitely many of the events $A_n$. This implies that:
+    \[
+    \limsup \mathbf{1}_{A_n}(\omega) = 1
+    \]
+    and
+    \[
+    \liminf \mathbf{1}_{A_n}(\omega) = 0
+    \]
+    since $\omega$ does not belong to all $A_n$ from a certain point onward. \newline
+    Therefore, in this case, the difference $\limsup \mathbf{1}_{A_n} - \liminf \mathbf{1}_{A_n}$ is equal to $1 - 0 = 1$. This matches the value of $\mathbf{1}_{\limsup A_n} - \mathbf{1}_{\liminf A_n}$, which is also $1 - 0 = 1$.
+    
+    \subsubsection{Case 2: $\mathbf{1}_{\liminf A_n} = 1$}
+    This happens if and only if $\omega \in \liminf A_n$, meaning that $\omega$ belongs to all events from some index onward. In this case:
+    \[
+    \limsup \mathbf{1}_{A_n}(\omega) = 1
+    \]
+    and
+    \[
+    \liminf \mathbf{1}_{A_n}(\omega) = 1.
+    \]
+    Thus, the difference $\limsup \mathbf{1}_{A_n} - \liminf \mathbf{1}_{A_n}$ is equal to $1 - 1 = 0$, which matches the value of $\mathbf{1}_{\limsup A_n} - \mathbf{1}_{\liminf A_n} = 1 - 1 = 0$.
+    
+    \subsubsection{Case 3: $\mathbf{1}_{\limsup A_n} = 0$ and $\mathbf{1}_{\liminf A_n} = 0$}
+    In this case, $\omega$ does not belong to any event $A_n$ infinitely often, nor does it belong to all $A_n$ from a certain point onward. Therefore, both the \textit{lim sup} and \textit{lim inf} of the indicator functions are zero:
+    \[
+    \limsup \mathbf{1}_{A_n}(\omega) = 0
+    \]
+    and
+    \[
+    \liminf \mathbf{1}_{A_n}(\omega) = 0.
+    \]
+    Thus, the difference is $0 - 0 = 0$, which matches $\mathbf{1}_{\limsup A_n} - \mathbf{1}_{\liminf A_n} = 0 - 0 = 0$.
+    
+    \section{Borel-Cantelli Lemmas}
+    Consider a sequence of values that can take either 1 or 0. If the value is 0 infinitely often, this is sufficient to conclude that the \textit{lim sup} of the sequence of numbers is 0. Similarly, if the value is 1 infinitely often, the \textit{lim sup} of the sequence of numbers will be 1. This property is what we aim to prove.
+    
+    \subsection{The First Borel-Cantelli Lemma}
+    Let $\{A_n\}$ be a family of events. The first Borel-Cantelli lemma, which is the more important of the two, states the following: \newline
+    Let $\{A_n\}$ be a sequence of events such that:
+    \[
+    \sum_{n=1}^{\infty} P(A_n) < \infty
+    \]
+    This is a series of non-negative numbers (the probabilities), which increases as we sum more terms. If this sum is finite, then:
+    \[
+    P(\limsup_{n \to \infty} A_n) = 0
+    \]
+    This means that the probability of events $A_n$ occurring infinitely often is 0. In other words, the \textit{lim sup} of this sequence of events has probability 0, and it is impossible for an infinite number of events in the sequence to occur.
+    
+    \paragraph{Remark}
+    If the sum of probabilities $\sum_{n=1}^{\infty} P(A_n)$ is finite, then the probability $P(A_n)$ must approach 0 as $n$ increases. However, it is not sufficient for the probabilities to approach 0; they must decrease fast enough for the sum to remain finite. For example, the sum $\sum_{n=1}^{\infty} \frac{1}{\mathbb{N}}$ diverges to infinity, even though each individual term $\frac{1}{\mathbb{N}}$ approaches 0.
+    
+    \subsection{The Second Borel-Cantelli Lemma}
+    The second Borel-Cantelli lemma provides a converse result, but requires the assumption of independence between the event. \newline
+    Let $\{A_n\}$ be a sequence of independent events. If:
+    \[
+    \sum_{n=1}^{\infty} P(A_n) = \infty
+    \]
+    (i.e., the sum diverges to infinity), then:
+    \[
+    P(\limsup_{n \to \infty} A_n) = 1
+    \]
+    This means that if the events $A_n$ are independent and the sum of their probabilities diverges, then the probability that events occur infinitely often is 1.
+    
+    \subsection{Examples}
+    The Borel-Cantelli lemmas are general results in probability theory that deal with sequences of independent events. These lemmas establish the 0-1 law, which states that if an event depends on an infinite number of trials, its probability can only be 0 or 1.
+    
+    \paragraph{Example: Sequence of Trials}
+    Consider a sequence of trials where the probability of success in the $n$th trial is given by $p_n$, where $0 < p_n < 1$. Define $A_n$ to be the event that the $n$th trial is a success. In this case, the events $\{A_n\}$ are independent by definition. \newline
+    We are interested in finding the probability that successes occur infinitely often. In other words, we want to know:
+    \[
+    P\left( \limsup_{n \to \infty} A_n \right)
+    \]
+    According to the Borel-Cantelli lemmas:
+    \begin{itemize}
+        \item If $\sum_{n=1}^{\infty} p_n < \infty$, then the probability of having infinitely many successes is 0. In this case, the probability of success decreases to 0 fast enough that we only expect a finite number of successes.
+        \item If $\sum_{n=1}^{\infty} p_n = \infty$, then the probability of having infinitely many successes is 1. This means that if the probabilities do not decrease too quickly, we can expect infinitely many successes.
+    \end{itemize}
+    
+    \paragraph{Example: Coin Tosses}
+    Consider an infinite sequence of coin tosses where the probability of heads in each trial is a constant $p$. This is equivalent to flipping the same coin infinitely many times. In this case, $p_n = p$ for all $n$, and the sum of probabilities is:
+    \[
+    \sum_{n=1}^{\infty} p = \infty
+    \]
+    Since the sum diverges, by the second Borel-Cantelli lemma, the probability that heads appear infinitely often is 1. Even if $p$ is very small, flipping the coin infinitely often guarantees that heads will appear an infinite number of times.
+    
+    \paragraph{Remark: Paradox of the Monkey Typing the Bible}
+    This type of result leads to well-known paradoxes, such as the "monkey typing the Bible" scenario. If a monkey randomly presses keys on a keyboard for an infinite amount of time, the probability that it will eventually type the entire Bible is 1. Although the probability of typing the Bible in any finite number of keystrokes is extremely small, summing this probability infinitely results in a probability of 1. The paradox arises because the time required is infinite, making it practically impossible in human terms.
+
+    \paragraph{Example: Infinite Sequence of Coin Flips}
+    Consider the simple case of flipping a coin infinitely often. The sample space $\Omega$ consists of infinite sequences of outcomes from each coin flip. Specifically, the sample space can be written as:
+    \[
+    \Omega = \{\omega_1, \omega_2, \dots \}
+    \]
+    where each $\omega_n$ takes the value $H$ (heads) or $T$ (tails). Thus, each element of the sample space is an infinite sequence of heads and tails.
+    
+    \paragraph{Size of the Sample Space}
+    How large is this sample space? Is it finite? No. Is it countable? No. The sample space is uncountably infinite, similar to the set of real numbers. This space is analogous to the real numbers because, just as any real number between 0 and 1 can be expressed as an infinite binary expansion (with digits 0 or 1), an infinite sequence of heads or tails can be thought of as a sequence of binary digits.
+    
+    \paragraph{Sigma Fields and Borel Sets}
+    In defining a probability model for this infinite sequence of coin flips, we cannot take all possible subsets of the sample space, as this would be too large. Instead, we construct a sigma field that is more manageable. \newline
+    For example, when dealing with the real numbers, we define the Borel sigma field, which is the smallest sigma field containing all open sets (or intervals) in $\mathbb{R}$. Similarly, for our infinite sequence of coin flips, we will define a sigma field generated by certain sets, known as cylinder sets.
+    
+    \section{Cylinder Sets}
+    A cylinder set is a set that is determined by fixing a finite number of coordinates (or trials) and allowing the remaining coordinates to take any value. Formally, a cylinder set is constructed by fixing the outcomes for the first $n$ coin flips, and allowing all subsequent flips to vary freely. This is analogous to defining a set in $\mathbb{R}^n$ by fixing some coordinates and allowing the others to take any possible value.
+    
+    \paragraph{Example: Cylinder Sets in Infinite Sequences}
+    Consider the first three trials of an infinite sequence of coin flips. A cylinder set could be defined as the event where the first coin flip is heads, the second coin flip is tails, and the third coin flip is heads, with all subsequent flips being free to take any value. This set is represented as:
+    \[
+    \{H, T, H, \dots\}
+    \]
+    The probability of this event is the product of the probabilities of the individual outcomes:
+    \[
+    P(\{H, T, H, \dots\}) = p \times (1 - p) \times p
+    \]
+    where $p$ is the probability of heads, and $(1 - p)$ is the probability of tails. This cylinder set is an event in the sigma field generated by such sets.
+    
+    \section{Constructing the Probability Space}
+    The probability space for this infinite sequence of coin flips is constructed as follows:
+    \begin{itemize}
+        \item The sample space $\Omega$ consists of infinite sequences of heads and tails.
+        \item The sigma field is generated by cylinder sets, which are defined by fixing a finite number of outcomes and allowing the remaining outcomes to vary.
+        \item The probability of each event is computed as the product of the probabilities of the individual outcomes in the fixed positions.
+    \end{itemize}
+    This construction allows us to define a well-behaved probability measure on the infinite sequence of coin flips.
+    
+    \section{Random Variables and Probability Spaces}
+    In probability theory, random variables take center stage once we have defined the probability space. A random variable is a function from the sample space to the real numbers. In the context of our infinite sequence of coin flips, random variables are used to model quantities of interest, such as the number of heads in the first $n$ trials. \newline
+    The beauty of random variables lies in their ability to characterize probability distributions on $\mathbb{R}$ using the Borel sigma field. This approach extends to random vectors and more complex spaces.

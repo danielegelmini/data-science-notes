@@ -1,0 +1,888 @@
+\section{Convergence in Probability Theory}  
+We aim to explore the meaning of convergence for sequences of random variables. Recall that a random variable, despite its name, can be viewed as a function. This allows us to draw parallels between convergence for sequences of functions and sequences of random variables.  
+
+\subsection{Pointwise Convergence of Numbers and Functions}  
+Consider a sequence of real numbers \(X_n\). We say that \(X_n\) converges to \(X\) as \(n \to \infty\) if, for any \(\epsilon > 0\):  
+\[
+\exists \, N \in \mathbb{N} \text{ such that } \forall n \geq N, \, |X_n - X| < \epsilon.
+\]
+This definition implies that for sufficiently large \(n\), all values of \(X_n\) fall within an \(\epsilon\)-neighborhood of \(X\). \newline
+Similarly, for a sequence of functions \(f_n(x)\), we say \(f_n(x)\) converges pointwise to \(f(x)\) if:
+\[
+\lim_{n \to \infty} f_n(x) = f(x) \quad \forall x \in \text{Domain}(f).
+\]
+This is termed pointwise convergence. While widely used, mathematicians often prefer stronger notions such as uniform convergence due to its desirable properties, such as the preservation of continuity.  
+
+\subsection{Almost Sure Convergence of Random Variables}  
+Let \(\{X_n\}_{n=1}^\infty\) be a sequence of random variables defined on the same probability space \((\Omega, \mathcal{F}, \mathbb{P})\), and let \(X\) be another random variable. We say \(X_n\) converges to \(X\) \textbf{almost surely} (a.s.) as \(n \to \infty\) if:  
+\[
+\mathbb{P} \left( \omega \in \Omega : \lim_{n \to \infty} X_n(\omega) = X(\omega) \right) = 1.
+\]
+We write:
+\[
+X_n \xrightarrow{\text{a.s.}} X.
+\]
+This means that the sequence \(X_n(\omega)\) converges to \(X(\omega)\) for almost every \(\omega \in \Omega\), except possibly on a set of probability zero.  
+
+\subsection{Convergence in Probability}  
+Another notion of convergence for random variables is convergence in probability. Let \(\{X_n\}_{n=1}^\infty\) be a sequence of random variables and \(X\) another random variable on the same probability space. We say that \(X_n\) converges to \(X\) in probability, written as:
+\[
+X_n \xrightarrow{\mathbb{P}} X,
+\]
+if, for any \(\epsilon > 0\):
+\[
+\lim_{n \to \infty} \mathbb{P}(|X_n - X| \geq \epsilon) = 0.
+\]
+This definition implies that for large \(n\), the probability of \(X_n\) being farther than \(\epsilon\) from \(X\) becomes arbitrarily small.  
+
+\subsubsection{Understanding the Probability Event}  
+The event \(|X_n - X| \geq \epsilon\) can be expressed as:
+\[
+\{\omega \in \Omega : |X_n(\omega) - X(\omega)| \geq \epsilon\}.
+\]
+This is equivalent to:
+\[
+\{\omega \in \Omega : X_n(\omega) \not\in [X(\omega) - \epsilon, X(\omega) + \epsilon]\}.
+\]
+Thus, for convergence in probability, we require that the probability of \(X_n\) falling outside the \(\epsilon\)-neighborhood of \(X\) decreases to zero as \(n \to \infty\).  
+
+\paragraph{Comparison of Convergence Types}  
+\begin{itemize}  
+    \item Almost Sure Convergence: Guarantees that \(X_n(\omega) \to X(\omega)\) for almost all \(\omega\). This is a strong form of convergence.  
+    \item Convergence in Probability: Weaker than almost sure convergence. It ensures that the sequence of random variables is "close" to \(X\) with high probability, but this closeness may vary for different subsets of \(\Omega\) as \(n\) changes.  
+\end{itemize}  
+
+\subsection{Theorem: Convergence Almost Surely Implies Convergence in Probability}  
+If \( X_n \to X \) almost surely as \( n \to \infty \), then:
+\[
+\mathbb{P} \left( \limsup_{n \to \infty} |X_n - X| \geq \epsilon \right) = 0 \quad \text{for all} \, \epsilon > 0.
+\]
+This means that if \( X_n \) converges to \( X \) almost surely, the probability that the distance between \( X_n \) and \( X \) is greater than any fixed \( \epsilon \) infinitely often is zero.
+
+\subsubsection{Corollary: Sufficient Condition for Almost Sure Convergence}  
+By the Borel-Cantelli Lemma, we know that if the sum:
+\[
+\sum_{n=1}^{\infty} \mathbb{P} \left( |X_n - X| \geq \epsilon \right) < \infty
+\]
+is finite, then \( X_n \to X \) almost surely. This provides a sufficient condition for almost sure convergence. If \(X_n \xrightarrow{\text{a.s.}} X\), then \(X_n \xrightarrow{\mathbb{P}} X\). However, the converse is not necessarily true. Convergence in probability does not imply almost sure convergence because the subset of \(\Omega\) where \(X_n\) does not converge to \(X\) may change with \(n\), even if the probability of such a subset becomes arbitrarily small. 
+
+\section{Counterexample for Convergence in Probability but Not Almost Surely}
+
+It is possible to construct a sequence of random variables \( \{X_n\}_{n=1}^\infty \) that converges to a random variable \( X \) in probability but does not converge almost surely to any random variable. This highlights that convergence in probability does not necessarily imply almost sure convergence.
+
+\paragraph{Counterexample: A Constructive Approach}
+Let us consider the sequence \( X_n \) defined as follows:
+\begin{itemize}
+    \item \( X_n \sim \text{Binomial}(1, p_n) \), where \( p_n \) varies depending on \( n \).
+    \item We construct \( X_n \) using the unit interval \( \Omega = [0, 1] \) with the Lebesgue measure as the probability measure.
+\end{itemize}
+
+\paragraph{Construction of the Sequence:}
+\begin{enumerate}
+    \item Define \( X_1 \) such that:
+    \[
+    X_1(x) =
+    \begin{cases}
+    1 & \text{if } x \in [0, \frac{1}{2}), \\
+    0 & \text{if } x \in [\frac{1}{2}, 1].
+    \end{cases}
+    \]
+    Clearly, \( X_1 \sim \text{Binomial}(1, \frac{1}{2}) \).
+    
+    \item Define \( X_2 \) as:
+    \[
+    X_2(x) =
+    \begin{cases}
+    0 & \text{if } x \in [0, \frac{1}{2}), \\
+    1 & \text{if } x \in [\frac{1}{2}, 1].
+    \end{cases}
+    \]
+    Again, \( X_2 \sim \text{Binomial}(1, \frac{1}{2}) \), but note that \( X_1(x) \neq X_2(x) \) for all \( x \in [0, 1] \).
+
+    \item Continue this construction, dividing the interval \([0, 1]\) into \( n \) equal parts for \( X_n \). Define \( X_n \) such that \( X_n(x) = 1 \) for one subinterval and \( 0 \) elsewhere. For instance:
+    \[
+    X_3(x) =
+    \begin{cases}
+    1 & \text{if } x \in [0, \frac{1}{3}), \\
+    0 & \text{otherwise}.
+    \end{cases}
+    \]
+    \item Similarly:
+    \[
+    X_4(x) =
+    \begin{cases}
+    1 & \text{if } x \in [\frac{1}{3}, \frac{2}{3}), \\
+    0 & \text{otherwise}.
+    \end{cases}
+    \]
+\end{enumerate}
+
+\paragraph{Properties of the Construction:}
+\begin{itemize}
+    \item For any fixed \( x \in [0, 1] \), the sequence \( \{X_n(x)\} \) alternates between \( 0 \) and \( 1 \), depending on the subinterval to which \( x \) belongs.
+    \item Each \( X_n \sim \text{Binomial}(1, \frac{1}{n}) \). As \( n \to \infty \), the probability \( p_n = \frac{1}{n} \) decreases, making \( X_n(x) \) increasingly likely to be \( 0 \).
+\end{itemize}
+We now show that \( X_n \to 0 \) in probability:
+\[
+\mathbb{P}(|X_n - 0| > \epsilon) = \mathbb{P}(X_n = 1) = p_n = \frac{1}{n}.
+\]
+As \( n \to \infty \), \( \frac{1}{n} \to 0 \). Therefore, \( X_n \to 0 \) in probability. \newline
+For almost sure convergence, we consider any fixed \( x \in [0, 1] \). The sequence \( \{X_n(x)\} \) alternates between \( 0 \) and \( 1 \) infinitely often due to the construction. Thus:
+\[
+\limsup_{n \to \infty} X_n(x) = 1, \quad \liminf_{n \to \infty} X_n(x) = 0.
+\]
+Since the limits do not coincide, the sequence \( \{X_n(x)\} \) does not converge almost surely to any random variable. \newline
+This counterexample demonstrates:
+\begin{enumerate}
+    \item Convergence in probability does not imply almost sure convergence.
+    \item Almost sure convergence is a stronger form of convergence that requires the sequence to settle on a limit for almost every \( x \) in \( \Omega \).
+\end{enumerate}
+The distinction between convergence in probability and almost sure convergence is fundamental in understanding the Law of Large Numbers (LLN):
+\begin{itemize}
+    \item Weak LLN: Proves convergence in probability for the sample mean \( \bar{X}_n \).
+    \item Strong LLN: Proves almost sure convergence for \( \bar{X}_n \).
+\end{itemize}
+These results will be explored in detail in subsequent sections.
+
+
+\section{Convergence in $L^P$ Norm and Weak Convergence}
+
+\subsection{Convergence in $L^P$ Norm}  
+We now consider another type of convergence called convergence in \( L^p \)-norm. Recall that a random variable \( X \) belongs to \( L^1 \) (the space of square-integrable random variables) if and only if the expectation of \( X \) is finite:
+\[
+\mathbb{E}[|X|] < \infty.
+\]
+Similarly, \( X \in L^2 \) if and only if the expectation of the absolute value of \( X^2 \) is finite:
+\[
+\mathbb{E}[|X|^2] < \infty.
+\]
+For \( p = 3 \), \( X \in L^3 \) if and only if \( \mathbb{E}[|X|^3] < \infty \). In general, we define that \( X \in L^p \) for any \( p \geq 1 \) if and only if:
+\[
+\mathbb{E}[|X|^p] < \infty.
+\]
+This defines the space \( L^p \), which contains random variables whose absolute value raised to the power \( p \) has a finite expectation.
+
+\subsubsection{Definition}  
+Let \( \{X_n\}_{n=1}^\infty \) be a sequence of random variables and \( X \) another random variable, both defined on the same probability space. We say that \( X_n \) converges to \( X \) in \( L^p \)-norm as \( n \to \infty \) if:
+\[
+\lim_{n \to \infty} \mathbb{E}[|X_n - X|^p] = 0.
+\]
+This is the definition of convergence in \( L^p \)-norm. All the random variables in the sequence must belong to the same probability space and to the space \( L^p \) (i.e., their moments of order \( p \) must be finite).
+
+\subsection{Weak Convergence (Convergence in Distribution)}  
+The fourth type of convergence is called weak convergence, or convergence in distribution. Weak convergence is conceptually different from the previous types of convergence discussed. While the previous types required the random variables to be defined on the same probability space, weak convergence applies to random variables that may not share the same probability space. \newline
+Let \( \{X_n\}_{n=1}^\infty \) be a sequence of random variables and \( X \) another random variable. We say that \( X_n \) converges to \( X \) in distribution, which is represented with \(X_n \xrightarrow{\mathcal{D}^w} X\), then \(X_n \xrightarrow{\mathbb{P}} X\) as \( n \to \infty \) if:
+\[
+F_{X_n}(x) \to F_X(x) \quad \text{for all } x \in \mathbb{R} \text{ where } F_X(x) \text{ is continuous}.
+\]
+Here, \( F_{X_n}(x) \) is the cumulative distribution function (CDF) of \( X_n \) and \( F_X(x) \) is the CDF of \( X \). The convergence happens at all points where \( F_X(x) \) is continuous. \newline
+This type of convergence is also known as convergence in distribution, and it does not require the random variables to be defined on the same probability space. We simply require the convergence of their distribution functions.
+
+\subsubsection{Further Results: Weak Convergence and Distribution Functions}
+
+\begin{itemize}
+    \item Weak convergence does not require the random variables to be defined on the same probability space. It only involves the convergence of their distribution functions.
+    \item Convergence in distribution is typically used when analyzing large sample properties, such as the Central Limit Theorem (CLT), where we are interested in the behavior of the distribution rather than individual realizations of the random variables.
+\end{itemize}
+
+
+\section{The Weak Law of Large Numbers (WLLN)}
+Let \( \{X_n\}_{n \geq 1} \) be a sequence of i.i.d. random variables, where "i.i.d." stands for independent and identically distributed. This means:
+\begin{itemize}
+    \item All random variables \( X_i \) share the same distribution (e.g., all are Binomial, Gaussian, or Exponential with the same parameter).
+    \item The \( X_i \) are mutually independent.
+\end{itemize}
+Let \( \mu = \mathbb{E}[X_i] \), and assume that \( \mu \) is finite. This implies \( X_i \in L^1 \). Since all \( X_i \) share the same distribution, they have the same expectation \( \mu \). Additionally, assume that the variance \( \sigma^2 = \mathrm{Var}(X_i) \) is finite. For any \( \epsilon > 0 \), the following holds:
+\[
+\mathbb{P}(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\sigma^2}{n \epsilon^2},
+\]
+where:
+\[
+\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i
+\]
+is the sample mean of \( X_1, \dots, X_n \). \newline
+This inequality implies that the probability of the sample mean deviating from the population mean \( \mu \) by more than \( \epsilon \) becomes arbitrarily small as \( n \to \infty \). Specifically, the right-hand side \( \frac{\sigma^2}{n \epsilon^2} \) approaches \( 0 \) as \( n \to \infty \). \newline
+The sample mean \( \bar{X}_n \) converges to \( \mu \) in probability, denoted as:
+\[
+\bar{X}_n \xrightarrow{\mathbb{P}} \mu.
+\]
+This means that for any \( \epsilon > 0 \):
+\[
+\lim_{n \to \infty} \mathbb{P}(|\bar{X}_n - \mu| \geq \epsilon) = 0.
+\]
+In order to prove it we need to introduce the Markov Inequality and the Chebyshev Inequality.
+\subsection{Markov Inequality}
+The Markov inequality is a fundamental result in probability theory. It states that if \( Y \) is a non-negative random variable, and \( \delta > 0 \) is any positive constant, then:
+\[
+\mathbb{P}(Y \geq \delta) \leq \frac{\mathbb{E}[Y]}{\delta}.
+\]
+
+\paragraph{Proof:}  
+For any \( Y \geq 0 \), we can write:
+\[
+Y \geq \delta \cdot \mathbb{I}(Y \geq \delta),
+\]
+where \( \mathbb{I}(Y \geq \delta) \) is the indicator function of the event \( Y \geq \delta \). The inequality holds because:
+\begin{itemize}
+    \item If \( Y \geq \delta \), then \( \mathbb{I}(Y \geq \delta) = 1 \), and \( Y \geq \delta \) is trivially true.
+    \item If \( Y < \delta \), then \( \mathbb{I}(Y \geq \delta) = 0 \), and \( Y \geq 0 \) holds because \( Y \) is non-negative.
+\end{itemize}
+Taking expectations on both sides:
+\[
+\mathbb{E}[Y] \geq \delta \cdot \mathbb{E}[\mathbb{I}(Y \geq \delta)].
+\]
+Since the expectation of an indicator function corresponds to the probability of the event it represents:
+\[
+\mathbb{E}[\mathbb{I}(Y \geq \delta)] = \mathbb{P}(Y \geq \delta).
+\]
+Thus:
+\[
+\mathbb{E}[Y] \geq \delta \cdot \mathbb{P}(Y \geq \delta).
+\]
+Dividing both sides by \( \delta \) gives:
+\[
+\mathbb{P}(Y \geq \delta) \leq \frac{\mathbb{E}[Y]}{\delta}.
+\]
+
+\subsection{Chebyshev Inequality}
+The Chebyshev inequality is a direct consequence of the Markov inequality. It provides a bound on the probability that a random variable deviates from its mean by a certain amount.
+
+\paragraph{Theorem:}
+Let \( X \in L^2 \), meaning \( \mathbb{E}[X^2] < \infty \). Then, for any \( \epsilon > 0 \):
+\[
+\mathbb{P}(|X - \mu| \geq \epsilon) \leq \frac{\mathrm{Var}(X)}{\epsilon^2},
+\]
+where \( \mu = \mathbb{E}[X] \) and \( \mathrm{Var}(X) = \mathbb{E}[(X - \mu)^2] \). \newline
+Define \( Y = (X - \mu)^2 \), which is a non-negative random variable. Then:
+\[
+\mathbb{P}(|X - \mu| \geq \epsilon) = \mathbb{P}((X - \mu)^2 \geq \epsilon^2).
+\]
+Applying the Markov inequality to \( Y \) with \( \delta = \epsilon^2 \), we get:
+\[
+\mathbb{P}((X - \mu)^2 \geq \epsilon^2) \leq \frac{\mathbb{E}[(X - \mu)^2]}{\epsilon^2}.
+\]
+By definition of variance, \( \mathbb{E}[(X - \mu)^2] = \mathrm{Var}(X) \). Thus:
+\[
+\mathbb{P}(|X - \mu| \geq \epsilon) \leq \frac{\mathrm{Var}(X)}{\epsilon^2}.
+\]
+
+\subsection{Application to the Weak Law of Large Numbers (WLLN)}
+
+Consider the sequence \( \{X_i\}_{i=1}^n \), where \( X_i \) are independent and identically distributed (i.i.d.) random variables with mean \( \mu \) and variance \( \sigma^2 \). Define the sample mean:
+\[
+\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i.
+\]
+
+\paragraph{Key Properties of \( \bar{X}_n \):}
+\begin{enumerate}
+    \item Expectation:
+    \[
+    \mathbb{E}[\bar{X}_n] = \frac{1}{n} \sum_{i=1}^n \mathbb{E}[X_i] = \mu.
+    \]
+    \item Variance:
+    \[
+    \mathrm{Var}(\bar{X}_n) = \mathrm{Var}\left(\frac{1}{n} \sum_{i=1}^n X_i \right) = \frac{1}{n^2} \sum_{i=1}^n \mathrm{Var}(X_i).
+    \]
+    Since \( X_i \) are i.i.d., \( \mathrm{Var}(X_i) = \sigma^2 \), so:
+    \[
+    \mathrm{Var}(\bar{X}_n) = \frac{1}{n^2} \cdot n \cdot \sigma^2 = \frac{\sigma^2}{n}.
+    \]
+\end{enumerate}
+
+\paragraph{Weak Law of Large Numbers (WLLN):}
+Using the Chebyshev inequality:
+\[
+\mathbb{P}(|\bar{X}_n - \mu| \geq \epsilon) \leq \frac{\mathrm{Var}(\bar{X}_n)}{\epsilon^2} = \frac{\sigma^2}{n \epsilon^2}.
+\]
+As \( n \to \infty \), \( \frac{\sigma^2}{n \epsilon^2} \to 0 \). Therefore:
+\[
+\bar{X}_n \xrightarrow{\mathbb{P}} \mu,
+\]
+i.e., \( \bar{X}_n \) converges in probability to \( \mu \). This inequality shows that the probability of the sample mean deviating from the true mean \( \mu \) diminishes as \( n \to \infty \). Specifically, it converges to \( 0 \) at a rate proportional to \( \frac{1}{n} \).
+
+\section{Chernoff Bounds: Derivation and Application}
+While the WLLN guarantees convergence in probability, it is often beneficial to analyze the rate of convergence. The Chebyshev bound suggests a convergence rate of \( \mathcal{O}(1/n) \), which, while useful, is not particularly rapid. To refine the bounds on probabilities of deviations in the sample mean, we proceed with the analysis of the following inequality for \( \bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i \). We get that the upper tail estimate is:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp(-n G(t)),
+\]
+where \( G(t) \) is a carefully defined function derived from the moment-generating function of \( X_i \). 
+
+\subsubsection{Step 1: Rewriting the Probability as an Exponential}
+The initial probability can be expressed as:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) = \mathbb{P}\left(\sum_{i=1}^n X_i \geq n(\mu + \epsilon)\right).
+\]
+Exponentiating both sides using the monotonicity of the exponential function, with $t>0$, gives:
+\[
+\mathbb{P}\left(\sum_{i=1}^n X_i \geq n(\mu + \epsilon)\right) = \mathbb{P}\left(e^{t \sum_{i=1}^n X_i} \geq e^{t n (\mu + \epsilon)}\right).
+\]
+Using Markov's inequality, we obtain:
+\[
+\mathbb{P}\left(e^{t \sum_{i=1}^n X_i} \geq e^{t n (\mu + \epsilon)}\right) \leq \frac{\mathbb{E}[e^{t \sum_{i=1}^n X_i}]}{e^{t n (\mu + \epsilon)}}.
+\]
+
+\subsubsection{Step 2: Leveraging Independence and Moment-Generating Functions}
+Exploiting the independence of the \( X_i \), the expectation in the numerator becomes:
+\[
+\mathbb{E}\left[e^{t \sum_{i=1}^n X_i}\right] = \prod_{i=1}^n \mathbb{E}\left[e^{t X_i}\right] = \left(\mathbb{E}[e^{t X_1}]\right)^n = \left(M(t)\right)^n,
+\]
+where \( M(t) = \mathbb{E}[e^{t X_1}] \) is the moment-generating function of \( X_1 \). Substituting this into the inequality yields:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \frac{\left(M(t)\right)^n}{e^{t n (\mu + \epsilon)}}.
+\]
+
+\subsubsection{Step 3: Simplifying the Expression}
+Rewriting the ratio as a single exponential:
+\[
+\frac{\left(M(t)\right)^n}{e^{t n (\mu + \epsilon)}} = \exp\left(n \ln M(t) - t n (\mu + \epsilon)\right).
+\]
+Define \( G(t) \) as:
+\[
+G(t) = t (\mu + \epsilon) - \ln M(t).
+\]
+Thus:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp\left(-n G(t)\right).
+\]
+
+\subsubsection{Step 4: Optimizing \( G(t) \)}
+The utility of this bound depends on the behavior of \( G(t) \). Specifically:
+\begin{itemize}
+    \item If \( G(t) > 0 \), the bound converges to zero exponentially as \( n \to \infty \).
+    \item To tighten the bound, we maximize \( G(t) \) for \( t \geq 0 \). Let \( t^* \) be the maximizer, such that:
+    \[
+    G(t^*) = \max_{t \geq 0} G(t).
+    \]
+    \item Substituting \( t^* \) into the bound provides the sharpest estimate:
+    \[
+    \mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp\left(-n G(t^*)\right).
+    \]
+\end{itemize}
+
+\subsubsection{Step 5: Analysis of \( G(t) \), with $t>0$}
+The function \( G(t) \) is given by:
+\[
+G(t) = t \cdot (\mu + \epsilon) - \ln M(t).
+\]
+\begin{itemize}
+    \item At \( t = 0 \), \( G(0) = 0 \), since \( \ln M(0) = \ln 1 = 0 \).
+    \item The derivative is:
+    \[
+    G'(t) = (\mu + \epsilon) - \frac{M'(t)}{M(t)}.
+    \]
+    At \( t = 0 \):
+    \[
+    G'(0) = (\mu + \epsilon) - \mu = \epsilon > 0.
+    \]
+    Since \( G'(0) > 0 \), \( G(t) \) increases for small \( t > 0 \). This guarantees the existence of a \( t^* > 0 \) where \( G(t^*) > 0 \).
+\end{itemize}
+
+\subsubsection{Step 6: Extending to the Lower Tail}
+A similar argument applies for the lower tail:
+\[
+\mathbb{P}(\bar{X}_n \leq \mu - \epsilon) \leq \exp\left(-n H(t)\right),
+\]
+where \( H(t) \) is defined as:
+\[
+H(t) = -t (\mu - \epsilon) - \ln M(-t).
+\]
+\begin{itemize}
+    \item \( H(0) = 0 \).
+    \item The derivative:
+    \[
+    H'(t) = -(\mu - \epsilon) + \frac{M'(-t)}{M(-t)}.
+    \]
+    At \( t = 0 \), \( H'(0) = \epsilon > 0 \), ensuring \( H(t) > 0 \) for small \( t > 0 \).
+\end{itemize}
+
+\subsubsection{Conclusion}
+Combining the upper and lower tail bounds:
+\[
+\mathbb{P}(|\bar{X}_n - \mu| \geq \epsilon) \leq 2 \exp\left(-n G(t^*)\right),
+\]
+where \( G(t^*) \) is the maximum of \( G(t) \) for \( t \geq 0 \). This result showcases the exponential decay of probabilities, significantly improving over earlier polynomial bounds.
+
+\section{Chernoff Bounds: Extension to the Lower Tail and Example with Gaussian Random Variables}
+
+\subsection{Example 1: Standard Normal Variables}
+The Gaussian random variable case provides an excellent starting point to understand Chernoff bounds. Let us consider independent copies of a standard normal random variable \( X_i \sim \mathcal{N}(0, 1) \).
+\begin{itemize}
+    \item For the standard normal, the expectation \( \mu = 0 \) and the moment-generating function is:
+    \[
+    M(t) = \mathbb{E}[e^{t X}] = e^{t^2 / 2}, \quad t \in \mathbb{R}.
+    \]
+    \item The upper-tail probability is bounded as:
+    \[
+    \mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp\left(-n G(t^*)\right),
+    \]
+    where \( G(t) = t (\mu + \epsilon) - \ln M(t) \).
+\end{itemize}
+Substituting \( \mu = 0 \) and \( \ln M(t) = t^2 / 2 \), the function \( G(t) \) becomes:
+\[
+G(t) = t \epsilon - \frac{t^2}{2}.
+\]
+
+\subsubsection{Analysis of \( G(t) \)}
+\begin{itemize}
+    \item The function \( G(t) = t \epsilon - \frac{t^2}{2} \) is quadratic in \( t \). Its maximum occurs at \( t = \epsilon \), which is the vertex of the parabola.
+    \item At \( t = \epsilon \):
+    \[
+    G(t^*) = G(\epsilon) = \epsilon^2 / 2.
+    \]
+\end{itemize}
+Thus, the Chernoff bound for the Gaussian case becomes:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) = \mathbb{P}(\bar{X}_n \geq \epsilon) \leq \exp\left(-\frac{n \epsilon^2}{2}\right).
+\]
+
+\subsubsection{Remark on the Gaussian Case}
+For Gaussian random variables, we can derive even tighter bounds using properties specific to the normal distribution. By leveraging additional tools, the probability of a standard normal exceeding a threshold \( x \) satisfies:
+\[
+\mathbb{P}(X \geq x) \leq \frac{1}{x \sqrt{2\pi}} e^{-x^2 / 2}, \quad x \geq 0.
+\]
+This result improves upon the Chernoff bound by including a prefactor \( 1/x \), which accelerates convergence to zero.
+
+\subsubsection{Generalization to Other Distributions}
+The Gaussian case serves as a benchmark. For more general distributions, we aim to derive bounds that mimic the Gaussian behavior:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp\left(-n f(\epsilon)\right),
+\]
+where \( f(\epsilon) \) often involves \( \epsilon^2 \) or other polynomial dependencies on \( \epsilon \). \newline
+For standard normal variables, we achieve sharper results using their specific properties. In the general setting, Chernoff bounds provide a robust framework for analyzing tail probabilities. The next step is to explore other "easy cases" and extend the bounds to more complex distributions.
+
+\subsection{Example 2: Transformation of Standard Normal Variables}
+
+Let us consider a family of independent standard normal random variables \( Z_1, Z_2, \ldots, Z_n \), where \( Z_i \sim \mathcal{N}(0, 1) \). For each \( i = 1, 2, \ldots, n \), we define a transformation of \( Z_i \) as:
+\[
+X_i = Z_i^2.
+\]
+These random variables \( X_i \) are said to follow a chi-square distribution with one degree of freedom:
+\[
+X_i \sim \chi^2(1).
+\]
+This distribution is also equivalent to a Gamma distribution:
+\[
+X_i \sim \Gamma\left(\frac{1}{2}, 1\right).
+\]
+The chi-square distribution arises naturally in statistics, especially in hypothesis testing and estimation.
+
+\subsubsection{Moment-Generating Function of \( X_i \)}
+To apply Chernoff bounds, we need the expectation and moment-generating function (MGF) of \( X_i \):
+\begin{itemize}
+    \item The expectation is:
+    \[
+    \mathbb{E}[X_i] = \mathbb{E}[Z_i^2] = \text{Var}(Z_i) = 1.
+    \]
+    \item The moment-generating function is:
+    \[
+    M_X(t) = \mathbb{E}[e^{t X_i}] = \mathbb{E}[e^{t Z_i^2}].
+    \]
+\end{itemize}
+To compute \( M_X(t) \), we integrate over the density of the standard normal random variable:
+\[
+M_X(t) = \int_{-\infty}^{\infty} e^{t z^2} \cdot \frac{1}{\sqrt{2\pi}} e^{-z^2 / 2} \, dz = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty e^{-(1 - 2t)z^2 / 2} \, dz.
+\]
+
+\subsubsection{Evaluation of the Integral}
+
+By completing the square and substituting \( s = \sqrt{1 - 2t} \cdot z \), we simplify the integral:
+\[
+M_X(t) = \frac{1}{\sqrt{2\pi}} \int_{-\infty}^\infty \frac{1}{\sqrt{1 - 2t}} e^{-s^2 / 2} \, ds.
+\]
+Since the integral of the standard normal density over \( s \) is 1, we obtain:
+\[
+M_X(t) =
+\begin{cases}
+\frac{1}{\sqrt{1 - 2t}}, & t < \frac{1}{2}, \\
+\infty, & t \geq \frac{1}{2}.
+\end{cases}
+\]
+The moment-generating function is finite for \( t < 1/2 \), which is sufficient to apply Chernoff bounds.
+
+\subsubsection{Chernoff Bound for the Upper Tail}
+
+The upper-tail probability is given by:
+\[
+\mathbb{P}\left(\bar{X}_n \geq \mu + \epsilon\right) \leq e^{-n G(t)},
+\]
+where \( G(t) = t (\mu + \epsilon) - \ln M_X(t) \). Substituting \( \mu = 1 \) and \( \ln M_X(t) = -\frac{1}{2} \ln(1 - 2t) \), we have:
+\[
+G(t) = t (1 + \epsilon) + \frac{1}{2} \ln(1 - 2t).
+\]
+
+\subsubsection{Maximizing \( G(t) \)}
+
+To find the best bound, we maximize \( G(t) \) over \( t \in [0, 1/2) \). The derivative of \( G(t) \) is:
+\[
+G'(t) = (1 + \epsilon) - \frac{1}{1 - 2t}.
+\]
+Setting \( G'(t) = 0 \), we solve:
+\[
+(1 + \epsilon) = \frac{1}{1 - 2t}.
+\]
+Rearranging gives:
+\[
+1 - 2t = \frac{1}{1 + \epsilon}, \quad 2t = 1 - \frac{1}{1 + \epsilon} = \frac{\epsilon}{1 + \epsilon}, \quad t = \frac{\epsilon}{2(1 + \epsilon)}.
+\]
+
+\subsubsection{Optimal Value of \( G(t) \)}
+
+Substituting \( t^* = \frac{\epsilon}{2(1 + \epsilon)} \) into \( G(t) \), we find:
+\[
+G(t^*) = t^* (1 + \epsilon) + \frac{1}{2} \ln\left(1 - 2t^*\right).
+\]
+Using \( 1 - 2t^* = \frac{1}{1 + \epsilon} \), this simplifies to:
+\[
+G(t^*) = \frac{\epsilon}{2} - \frac{1}{2} \ln(1 + \epsilon).
+\]
+Thus, the Chernoff bound becomes:
+\[
+\mathbb{P}\left(\bar{X}_n \geq 1 + \epsilon\right) \leq \exp\left(-n \left[\frac{\epsilon}{2} - \frac{1}{2} \ln(1 + \epsilon)\right]\right).
+\]
+
+\subsubsection{Approximation of \( \ln(1 + \epsilon) \)}
+To simplify the bound, we approximate \( \ln(1 + \epsilon) \) for small \( \epsilon > 0 \). Specifically, we want to show:
+\[
+\ln(1 + \epsilon) \leq \epsilon - \frac{\epsilon^2}{2(1 + \epsilon)}.
+\]
+
+Define:
+\[
+A(\epsilon) = \ln(1 + \epsilon), \quad B(\epsilon) = \epsilon - \frac{\epsilon^2}{2(1 + \epsilon)}.
+\]
+We aim to prove \( A(\epsilon) \leq B(\epsilon) \) for small \( \epsilon \geq 0 \).
+
+\paragraph{Step 1: Initial Values.}
+At \( \epsilon = 0 \):
+\[
+A(0) = \ln(1) = 0, \quad B(0) = 0.
+\]
+Thus, \( A(0) = B(0) \).
+
+\paragraph{Step 2: Derivatives.}
+The derivatives of \( A(\epsilon) \) and \( B(\epsilon) \) are:
+\[
+A'(\epsilon) = \frac{1}{1 + \epsilon}, \quad
+B'(\epsilon) = 1 - \frac{\epsilon(2 + \epsilon)}{2(1 + \epsilon)^2}.
+\]
+
+If \( A'(\epsilon) \leq B'(\epsilon) \) for small \( \epsilon \geq 0 \), then \( A(\epsilon) \leq B(\epsilon) \).
+
+\paragraph{Step 3: Simplifying the Inequality.}
+We compare \( A'(\epsilon) \) and \( B'(\epsilon) \). The inequality \( \frac{1}{1 + \epsilon} \leq 1 - \frac{\epsilon(2 + \epsilon)}{2(1 + \epsilon)^2} \) reduces to:
+\[
+2(1 + \epsilon)^2 \leq 2 + 2\epsilon + \epsilon^2.
+\]
+Expanding both sides confirms this inequality holds for small \( \epsilon \geq 0 \).
+
+\subsubsection{Final Bound}
+
+Using the approximation \( \ln(1 + \epsilon) \leq \epsilon - \frac{\epsilon^2}{2(1 + \epsilon)} \), the function \( G(t^*) \) becomes:
+\[
+G(t^*) \geq \frac{\epsilon^2}{4(1 + \epsilon)}.
+\]
+Thus, the upper tail estimate is:
+\[
+\mathbb{P}\left(\bar{X}_n \geq 1 + \epsilon\right) \leq \exp\left(-n \frac{\epsilon^2}{4(1 + \epsilon)}\right).
+\]
+This bound provides an exponential decay rate for the probability as \( n \to \infty \).
+
+\subsubsection{Lower Tail Estimate Using Chernoff Bound}
+
+To complement the upper tail estimate, we now focus on the *lower tail* bound. Specifically, we aim to estimate:
+\[
+\mathbb{P}\left(\bar{X}_n \leq \mu - \epsilon\right),
+\]
+where \( \bar{X}_n \) is the sample mean, \(\mu\) is the mean of the distribution of \(X_i\), and \(\epsilon > 0\). Using the Chernoff technique, this probability is bounded as follows:
+\[
+\mathbb{P}\left(\bar{X}_n \leq \mu - \epsilon\right) \leq \exp\left(-n H(t)\right),
+\]
+where the function \( H(t) \) is defined as:
+\[
+H(t) = -t (\mu - \epsilon) - \ln M_X(-t).
+\]
+
+\paragraph{Definition of \(H(t)\):}
+For the case where \(X_i = Z_i^2\), with \(Z_i \sim \mathcal{N}(0, 1)\), we know that:
+\[
+M_X(t) = \begin{cases}
+\frac{1}{\sqrt{1 - 2t}}, & \text{if } t < \frac{1}{2}, \\
+\infty, & \text{if } t \geq \frac{1}{2}.
+\end{cases}
+\]
+Thus:
+\[
+M_X(-t) = \frac{1}{\sqrt{1 + 2t}} \quad \text{for } t > 0.
+\]
+Substituting into \(H(t)\):
+\[
+H(t) = -t (\mu - \epsilon) + \frac{1}{2} \ln(1 + 2t).
+\]
+For \( t = 0 \), \( H(0) = 0 \), ensuring \(H(t) \geq 0\) for small values of \(t\).
+
+\paragraph{Optimization of \(H(t)\):}
+To find the optimal value of \(t\), we compute the derivative \(H'(t)\) and set it to zero:
+\[
+H'(t) = -(\mu - \epsilon) + \frac{1}{2} \cdot \frac{2}{1 + 2t}.
+\]
+Simplifying:
+\[
+H'(t) = -(\mu - \epsilon) + \frac{1}{1 + 2t}.
+\]
+Setting \(H'(t) = 0\):
+\[
+\frac{1}{1 + 2t} = \mu - \epsilon,
+\]
+which implies:
+\[
+1 + 2t = \frac{1}{\mu - \epsilon}.
+\]
+Thus:
+\[
+t^* = \frac{\frac{1}{\mu - \epsilon} - 1}{2} = \frac{\epsilon}{2(\mu - \epsilon)}.
+\]
+
+\paragraph{Evaluation of \(H(t^*)\):}
+Substituting \(t^*\) back into \(H(t)\):
+\[
+H(t^*) = -t^*(\mu - \epsilon) + \frac{1}{2} \ln(1 + 2t^*).
+\]
+Using \(1 + 2t^* = \frac{1}{\mu - \epsilon}\), we find:
+\[
+H(t^*) = -\frac{\epsilon}{2(\mu - \epsilon)}(\mu - \epsilon) + \frac{1}{2} \ln\left(\frac{1}{\mu - \epsilon}\right).
+\]
+Simplifying:
+\[
+H(t^*) = -\frac{\epsilon}{2} + \frac{1}{2} \ln\left(\frac{1}{\mu - \epsilon}\right).
+\]
+For the case where \(\mu = 1\), the above reduces to:
+\[
+H(t^*) = -\frac{\epsilon}{2} + \frac{1}{2} \ln\left(\frac{1}{1 - \epsilon}\right).
+\]
+
+\paragraph{
+Approximation for Logarithmic Term:}
+To simplify further, we use the inequality:
+\[
+\l(1 - \epsilon) \leq -\epsilon - \frac{\epsilon^2}{2}.
+\]
+Thus:
+\[
+-\frac{\epsilon}{2} + \frac{1}{2} \ln\left(\frac{1}{1 - \epsilon}\right) \leq -\frac{\epsilon}{2} + \frac{1}{2}(-\epsilon - \frac{\epsilon^2}{2}) = -\frac{\epsilon^2}{4}.
+\]
+
+\paragraph{Final Lower Tail Bound:}
+This yields the lower tail estimate:
+\[
+\mathbb{P}\left(\bar{X}_n \leq \mu - \epsilon\right) \leq \exp\left(-n \frac{\epsilon^2}{4}\right).
+\]
+
+\subsubsection{Summary of Chernoff Bounds}
+Combining the upper and lower tail estimates:
+\[
+\mathbb{P}(|\bar{X}_n - \mu| \geq \epsilon) \leq 2 \exp\left(-n \frac{\epsilon^2}{8}\right).
+\]
+This provides a complete characterization of the deviation of the sample mean from the true mean for the squared normal random variables under the Chernoff bound framework.
+
+\subsection{Advanced Probability Estimates for Normal and Binomial Distributions}
+
+\paragraph{Probability Bounds for Normal Distributions.}
+For a standard normal random variable \( X \), the probability that the sample mean \( \bar{X}_n \) deviates significantly from the mean can be tightly bounded. Specifically, we showed:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq e^{-n\epsilon^2 / 2}.
+\]
+This result is particularly significant for its exponential decay rate, which implies rapid convergence of \( \bar{X}_n \) to the true mean \( \mu \). The probability of error decreases exponentially with \( n \), allowing us to achieve desired confidence levels with moderate sample sizes. \newline
+For practical applications, if a specific small probability of error, say less than \( 0.01 \), is required, this inequality provides the necessary sample size \( n \). This reduces both computational and data collection costs while ensuring statistical accuracy.
+
+\paragraph{Sharper Bounds Using the Density of Standard Normal Variables.}
+The probability \( \mathbb{P}(X \geq x) \) for \( X \sim N(0, 1) \) can also be estimated directly using its probability density function (PDF). Recall that the PDF is given by:
+\[
+f_X(x) = \frac{1}{\sqrt{2\pi}} e^{-x^2 / 2}.
+\]
+To refine the estimate, we applied a differential equation associated with the density function:
+\[
+x f_X(x) = -f'_X(x).
+\]
+Using this property, we derived:
+\[
+\mathbb{P}(X \geq x) \leq \frac{1}{x} f_X(x),
+\]
+where \( x > 0 \). This estimate is particularly useful for tail probabilities in Gaussian distributions, as it leverages the exponential decay of \( f_X(x) \).
+
+\paragraph{Application to Sample Means.}
+For a sample mean \( \bar{X}_n \) of \( n \) independent \( N(0, 1) \) random variables, we observed that:
+\[
+\mathbb{P}(\bar{X}_n \geq \epsilon) = \mathbb{P}\left(\sqrt{n} \bar{X}_n \geq \sqrt{n} \epsilon\right),
+\]
+where \( \sqrt{n} \bar{X}_n \sim N(0, 1) \). Applying the sharper bound, we obtained:
+\[
+\mathbb{P}(\bar{X}_n \geq \epsilon) \leq \frac{1}{\epsilon \sqrt{n}} \frac{1}{\sqrt{2\pi}} e^{-n\epsilon^2 / 2}.
+\]
+This result demonstrates the added precision of including a multiplicative factor of \( 1 / \sqrt{n} \), further tightening the probability bounds.
+
+\paragraph{Upper Tail Estimates for Binomial Distributions.}
+For a sequence of \( n \) i.i.d. Bernoulli random variables \( X_i \sim \text{Bernoulli}(p) \), the moment-generating function (MGF) plays a critical role in deriving bounds:
+\[
+M(t) = p e^t + (1 - p).
+\]
+Using this MGF, the upper tail probability for the sample mean \( \bar{X}_n \) exceeding \( p + \delta \) can be bounded by:
+\[
+\mathbb{P}(\bar{X}_n \geq p + \delta) \leq e^{-n p \delta^2 / (2 + \delta)}.
+\]
+For small values of \( \delta \), this reduces to the simpler form:
+\[
+\mathbb{P}(\bar{X}_n \geq p + \delta) \leq e^{-n p \delta^2 / 2},
+\]
+providing a practical estimate with fewer computational demands.
+
+
+\section{Chernoff Bounds for Discrete Random Variables}
+
+We now turn our attention to the application of Chernoff bounds in the context of discrete random variables. Specifically, we analyze the scenario of independent and identically distributed (i.i.d.) random variables taking discrete values. 
+
+\subsection{Bernoulli Random Variables}
+Consider \( X_1, X_2, \dots, X_n \), where each \( X_i \) is a Bernoulli random variable with parameter \( p \). That is:
+\[
+\mathbb{P}(X_i = 1) = p, \quad \mathbb{P}(X_i = 0) = 1 - p.
+\]
+The expectation of \( X_i \) is:
+\[
+\mu = \mathbb{E}[X_i] = p.
+\]
+The moment-generating function (MGF) of \( X_i \) is given by:
+\[
+M_X(t) = \mathbb{E}\left[e^{t X_i}\right] = p e^t + (1 - p).
+\]
+
+\paragraph{Upper Tail Estimate}
+We seek to bound:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon),
+\]
+where \( \bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i \) is the sample mean. Using the Chernoff technique:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp\left(-n G(t)\right),
+\]
+where:
+\[
+G(t) = t (\mu + \epsilon) - \ln M_X(t).
+\]
+Substituting \( \mu = p \), the function \( G(t) \) becomes:
+\[
+G(t) = t (p + \epsilon) - \ln\left[p e^t + (1 - p)\right].
+\]
+
+\paragraph{Optimization of \( G(t) \)}
+To find the optimal bound, we maximize \( G(t) \) by solving:
+\[
+G'(t) = (p + \epsilon) - \frac{p e^t}{p e^t + (1 - p)} = 0.
+\]
+Simplifying:
+\[
+p e^t + (1 - p) = \frac{p e^t}{p + \epsilon},
+\]
+which leads to:
+\[
+e^t = \frac{(p + \epsilon)(1 - p)}{p (1 - p - \epsilon)}.
+\]
+Taking the natural logarithm gives the optimal \( t^* \):
+\[
+t^* = \ln\left(\frac{(p + \epsilon)(1 - p)}{p (1 - p - \epsilon)}\right).
+\]
+
+\paragraph{Final Bound}
+Substituting \( t^* \) into \( G(t) \):
+\[
+G(t^*) = t^* (p + \epsilon) - \ln\left[p e^{t^*} + (1 - p)\right].
+\]
+While this expression can be evaluated numerically, it is generally unwieldy. To simplify, we use the inequality:
+\[
+\l(1 + x) \leq x.
+\]
+This allows us to approximate \( G(t) \) and derive a looser but more interpretable bound. Ultimately, we find:
+\[
+\mathbb{P}(\bar{X}_n \geq \mu + \epsilon) \leq \exp\left(-n \frac{\epsilon^2}{2p}\right),
+\]
+valid for \( \epsilon \leq p \).
+
+\paragraph{Remarks on Tightening the Bound}
+While the Chernoff bound provides a general framework, additional tricks or properties specific to the random variable can yield sharper estimates. For instance, for Gaussian random variables, specific properties of the normal distribution allow the derivation of more refined tail bounds. Similarly, for Bernoulli variables, leveraging the binomial structure may produce tighter results, though these can involve more intricate computations.
+
+\paragraph{Summary}
+Chernoff bounds serve as a versatile tool for bounding probabilities of rare events, particularly for sums of i.i.d. random variables. While exact computation can be challenging, the framework provides a principled approach to understanding deviations in both discrete and continuous cases.
+
+\section{Central Limit Theorem: Upper Tail Estimate and General Proof}
+
+\paragraph{Upper Tail Estimate.}
+The probability that the sample mean deviates above its expected value by at least a fraction \(\delta\) of the true mean can be bounded as follows:
+\[
+\mathbb{P}(\bar{X}_n \geq (1 + \delta) \mu) \leq \exp\left(-n \mu \frac{\delta^2}{2 + \delta}\right),
+\]
+where we denote \(\epsilon = \delta \mu\) for notational simplicity. \newline
+This result is a direct consequence of applying Chernoff bounds, where the quadratic term \(\delta^2\) dominates the behavior of the bound. For small \(\delta\), we observe that the denominator \(2 + \delta\) can be approximated by a constant, simplifying the estimate further. This makes Chernoff bounds particularly powerful for analyzing deviations in sums of random variables.
+
+\paragraph{Introduction to the Central Limit Theorem.}
+The Central Limit Theorem (CLT) forms the foundation of statistical inference. Consider a sequence of independent and identically distributed (i.i.d.) random variables \((X_n)_{n \in \mathbb{N}}\), each with finite mean \(\mu = \mathbb{E}[X_i]\) and variance \(\sigma^2 = \mathrm{Var}(X_i) > 0\). Define the standardized variable:
+\[
+Z_n = \frac{\sqrt{n} (\bar{X}_n - \mu)}{\sigma},
+\]
+where \(\bar{X}_n = \frac{1}{n} \sum_{i=1}^n X_i\) is the sample mean. Substituting \(\bar{X}_n\) into \(Z_n\), we rewrite:
+\[
+Z_n = \frac{1}{\sqrt{n} \sigma} \sum_{i=1}^n (X_i - \mu).
+\]
+The Central Limit Theorem asserts that:
+\[
+Z_n \xrightarrow{D} \mathcal{N}(0, 1),
+\]
+where \(\mathcal{N}(0, 1)\) denotes the standard normal distribution. This remarkable result holds regardless of the underlying distribution of \(X_i\), provided \(\mathbb{E}[X_i^2] < \infty\).
+
+\paragraph{Intuition Behind the CLT.}
+\begin{enumerate}
+    \item Law of Large Numbers: The sample mean \(\bar{X}_n\) converges in probability (and almost surely) to the true mean \(\mu\):
+   \[
+   \bar{X}_n \xrightarrow{\mathbb{P}} \mu.
+   \]
+   This implies that the sum of \(n\) independent observations grows linearly with \(n\), but the mean stabilizes.
+   \item Variance Scaling: The sum \(\sum_{i=1}^n (X_i - \mu)\) grows unbounded as \(n\) increases. Dividing by \(\sqrt{n}\) rescales this sum, ensuring the variance of the standardized sum stabilizes.
+   \item Normality Emergence: Surprisingly, the limiting distribution is \emph{always} normal, regardless of the original distribution of \(X_i\).
+\end{enumerate}
+
+\paragraph{Sketch of the Proof.}
+We use the characteristic function approach to demonstrate the CLT. \newline
+Let \(Y_i = \frac{X_i - \mu}{\sigma}\) be standardized random variables with mean 0 and variance 1. Then:
+\[
+Z_n = \frac{1}{\sqrt{n}} \sum_{i=1}^n Y_i.
+\]
+The characteristic function of \(Z_n\) is:
+\[
+\phi_{Z_n}(u) = \mathbb{E}\left[e^{iu Z_n}\right] = \prod_{i=1}^n \phi_Y\left(\frac{u}{\sqrt{n}}\right),
+\]
+where \(\phi_Y(t)\) is the characteristic function of \(Y_i\). Using the Taylor expansion of \(\phi_Y\):
+\[
+\phi_Y(t) = 1 - \frac{t^2}{2} + o(t^2).
+\]
+Substituting \(t = \frac{u}{\sqrt{n}}\):
+\[
+\phi_Y\left(\frac{u}{\sqrt{n}}\right) = 1 - \frac{u^2}{2n} + o\left(\frac{1}{n}\right).
+\]
+Thus:
+\[
+\phi_{Z_n}(u) = \left(1 - \frac{u^2}{2n} + o\left(\frac{1}{n}\right)\right)^n.
+\]
+Expanding using the exponential approximation:
+\[
+\phi_{Z_n}(u) \to \exp\left(-\frac{u^2}{2}\right) \quad \text{as } n \to \infty.
+\]
+This is the characteristic function of \(\mathcal{N}(0, 1)\), proving that:
+\[
+Z_n \xrightarrow{D} \mathcal{N}(0, 1).
+\]
+
+\paragraph{Significance of the CLT.}
+The Central Limit Theorem justifies the widespread use of the normal distribution in statistics. Even if the underlying data distribution is unknown or complex, the CLT ensures that sufficiently large samples lead to normal-like behavior. This underpins hypothesis testing, confidence intervals, and numerous probabilistic models.
+
+\paragraph{Other Chernoff bounds.} The demonstrations of the other Chernoff bounds can be found in the Paolo Dai Prada notes. Be sure to learn how to obtain those bounds because the professor will ask you this in the exam.
+
+
+
+

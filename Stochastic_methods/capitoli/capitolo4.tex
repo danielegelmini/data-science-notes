@@ -1,0 +1,290 @@
+    A \textbf{random variable} is defined as a function \( X \) that maps from a probability space \( (\Omega, \mathcal{A}, P) \) to a measurable space \( (E, \mathcal{E}) \). In other words, it is a function:
+    \[
+    X : \Omega \to E.
+    \]
+    However, for \( X \) to be a random variable, it is not enough to be a simple function; it must satisfy additional properties. Specifically, for any \( A \in \mathcal{E} \) (where \( \mathcal{E} \) is a $\sigma$-algebra on \( E \)), the \textbf{preimage} of \( A \) under \( X \), defined as:
+    \[
+    X^{-1}(A) = \{ \omega \in \Omega : X(\omega) \in A \} = \{X \in A\} \subseteq \Omega,
+    \]
+    must be an element of \( \mathcal{A} \). This ensures that the preimage is measurable, allowing us to evaluate probabilities.
+    
+    \paragraph{Understanding the Preimage Concept}
+    
+    If we have a subset \( A \subseteq E \), the preimage \( X^{-1}(A) \) is a subset of \( \Omega \), and it consists of all elements \( \omega \) such that \( X(\omega) \in A \). This backward mapping allows us to determine the probability of events associated with \( X \). \newline
+    For example, suppose \( X: \Omega \to \mathbb{R} \) is a real-valued random variable. We can ask what the probability is that \( X \) takes values greater than 1. This can be expressed as:
+    \[
+    P(X > 1) = P(\{\omega \in \Omega : X(\omega) > 1\}) = P(X^{-1}([1, +\infty))).
+    \]
+    
+    \paragraph{Sigma-Field on the Target Space}
+    
+    To define a random variable X rigorously, we need to specify a $\sigma$-field \( \mathcal{E} \) on the target space \( E \). This allows us to determine which subsets of \( E \) we can meaningfully talk about in terms of probabilities. Thus, a random variable is a function:
+    \[
+    X : (\Omega, \mathcal{A}) \to (E, \mathcal{E}),
+    \]
+    such that for every \( A \in \mathcal{E} \), the preimage \( X^{-1}(A) \in \mathcal{A} \). Given this I can define a function called the \textit{distribution} on the \textit{law} of \textit{X}
+    \[
+    \mu_{X}: \mathcal{E} \rightarrow [0,1]
+    \]
+    such that 
+    \[
+    \mathcal{E} \ni A \rightarrow \mu_{X}(A) = P[X^{-1}(A)]
+    \]
+    
+    \paragraph{Theorem}
+    If $X:(\Omega,\mathcal{A},P) \rightarrow (E,\mathcal{E})$ is a random variable than $(E,\mathcal{E},\mu_X)$ is a probability space. The most important cases are the one with $E = \mathbb{R}$, $\mathcal{E} = \mathcal{B}(\mathbb{R})$ and the one with $E = \mathbb{R}^d$, $\mathcal{E} = \mathcal{B}(\mathbb{R}^d)$. The first one represents real random variable, the second one random vectors.
+    
+    \section{Discrete Random Variables}
+    A random variable \( X \) taking values in a set \( E \) is called \textbf{discrete} if there exists a countable subset \( N \subseteq \mathcal{E} \), at most countable, such that:
+    \[
+    P(X \in N) = \mu_X[N] =  1.
+    \]
+    This means that \( X \) takes values in a discrete (finite or countable) subset of \( E \) with probability 1. The set \( N \) is referred to as the \textbf{support} of the distribution of \( X \), although this support is not necessarily unique.
+    
+    \subsection{Probability Mass Function (PMF)}
+    
+    For discrete random variables, we can define a \textbf{probability mass function} (PMF):
+    \[
+    p_X(x) = P(X = x), \quad x \in E.
+    \]
+    The PMF assigns probabilities to each value that the random variable can take. For any subset \( A \subseteq E \), the probability that \( X \) falls within \( A \) can be determined as:
+    \[
+    P(X \in A) = \sum_{x \in A} p_X(x).
+    \]
+    
+    \paragraph{Conditions for a Valid PMF}
+    
+    A function \( p: E \to [0, 1] \) can serve as the PMF of a discrete random variable if:
+    \begin{enumerate}
+        \item There exists a countable set \( N \subseteq E \) such that \( p(x) = 0 \) for all \( x \notin N \).
+        \item \( p(x) \geq 0 \) for all \( x \in N \).
+        \item \(\sum_{x \in N} p(x) = 1\).
+    \end{enumerate}
+    If these conditions are satisfied, \( p \) can be used to define a discrete random variable.
+
+    \paragraph{Constructing a Discrete Random Variable}
+    If we know the values \( \{p_X(x)\} \) for \( x \in \mathbb{N} \), we can determine the distribution of \( X \). Conversely, if we have a function \( p \) that satisfies the properties above, we can construct a random variable \( X \) whose law is defined by \( p \).
+    
+    \paragraph{Distribution and Measures Induced by Random Variables}
+    Given a random variable \( X: \Omega \to E \), we can define a measure \( \mu_X \) on \( (E, \mathcal{E}) \), called the \textbf{distribution} of \( X \), by:
+    \[
+    \mu_X(A) = P(X^{-1}(A)), \quad A \in \mathcal{E}.
+    \]
+    This measure describes how the probability mass or density is distributed across the target space \( E \). 
+
+    \paragraph{Applications and Extensions}
+    The concept of random variables extends to more complex cases, such as:
+    \begin{itemize}
+        \item \textbf{Random vectors:} Where \( E = \mathbb{R}^d \) and \( \mathcal{E} \) is the Borel $\sigma$-algebra.
+        \item \textbf{Stochastic processes:} These can be seen as sequences of random variables, often indexed by time.
+    \end{itemize}
+    For instance, a \textbf{discrete-time stochastic process} can be thought of as a sequence of random variables \( \{X_n\}_{n \in \mathbb{N}} \), where each \( X_n \) maps \( \Omega \) to \( \mathbb{R} \).
+    
+    \section{Examples of Discrete Probability Distributions:Binomial Distribution}
+    One common discrete random variable is the \textbf{binomial random variable}, which models the number of successes in \( n \) independent Bernoulli trials. If each trial has a success probability \( p \), then the PMF of a binomial random variable \( X \) is:
+    \[
+    p_X(k) = \binom{{N}}{k} p^k (1-p)^{n-k}, \quad k = 0, 1, \ldots, n,
+    \]
+    where \( \binom{{N}}{k} \) is the binomial coefficient:
+    \[
+    \binom{{N}}{k} = \frac{n!}{k!(n-k)!}.
+    \]
+    This distribution is defined for \( p \in [0, 1] \) and \( n \in \mathbb{N} \). The sum over all possible values \( k \) should equal 1:
+    \[
+    \sum_{k=0}^{N} \binom{{N}}{k} p^k (1-p)^{n-k} = 1,
+    \]
+    which can be verified using the \textbf{binomial theorem}.
+    
+    \subsection{The Binomial Theorem and Its Application}
+    The binomial theorem states:
+    \[
+    (a + b)^n = \sum_{k=0}^{N} \binom{N}{k} a^k b^{n-k}.
+    \]
+    By setting \( a = p \) and \( b = 1 - p \), we can see that the sum of the binomial distribution's PMF over all possible values equals 1:
+    \[
+    (p + (1-p))^n = 1^n = 1.
+    \]
+    The \textbf{binomial theorem} is a fundamental concept in combinatorics. It states that for any two numbers \( a \) and \( b \) and a positive integer \( n \), the expression \( (a + b)^n \) can be expanded as:
+    \[
+    (a + b)^n = \sum_{k=0}^{N} \binom{N}{k} a^k b^{n-k},
+    \]
+    where \( \binom{N}{k} \) is the \textbf{binomial coefficient}, defined as:
+    \[
+    \binom{N}{k} = \frac{n!}{k!(n-k)!}.
+    \]
+  
+    \section{Discrete Random Variables and Their Laws}   
+    A \textbf{random variable} \( X \) can be discrete or continuous. Discrete random variables take on countable values, and their probability distribution is described by a probability mass function (PMF). \newline
+    The \textbf{law} of a random variable is a function defined over a sigma field, assigning probabilities to different outcomes. However, working directly with the law can be challenging due to the abstract nature of sigma fields and their lack of simple analytical properties.
+    
+    \paragraph{Monotonicity and Continuity}
+    For a probability function \( P \), two fundamental properties are:
+    \begin{enumerate}
+        \item \textbf{Monotonicity}: If \( A \subseteq B \), then \( P(A) \leq P(B) \).
+        \item \textbf{Continuity}: If \( A_n \) is a sequence of events with \( A_n \to A \), then $lim_{n \to \infty} P(A_n) = P(A)$.
+    \end{enumerate}
+    These properties ensure that the behavior of probabilities over sequences of events is well-defined, although practical computation might still be complex. 
+    
+    \section{Introduction to Distribution Functions}
+    
+    In the study of \textbf{real-valued random variables}, we often define a function that is crucial for understanding the behavior of these variables. This function is known as the \textbf{cumulative distribution function} (CDF), and it provides a way to evaluate the probability that a random variable \( X \) takes on values less than or equal to a given \( x \in \mathbb{R} \). Formally, the CDF \( F_X \) of a random variable \( X \) is defined as:
+    \[
+    F_X(x) = P(X \leq x) = P(X \in (-\infty, x]).
+    \]
+    
+    \paragraph{Construction of the CDF}
+    
+    Given a random variable \( X \) mapping from a probability space \( (\Omega, \mathcal{A}, P) \) to the real line \( \mathbb{R} \), the CDF \( F_X \) can be described as:
+    \[
+    F_X(x) = P(X \leq x) = \mu_X((- \infty, x]),
+    \]
+    where \( \mu_X \) represents the probability measure induced by \( X \). For each real number \( x \), \( F_X(x) \) gives the probability that \( X \) will assume a value less than or equal to \( x \).
+    
+    \subsection{Properties of the CDF}
+    
+    The CDF \( F_X(x) \) is a fundamental tool for understanding the behavior of a random variable, and it satisfies several key properties, which we will now describe. These properties help to characterize \( F_X \) and establish its usefulness in probability theory.
+    
+    \paragraph{Monotonicity}
+    
+    The first property of \( F_X(x) \) is that it is \textbf{non-decreasing}. If \( x \leq y \) for \( x, y \in \mathbb{R} \), then:
+    \[
+    F_X(x) \leq F_X(y).
+    \]
+    This property can be understood because the event \( \{X \leq x\} \) is a subset of the event \( \{X \leq y\} \) whenever \( x \leq y \). Since probabilities are monotone with respect to set inclusion, it follows that:
+    \[
+    P(X \leq x) \leq P(X \leq y).
+    \]
+    
+    \paragraph{Right-Continuity}
+    
+    The CDF \( F_X(x) \) is \textbf{right-continuous}, which means:
+    \[
+    \lim_{y \to x^+} F_X(y) = F_X(x).
+    \]
+    In other words, if \( y \) approaches \( x \) from the right (from larger values), then the CDF converges to \( F_X(x) \). This property arises because probabilities are defined as measures on events, and events that "shrink" to a point from the right side will maintain the probability defined at that point.
+    
+    \paragraph{Proof of Right-Continuity}
+    
+    To prove right-continuity, consider a sequence \( \{x_n\} \) such that \( x_n \geq x \) and \( x_n \to x \) as \( n \to \infty \). By the definition of \( F_X \), we have:
+    \[
+    F_X(x_n) = P(X \leq x_n).
+    \]
+    Since \( \{x_n\} \) is a non-increasing sequence converging to \( x \), the events \( \{X \leq x_n\} \) form a decreasing sequence of sets, whose limit is \( \{X \leq x\} \). By the continuity properties of measures:
+    \[
+    \lim_{n \to \infty} P(X \leq x_n) = P(X \leq x).
+    \]
+    Thus, \( \lim_{y \to x^+} F_X(y) = F_X(x) \), proving right-continuity.
+    
+    \paragraph{Limits at Infinity}
+    
+    The CDF \( F_X(x) \) has well-defined limits as \( x \) approaches \(-\infty\) and \( +\infty\):
+    \begin{align*}
+    \lim_{x \to -\infty} F_X(x) &= 0, \\
+    \lim_{x \to +\infty} F_X(x) &= 1.
+    \end{align*}
+    These limits make intuitive sense because, as \( x \to -\infty \), the probability that \( X \) is less than or equal to \( x \) should approach zero, and as \( x \to +\infty \), the probability should approach one.
+    
+    \paragraph{Example: Evaluating the CDF}
+    Let's illustrate the use of the CDF with a concrete example. Suppose \( X \) is a random variable, and we want to determine the probability that \( X \leq 1 \). This can be calculated as:
+    \[
+    F_X(1) = P(X \leq 1).
+    \]
+    Similarly, \( F_X(-3) \) would represent the probability that \( X \) takes values less than or equal to \(-3\). 
+    
+    \subsection{Why Use the CDF Instead of the Law?}
+    
+    The CDF provides a simpler, more manageable function compared to the complete probability law of a random variable. While the law may be defined over an abstract sigma field and can be complex, the CDF is a real-valued function that is easier to analyze and use for practical calculations. \newline
+    Moreover, the CDF captures all the essential information about the distribution of a random variable and is sufficient for many purposes, such as calculating probabilities of intervals, determining quantiles, and understanding the general behavior of the distribution.
+    
+    \section{Properties of CDFs}
+    A function \( F: \mathbb{R} \to [0, 1] \) can be a CDF of some random variable if and only if it satisfies the following three properties:
+    \begin{enumerate}
+        \item \( F \) is \textbf{non-decreasing}.
+        \item \( F \) is \textbf{right-continuous}.
+        \item \(\lim_{x \to -\infty} F(x) = 0\) and \(\lim_{x \to +\infty} F(x) = 1\).
+    \end{enumerate}
+    These properties ensure that the CDF is well-defined and corresponds to the behavior of a genuine random variable.
+    
+    \section{Characterization of Random Variables via Distribution Functions}
+    
+    In probability theory, there are two fundamental theorems that highlight the importance of the \textbf{cumulative distribution function} (CDF) in characterizing random variables. These theorems show how the CDF can fully determine the distribution of a random variable and what conditions are necessary for a function to serve as a CDF.
+    
+    \subsection{Theorem 1: Distribution Function Characterizes the Law}
+    
+    The first theorem states that the \textbf{distribution function} \( F_X \) fully characterizes the \textbf{law} \( \mu_X \) of a random variable \( X \). This means that if two random variables \( X \) and \( Y \) have the same distribution function, they have the same law:
+    \[
+    F_X = F_Y \implies \mu_X = \mu_Y.
+    \]
+    Therefore, if \( X \) and \( Y \) are two random variables such that:
+    \[
+    F_X(x) = F_Y(x) \text{ for all } x \in \mathbb{R},
+    \]
+    then the distribution \( \mu_X \) of \( X \) is the same as the distribution \( \mu_Y \) of \( Y \). \newline
+    This theorem implies that, to define a class of distributions, it suffices to characterize their distribution functions. For instance, the \textbf{normal distribution} can be defined solely by its CDF rather than specifying a more complex measure over the Borel sets. The CDF simplifies the process as it is a real function that takes values in \([0,1]\).
+    
+    \subsection{Theorem 2: Conditions for a Function to be a Distribution Function}
+    
+    The second fundamental theorem states that a function \( F \) can be a distribution function of some random variable \( X \) if and only if it satisfies three properties:
+    \begin{enumerate}
+        \item \( F \) is \textbf{non-decreasing}.
+        \item \( F \) is \textbf{right-continuous}.
+        \item \(\lim_{x \to -\infty} F(x) = 0\) and \(\lim_{x \to +\infty} F(x) = 1\).
+    \end{enumerate}
+    Any function \( F \) satisfying these conditions can serve as the CDF for a unique random variable.
+    
+    \section{Discrete Distribution Function of the Binomial Random Variable: The Case of \( \text{Bin}(1, p) \)}
+    Consider a \textbf{Bernoulli random variable} \( X \) with parameter \( p \). This is a special case of the binomial distribution with \( n = 1 \). The support of \( X \) is \( \{0, 1\} \), and its \textbf{probability mass function} (PMF) is:
+    \[
+    P(X = 0) = 1 - p, \quad P(X = 1) = p, \quad P(X = x) = 0 \text{ for } x \neq 0, 1.
+    \]
+    
+    \paragraph{Constructing the CDF}
+    The CDF \( F_X(x) = P(X \leq x) \) for this Bernoulli distribution can be described as follows:
+    \begin{itemize}
+        \item For \( x < 0 \), \( F_X(x) = 0 \). The probability that \( X \leq x \) when \( x < 0 \) is zero because \( X \) cannot take negative values.
+        \item For \( 0 \leq x < 1 \), \( F_X(x) = 1 - p \). The probability that \( X \leq x \) is the same as the probability that \( X = 0 \), which is \( 1 - p \).
+        \item For \( x \geq 1 \), \( F_X(x) = 1 \). This is because \( P(X \leq 1) = P(X = 0) + P(X = 1) = 1 \).
+    \end{itemize}
+    Thus, the CDF of \( X \) can be summarized as:
+    \[
+    F_X(x) =
+    \begin{cases}
+    0 & \text{if } x < 0, \\
+    1 - p & \text{if } 0 \leq x < 1, \\
+    1 & \text{if } x \geq 1.
+    \end{cases}
+    \]
+    
+    \paragraph{Properties of the CDF for Discrete Random Variables}
+    
+    A discrete random variable has a CDF that exhibits \textbf{jump discontinuities} at points where the variable has positive probability. For the Bernoulli random variable \( X \), there is a jump from \( 0 \) to \( 1 - p \) at \( x = 0 \), and another jump from \( 1 - p \) to \( 1 \) at \( x = 1 \). 
+    
+    \section{Classifying Random Variables}
+    
+    \paragraph{Constant Random Variables}
+    
+    A \textbf{constant random variable} \( X \) takes a single value \( c \) with probability \( 1 \). Its CDF is characterized by:
+    \[
+    F_X(x) =
+    \begin{cases}
+    0 & \text{if } x < c, \\
+    1 & \text{if } x \geq c.
+    \end{cases}
+    \]
+    This function has a single jump from \( 0 \) to \( 1 \) at \( x = c \), reflecting that all the probability is concentrated at \( c \).
+    
+    \paragraph{Absolutely Continuous Random Variables}
+    
+    An \textbf{absolutely continuous random variable} \( X \) has a CDF \( F_X \) that can be expressed as:
+    \[
+    F_X(x) = \int_{-\infty}^{x} f_X(t) dt,
+    \]
+    where \( f_X \) is the \textbf{probability density function} (PDF). For such variables, the CDF is smooth and continuous, without jumps, and the PDF \( f_X \) provides a way to compute probabilities over intervals:
+    \[
+    P(a \leq X \leq b) = \int_{a}^{b} f_X(x) dx.
+    \]
+    
+    \paragraph{Singular Random Variables}
+    
+    Between discrete and absolutely continuous random variables, there are \textbf{singular random variables}. These variables are neither entirely discrete nor absolutely continuous. They have a CDF that is continuous but not absolutely continuous. Singular distributions are more complex and less common in practice.
+    
