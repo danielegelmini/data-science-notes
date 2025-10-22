@@ -1,0 +1,135 @@
+\chapter{Strassen Matrix Multiplication}
+    
+    Before introducing Strassen's method, let's examine standard matrix multiplication, called \textbf{Square-Matrix-Multiplication (SMMR)}. Given two \(n \times n\) matrices \(A\) and \(B\), we want to compute their product \(C = A \times B\).
+    
+    \subsection{Standard Matrix Multiplication (SMMR)}
+    1. Divide matrices \(A\) and \(B\) as follows:
+       \[
+       A = \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix}, \quad B = \begin{bmatrix} B_{11} & B_{12} \\ B_{21} & B_{22} \end{bmatrix}
+       \]
+       
+    2. Each element of \(C\) is computed as:
+       \[
+       C = A \times B = \begin{bmatrix} C_{11} & C_{12} \\ C_{21} & C_{22} \end{bmatrix}
+       \]
+       where
+       \[
+       C_{11} = A_{11} B_{11} + A_{12} B_{21}, \quad C_{12} = A_{11} B_{12} + A_{12} B_{22}
+       \]
+       \[
+       C_{21} = A_{21} B_{11} + A_{22} B_{21}, \quad C_{22} = A_{21} B_{12} + A_{22} B_{22}
+       \]
+    
+    This method requires 8 recursive multiplications for each submatrix.
+    
+    \subsection{Recursive SMMR Algorithm}
+    
+    \begin{verbatim}
+    def SMMR(A, B):
+        n = len(A)  # Number of rows in A
+        C = [[0] * n for _ in range(n)]  # Initialize nxn matrix C with zeros
+        
+        if n == 1:
+            C[0][0] = A[0][0] * B[0][0]
+        else:
+            # Partition matrices A, B, and C as described
+            C11 = SMMR(A11, B11) + SMMR(A12, B21)
+            C12 = SMMR(A11, B12) + SMMR(A12, B22)
+            C21 = SMMR(A21, B11) + SMMR(A22, B21)
+            C22 = SMMR(A21, B12) + SMMR(A22, B22)
+            
+            # Combine results into matrix C (requires additional merging steps in practice)
+        
+        return C
+    \end{verbatim}
+    
+    \subsection{Complexity Analysis of SMMR}
+    
+    Dividing each matrix into four \( \frac{n}{2} \times \frac{n}{2} \) submatrices requires 8 multiplications. Assuming each submatrix has \( \left(\frac{n}{2}\right)^2 = \frac{n^2}{4} \) entries, we derive the recurrence:
+    \[
+    T(n) = \begin{cases} 
+          \Theta(1) & \text{if } n = 1 \\
+          8T\left(\frac{n}{2}\right) + \Theta(n^2) & \text{if } n > 1 
+       \end{cases}
+    \]
+    
+    The height of the recursion tree is \(\log_2 n\), and the total number of leaves is \(n^{\log_2 8} = n^3\), leading to:
+    
+    
+    \section{Strassen's Algorithm}
+    
+    Strassen's algorithm presents a clever approach to improve the efficiency of matrix multiplication, specifically for large matrices. Although it is challenging to apply this algorithm beyond the context of matrix multiplication, studying it is highly useful for understanding the principles of recursion and complexity analysis in algorithms. 
+    
+    \subsection{Standard Recursive Matrix Multiplication}
+    As previously discussed, multiplying two matrices \(A\) and \(B\) can be formulated as a recursive problem. Each matrix is divided into four \( \frac{n}{2} \times \frac{n}{2} \) submatrices, and recursive calls are made until we reach matrices of size \(1 \times 1\), where the multiplications are performed directly. This standard approach yields a time complexity of \(\Theta(n^3)\).
+    
+    \subsection{Overview of Strassen's Algorithm}
+    Strassen’s algorithm reduces the complexity of matrix multiplication by leveraging specific combinations of additions and multiplications. It consists of four main steps:
+    \begin{enumerate}
+        \item Divide matrices \(A\) and \(B\) into \( \frac{n}{2} \times \frac{n}{2} \) submatrices, similar to the standard approach.
+        \item Construct 10 intermediate matrices \( S_1, S_2, \dots, S_{10} \) of size \( \frac{n}{2} \times \frac{n}{2} \), each representing specific sums or differences of the submatrices of \(A\) and \(B\). These combinations are carefully chosen to optimize the calculation process, as we will see shortly. This step has a complexity of \(\Theta(n^2)\).
+        \item Using the submatrices from steps 1 and 2, compute 7 product matrices \( P_1, P_2, \dots, P_7 \), each of size \( \frac{n}{2} \times \frac{n}{2} \), by recursively applying the Strassen algorithm.
+        \item Finally, construct the resulting submatrices \( C_{11}, C_{12}, C_{21}, C_{22} \) for the product matrix \(C\), using the product matrices \(P_i\). This step also has a complexity of \(\Theta(n^2)\).
+    \end{enumerate}
+    
+    The key improvement in Strassen's algorithm lies in reducing the number of recursive multiplications from 8 to 7, which reduces the overall complexity.
+    
+    \subsection{Detailed Steps of Strassen’s Algorithm}
+    \subsubsection*{Step 1: Divide Matrices}
+    This step involves partitioning \(A\) and \(B\) as:
+    \[
+    A = \begin{bmatrix} A_{11} & A_{12} \\ A_{21} & A_{22} \end{bmatrix}, \quad B = \begin{bmatrix} B_{11} & B_{12} \\ B_{21} & B_{22} \end{bmatrix}
+    \]
+    
+    \subsubsection*{Step 2: Construct Intermediate Sum Matrices}
+    Define the following intermediate matrices:
+    \[
+    \begin{aligned}
+        S_1 &= B_{12} - B_{22}, \\
+        S_2 &= A_{11} + A_{12}, \\
+        S_3 &= A_{21} + A_{22}, \\
+        S_4 &= B_{21} - B_{11}, \\
+        S_5 &= A_{11} + A_{22}, \\
+        S_6 &= B_{11} + B_{22}, \\
+        S_7 &= A_{12} - A_{22}, \\
+        S_8 &= B_{21} + B_{22}, \\
+        S_9 &= A_{11} - A_{21}, \\
+        S_{10} &= B_{11} + B_{12}.
+    \end{aligned}
+    \]
+    
+    \subsubsection*{Step 3: Compute Product Matrices}
+    Calculate the seven product matrices as follows:
+    \[
+    \begin{aligned}
+        P_1 &= A_{11} \cdot S_1, \\
+        P_2 &= S_2 \cdot B_{22}, \\
+        P_3 &= S_3 \cdot B_{11}, \\
+        P_4 &= A_{22} \cdot S_4, \\
+        P_5 &= S_5 \cdot S_6, \\
+        P_6 &= S_7 \cdot S_8, \\
+        P_7 &= S_9 \cdot S_{10}.
+    \end{aligned}
+    \]
+    
+    \subsubsection*{Step 4: Construct Final Product Matrix \(C\)}
+    Using the product matrices \(P_1, P_2, \dots, P_7\), construct the final submatrices of \(C\):
+    \[
+    \begin{aligned}
+        C_{11} &= P_5 + P_4 - P_2 + P_6, \\
+        C_{12} &= P_1 + P_2, \\
+        C_{21} &= P_3 + P_4, \\
+        C_{22} &= P_5 + P_1 - P_3 - P_7.
+    \end{aligned}
+    \]
+    The final product matrix \(C\) is given by:
+    \[
+    C = \begin{bmatrix} C_{11} & C_{12} \\ C_{21} & C_{22} \end{bmatrix}
+    \]
+    
+    \subsection{Complexity Analysis of Strassen's Algorithm}
+    Despite the algorithm's complexity in terms of individual operations, it reduces the number of multiplications needed, which decreases the overall complexity. Strassen's algorithm achieves a time complexity of:
+    \[
+    \Theta(n^{\log_2 7}) \approx \Theta(n^{2.8073})
+    \]
+    This represents a significant improvement over the standard matrix multiplication complexity of \(\Theta(n^3)\).
