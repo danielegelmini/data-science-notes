@@ -1,0 +1,81 @@
+\chapter{Design and Analysis of Algorithms}
+    \section{What is an Algorithm?}
+    An \textbf{algorithm} is a sequence of instructions that describes the solution to a problem. It is a well-defined computational procedure that takes one or more values as input and produces one or more values as output. Algorithms provide a structured way to discuss problems and solutions, giving us a formal language to describe computational tasks.
+    
+    \subsection{Euclid's Algorithm (one of the first problem constructed)}
+    Given two positive numbers \(n\) and \(m\), the goal is to find their greatest common divisor (GCD). The algorithm works as follows:
+    \begin{enumerate}
+        \item \textbf{Find remainder:} Divide \(m\) by \(n\), and let \(r\) be the remainder such that \(0 \leq r < n\).
+        \item \textbf{Is it zero?} If \(r = 0\), the algorithm terminates; \(n\) is the GCD.
+        \item \textbf{Reduce:} Set \(m \leftarrow n\), \(n \leftarrow r\), and repeat from step 1, it gives back a feedback.
+    \end{enumerate}
+    This algorithm is efficient and widely used for GCD computations. 
+    
+    \subsection{Knuth's Five Rules for Algorithms}
+    For a sequence of steps to be considered an algorithm, it must satisfy the following criteria:
+    \begin{enumerate}
+        \item \textbf{Finiteness:} The algorithm must terminate after a finite number of steps.
+        \item \textbf{Definiteness:} Each step must be precisely and unambiguously defined.
+        \item \textbf{Input:} It must take zero or more inputs.
+        \item \textbf{Output:} It must produce one or more outputs.
+        \item \textbf{Effectiveness:} Each step must be basic enough to be executed with paper and pencil in a finite amount of time.
+    \end{enumerate}
+    If an algorithm does not satisfy finiteness, it becomes a computational method rather than a true algorithm.
+    
+    \section{Sorting Algorithms}
+    The sorting problem involves rearranging a sequence of numbers into a specific order. 
+    
+    \subsection{Problem Definition}
+    \textbf{Input:} A sequence of numbers \(\langle a_1, a_2, \dots, a_n \rangle\).  
+    \textbf{Output:} A permutation \(\langle a'_1, a'_2, \dots, a'_n \rangle\) such that \(a'_1 \leq a'_2 \leq \dots \leq a'_n\). \newline
+    An example of sorting is:
+    \[
+    \langle 34, 2, 1, 45, 565 \rangle \rightarrow \langle 1, 2, 34, 45, 565 \rangle
+    \]
+    Here, the initial sequence is an \textit{instance} of the sorting problem. A sorting algorithm is \textit{correct} if it always produces the correct sorted sequence for any given input.
+    
+    \section{Computational Problems}
+    A computational problem \(\Pi\) is a relation between a set of instances \(I\) and a set of possible solutions \(S\):
+    \[
+    \Pi \subseteq I \times S \text{ such that } \forall i \in I, \exists s \in S \text{ with } (i, s) \in \Pi.
+    \]
+    An algorithm \(A\) solves the problem \(\Pi\) if, for every instance \(i \in I\), it produces a corresponding solution \(s \in S\).
+    
+    \section{Algorithm Performance}
+    The primary focus in algorithm design is performance. Other important aspects include:
+    \begin{itemize}
+        \item \textbf{Correctness:} An algorithm must produce the correct output for all valid inputs. This is essential because an incorrect algorithm, no matter how efficient, is useless if it doesn't solve the problem correctly.
+    
+        \item \textbf{Cost:} The overall resources (time, space, energy) required to implement and run the algorithm should be minimal. Lower cost means the algorithm is more practical for real-world applications, especially at scale.
+    
+        \item \textbf{Maintainability:} The ease with which the algorithm can be updated or modified. A maintainable algorithm is important for adapting to new requirements or fixing bugs without having to completely rewrite it.
+    
+        \item \textbf{Stability and robustness:} The algorithm should perform consistently and handle unexpected situations (e.g., invalid inputs) gracefully. Stability ensures that the algorithm remains reliable, while robustness guarantees that it works under a variety of conditions.
+    
+        \item \textbf{Modularity:} The algorithm should be designed in such a way that it is composed of smaller, independent modules. This makes it easier to understand, test, and reuse parts of the algorithm in other contexts.
+    
+        \item \textbf{Security:} The algorithm should ensure that it is safe from vulnerabilities that could be exploited. This is crucial for algorithms dealing with sensitive data or in security-critical applications.
+    
+        \item \textbf{User-friendliness:} The algorithm should be easy to use and understand, especially when it involves user interaction or configuration. A user-friendly algorithm can reduce errors and improve user adoption.
+    
+        \item \textbf{Time complexity:} The time complexity determines how the execution time of the algorithm grows with the size of the input. It is important because efficient time complexity ensures that the algorithm can handle large inputs within a reasonable time.
+    \end{itemize}
+    Performance often dictates the feasibility of using an algorithm in practice. For real-time systems, performance can be crucial. If an algorithm takes too long to execute, it may be unusable.
+    
+    \section{Algorithmic Analysis}
+    Algorithmic analysis helps determine how efficient an algorithm is. It is based on the number of operations the algorithm performs to solve a problem. Given two algorithms \(A\) and \(B\) that solve the same problem, we can compare them based on their performance.
+    
+    \subsection{Efficiency}
+    Even though computers are getting faster and faster, we should still care about algorithmic efficiency and memory use. Algorithmic efficiency is measured in terms of input size. For example:
+    \begin{itemize}
+        \item \textbf{Insertion sort} requires \(c_1 n^2\) operations to sort a sequence of \(n\) numbers.
+        \item \textbf{Merge sort} requires \(c_2 n \log n\) operations.
+    \end{itemize}
+    \(c_1 n^2\) and \(c_2 n^2\) are constant which depend on the quality of the pc and of the programmer.
+    \subsection{Example: Insertion Sort vs Merge Sort}
+    Consider sorting a sequence of \(10^7\) numbers:
+    \begin{itemize}
+        \item \textbf{Insertion sort:} \(c_1 n^2\)
+        \item \textbf{Merge sort:} \(c_2 n \log n\)
+    \end{itemize}
+    On a fast computer (\(10^{10}\) instructions/second) with a good implementation of insertion sort (\(c_1 = 2\)), it takes over 5.5 hours. On a slower computer (\(10^7\) instructions/second) with a poor implementation of merge sort (\(c_2 = 50\)), the sorting only takes about 20 minutes. This highlights the significant difference in performance between the two algorithms.
