@@ -1,0 +1,103 @@
+\chapter{Conformance checking}
+\section{Introduction to Conformance Checking}
+
+In process mining, \textbf{conformance checking} is a key activity used to assess the accuracy and reliability of a process model against real-life data. Specifically, it verifies whether the recorded behavior (from event logs) aligns with the defined process model. This is crucial in domains like auditing, where organizations aim to ensure compliance with internal and external regulations.
+
+Conformance checking serves various purposes, such as:
+\begin{itemize}
+    \item Verifying \textbf{validity} and \textbf{reliability} of process information,
+    \item Ensuring processes are executed within boundaries and constraints set by stakeholders (e.g., managers, regulatory bodies),
+    \item Detecting \textbf{fraud}, \textbf{risks}, inefficiencies, and areas for improvement in the processes.
+\end{itemize}
+
+\section{Desirable and Undesirable Deviations}
+
+Conformance checking identifies \textbf{deviations} between the event log and the process model. These deviations are generally categorized as:
+\begin{itemize}
+    \item \textbf{Desirable deviations}: Improvements or optimizations that enhance process efficiency,
+    \item \textbf{Undesirable deviations}: Deviations that signify non-compliance, such as a failure to follow established procedures, often due to operator errors.
+\end{itemize}
+
+\section{Token-based Conformance Checking}
+
+One approach to conformance checking involves a simulation known as the \textbf{token game}. The concept is straightforward:
+\begin{itemize}
+    \item A \textbf{token} is placed at the starting point of the Petri net.
+    \item Tokens move along the net according to the transitions dictated by the event log.
+    \item The process continues until either the token reaches the endpoint (signifying model compliance) or issues arise, such as missing or excess tokens.
+\end{itemize}
+\textbf{Key Indicators in Token Replay:} During token-based conformance checking, we track the following indicators:
+\begin{itemize}
+    \item \( m \): Number of \textbf{missing tokens},
+    \item \( r \): Number of \textbf{remaining tokens},
+    \item \( c \): Number of \textbf{consumed tokens},
+    \item \( p \): Number of \textbf{produced tokens}.
+\end{itemize}
+\textbf{Special Cases:}
+\begin{itemize}
+    \item At the start of each trace, a token is produced at the start place.
+    \item At the end of each trace, a token is consumed from the end place.
+\end{itemize}
+
+\section{Computing Fitness}
+
+The \textbf{fitness} of a model describes how well the observed traces in the event log align with the expected behavior in the process model. Fitness is calculated at both the trace level and the log level.
+
+For a single trace \(\sigma\), the fitness function is given by:
+\[
+\text{fitness}(\sigma, N) = \frac{1}{2} \left(1 - \frac{m}{c} \right) + \frac{1}{2} \left(1 - \frac{r}{p} \right)
+\]
+where:
+\begin{itemize}
+    \item The first term approaches 0 if all consumed tokens are missing,
+    \item The second term approaches 0 if all remaining tokens are produced but unused.
+\end{itemize}
+\textbf{Log-Level Fitness}: For an entire log \(L\), the fitness is averaged over all traces \(\sigma \in L\):
+\[
+\text{fitness}(L, N) = \frac{1}{2} 
+\left(1 - \frac{\sum_{\sigma \in L} L(\sigma) \cdot m_{N,\sigma}}{\sum_{\sigma \in L} L(\sigma) \cdot c_{N,\sigma}} \right) + \frac{1}{2} \left(1 - \frac{\sum_{\sigma \in L} L(\sigma) \cdot  r_{N,\sigma}}{\sum_{\sigma \in L} L(\sigma) \cdot  p_{N,\sigma}} \right)
+\]
+
+\section{Footprint Comparison for Conformance Checking}
+
+In cases where Petri nets are used, we can also perform conformance checking by comparing \textbf{log footprints} and \textbf{model footprints}. This involves generating a matrix of observed and expected transitions, and then counting the differences between them. For model footprints we mean that we have to understand the behavior of the model and all of the possible transitions.
+
+The \textbf{conformance level} can be computed as:
+\[
+\text{conformance level} = 1 - \frac{\text{cellsWithDifference}}{\text{totalNumberCells}}
+\]
+where each discrepancy between the log and model footprints is considered a deviation.
+
+\section{Conformance Checking with Alignments}
+
+In complex cases involving multiple transitions with the same label or invisible transitions, token-based methods may fall short. In such cases, \textbf{alignment-based conformance checking} is preferred. Alignments help determine the most probable model execution path corresponding to a given observed trace, thereby identifying points of deviation in terms of timing or activity misalignment.
+
+Alignments are:
+\begin{itemize}
+    \item \textbf{Globally optimal} in finding the closest possible model execution to the trace,
+    \item \textbf{Robust} against label duplication and invisible transitions,
+    \item Essential for providing a true execution path and explaining specific deviations.
+\end{itemize}
+
+### Alignment Costs
+The cost function \(c(a, b)\) assigns penalties to mismatches between the trace and model:
+\[
+\begin{cases}
+c(x, \gg) = 1 & \text{(log move)} \\
+c(\gg, y) = 1 & \text{(model move)} \\
+c(x, y) = 0 & \text{if } x = y \text{ (synchronous move)} \\
+c(x, y) = \infty & \text{if } x \neq y \text{ (illegal move)}
+\end{cases}
+\]
+where \(\gg\) represents an unobserved move in either the log or the model.
+
+The goal is to minimize the alignment cost, selecting the alignment with the lowest possible penalty, which reflects the closest match between the trace and the model.
+
+\section{Precision in Conformance Checking}
+
+A model must also be \textbf{precise}, meaning it should avoid overgeneralization and unnecessary paths. Precision is evaluated by constructing a \textbf{transition system} that indicates the frequency with which states are visited, allowing us to assess how often each path is taken compared to the event log.
+
+The precision measure \( \text{precision}_{L, M} \) is calculated as follows:
+\[
+\text{precision}_{L, M} = \frac{\sum_{s \in S} \text{freq}(s) \cdot \#s' \text{ where } s, s' \in E \text{ and } \text{freq}(s) > 0}{\sum_{s \in S} \text{freq}(s)}
+\]
